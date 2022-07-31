@@ -5,6 +5,7 @@ export const theme = createTheme({
         fontFamily: [
             'monospace',
             'Copperplate',
+            'Arial Black',
         ].join(',')
     },
     palette: {

@@ -6,35 +6,36 @@ import BlogTable, {Blog} from "../../components/BlogTable";
 
 // @ts-ignore
 const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
-    const nodes = data.allMicrocmsBlogs.edges
+    const blogEdges = data.allMicrocmsBlogs.edges
     const categories = data.allMicrocmsCategories.edges
 
-    if (nodes.length === 0) {
+    if (blogEdges.length === 0) {
         return (
-            <Layout pageTitle="ブログ一覧">
+            <Layout pageTitle="ブログ">
                 <p>
                     ブログ記事がありません。
                 </p>
             </Layout>
         )
     }
-
-    const blogNodes: Blog[] = nodes.map(
-        (node: {
-            blogIds: any
-            title: any
-            publishedAt: any
+    const blogs: Blog[] = blogEdges.map(
+        (e: {
+            node: {
+                blogsId: string
+                title: string
+                publishedAt: string
+            }
         }) => ({
-            blogIds: node.blogIds,
-            title: node.title,
-            publishedAt: node.publishedAt,
+            blogsId: e.node.blogsId,
+            title: e.node.title,
+            publishedAt: e.node.publishedAt,
         })
     )
 
     return (
-        <Layout pageTitle="ブログ一覧">
+        <Layout pageTitle="ブログ">
             <Box style={{margin: `10px 10px 20px 10px`}}>
-                <BlogTable nodes={blogNodes}/>
+                <BlogTable blogs={blogs}/>
             </Box>
         </Layout>
     )

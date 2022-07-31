@@ -15,7 +15,7 @@ interface Props {
 const Layout: React.FC<Props> = ({pageTitle, children}) => {
     return (
         <ThemeProvider theme={theme}>
-            <title>{pageTitle}</title>
+            <title>{pageTitle} | daisuzz.log</title>
             <main style={{padding: `80px 10px 20px 10px`,}}>
                 <Tabs>
                     <LinkTab label="トップ" href="/"/>

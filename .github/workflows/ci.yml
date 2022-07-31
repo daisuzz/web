@@ -21,12 +21,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install --frozen-lockfile
-      - run: npm run build
+      - run: npm ci && npm run build
         env:
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
           MICROCMS_SERVICE_ID: ${{ secrets.MICROCMS_SERVICE_ID }}
-      - if: github.ref == 'refs/heads/main'
-        run: firebase deploy --token $FIREBASE_TOKEN
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DAISUZZ_WEB }}'
+          channelId: live
+          projectId: daisuzz-web

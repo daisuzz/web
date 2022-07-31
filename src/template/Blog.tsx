@@ -1,11 +1,11 @@
 import * as React from "react"
 import {graphql, PageProps} from "gatsby"
 import Layout from "../components/Layout"
-import PageTitle from "../components/PageTitle"
+import PageTitle from "../components/atoms/PageTitle"
 import {Typography} from "@mui/material";
 
 // @ts-ignore
-const BlogPostTemplate: React.FC<PageProps<GatsbyTypes.MicrocmsBlogsQuery>> = ({data}) => {
+const BlogPostTemplate: React.FC<PageProps<Queries.MicrocmsBlogsQuery>> = ({data}) => {
     return (
         <Layout>
             <article className="memo-content" itemScope>

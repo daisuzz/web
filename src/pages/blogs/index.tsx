@@ -1,18 +1,17 @@
 import * as React from "react"
 import {graphql, PageProps} from "gatsby"
 import Layout from "../../components/Layout"
-import PageTitle from "../../components/PageTitle";
 import {Box} from "@mui/material";
 import BlogTable, {Blog} from "../../components/BlogTable";
 
 // @ts-ignore
-const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexPageQuery>> = ({data,}) => {
-    const posts = data.allMicrocmsBlogs.edges
+const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
+    const nodes = data.allMicrocmsBlogs.edges
     const categories = data.allMicrocmsCategories.edges
 
-    if (posts.length === 0) {
+    if (nodes.length === 0) {
         return (
-            <Layout>
+            <Layout pageTitle="ブログ一覧">
                 <p>
                     ブログ記事がありません。
                 </p>
@@ -20,23 +19,22 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexPageQuery>> = ({data,})
         )
     }
 
-    const blogPosts: Blog[] = posts.map(
-        (post: {
+    const blogNodes: Blog[] = nodes.map(
+        (node: {
             blogIds: any
             title: any
             publishedAt: any
         }) => ({
-            blogIds: post.blogIds,
-            title: post.title,
-            publishedAt: post.publishedAt,
+            blogIds: node.blogIds,
+            title: node.title,
+            publishedAt: node.publishedAt,
         })
     )
 
     return (
-        <Layout>
-            <PageTitle name="ブログ一覧"/>
+        <Layout pageTitle="ブログ一覧">
             <Box style={{margin: `10px 10px 20px 10px`}}>
-                <BlogTable posts={blogPosts}/>
+                <BlogTable nodes={blogNodes}/>
             </Box>
         </Layout>
     )

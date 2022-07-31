@@ -1,46 +1,10 @@
 import {Link} from "gatsby"
 import * as React from "react"
 import {DateUtils} from "../DateUtils"
-import {
-    createStyles,
-    Paper,
-    styled,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    Theme,
-    Typography,
-} from "@mui/material";
-import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
-
-const StyledTableCell = styled(TableCell)((theme: Theme) =>
-    createStyles({
-        head: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        body: {
-            fontSize: 14,
-        },
-    })
-)
-
-const StyledTableRow = styled(TableRow)((theme: Theme) =>
-    createStyles({
-        root: {
-            "&:nth-of-type(odd)": {
-                backgroundColor: theme.palette.action.hover,
-            },
-        },
-    })
-)
+import {Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableRow, Typography,} from "@mui/material";
 
 interface BlogArticleTableProps {
-    posts: Blog[]
+    nodes: Blog[]
 }
 
 export interface Blog {
@@ -49,50 +13,29 @@ export interface Blog {
     publishedAt: string
 }
 
-const BlogTable: React.FC<BlogArticleTableProps> = ({posts}) => {
-    const [page, setPage] = React.useState(0)
-    const [rowsPerPage, setRowsPerPage] = React.useState(10)
-
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number
-    ) => {
-        setPage(newPage)
-    }
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10))
-        setPage(0)
-    }
-
+const BlogTable: React.FC<BlogArticleTableProps> = ({nodes}) => {
     return (
-        <>
-            <TableContainer component={Paper}></TableContainer>
+        <TableContainer component={Paper}>
             <Table size="small">
                 <TableBody>
-                    {(rowsPerPage > 0
-                            ? posts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : posts
-                    ).map(post => {
-                        const title = post.title || post.blogsId
+                    {nodes.map(node => {
+                        const title = node.title || node.blogsId
                         const publishedDate = DateUtils.formatDate(
-                            new Date(Date.parse(post.publishedAt)),
+                            new Date(Date.parse(node.publishedAt)),
                             "YYYY年MM月DD日 hh:mm"
                         )
 
                         return (
                             <>
-                                <StyledTableRow key={post.blogsId}>
-                                    <StyledTableCell align="left">
+                                <TableRow key={node.blogsId}>
+                                    <TableCell align="left">
                                         <Typography
                                             variant="body1"
                                             color="textPrimary"
                                             component="p"
                                         >
                                             <Link
-                                                to={`/blog/${post.blogsId}`}
+                                                to={`/blog/${node.blogsId}`}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                             >
@@ -105,32 +48,16 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({posts}) => {
                                             component="p"
                                         >
                                         </Typography>
-                                    </StyledTableCell>
-                                </StyledTableRow>
+                                    </TableCell>
+                                </TableRow>
                             </>
                         )
                     })}
                 </TableBody>
                 <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            rowsPerPageOptions={[10, 25, 50, {label: "All", value: -1}]}
-                            colSpan={3}
-                            count={posts.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            SelectProps={{
-                                inputProps: {"aria-label": "rows per page"},
-                                native: true,
-                            }}
-                            onChangePage={handleChangePage}
-                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
                 </TableFooter>
             </Table>
-        </>
+        </TableContainer>
     )
 }
 

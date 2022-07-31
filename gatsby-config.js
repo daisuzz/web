@@ -24,6 +24,9 @@ module.exports = {
             },
         },
         `gatsby-plugin-sitemap`,
+        `gatsby-plugin-image`,
+        `gatsby-plugin-sharp`,
+        `gatsby-transformer-sharp`
     ].filter(Boolean),
 
     // GraphQL Typegenを有効にする

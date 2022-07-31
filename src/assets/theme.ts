@@ -4,7 +4,6 @@ export const theme = createTheme({
     typography: {
         fontFamily: [
             'monospace',
-            'Copperplate',
             'Arial Black',
         ].join(',')
     },

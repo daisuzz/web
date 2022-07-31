@@ -1,10 +1,8 @@
 import * as React from "react"
-import {theme} from "../assets/theme"
-import {Tabs, ThemeProvider} from "@mui/material";
 import PageTitle from "./atoms/PageTitle";
 // @ts-ignore
 import {container} from "./Layout.module.css"
-import LinkTab from "./atoms/LinkTab";
+import Header from "./organisms/Header";
 
 interface Props {
     pageTitle: string
@@ -14,17 +12,14 @@ interface Props {
 
 const Layout: React.FC<Props> = ({pageTitle, children}) => {
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <title>{pageTitle} | daisuzz.log</title>
-            <main style={{padding: `80px 10px 20px 10px`,}}>
-                <Tabs>
-                    <LinkTab label="トップ" href="/"/>
-                    <LinkTab label="ブログ" href="/blogs"/>
-                </Tabs>
+            <main>
+                <Header/>
                 <PageTitle name={pageTitle}/>
                 {children}
             </main>
-        </ThemeProvider>
+        </>
     )
 }
 

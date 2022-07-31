@@ -45,10 +45,8 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs}) => {
                                         color="textSecondary"
                                         component="p"
                                     >
+                                        {publishedDate}
                                     </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    {publishedDate}
                                 </TableCell>
                             </TableRow>
                         )

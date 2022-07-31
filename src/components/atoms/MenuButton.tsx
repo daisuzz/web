@@ -14,11 +14,12 @@ const MenuButton: React.FC<MenuButtonProps> = (props: MenuButtonProps) => {
             startIcon={props.icon}
             component={Link}
             to={props.href}
-            sx={{color: 'white', textDecoration: 'none', fontFamily: 'monospace',}}>
+            sx={{color: 'inherit', textDecoration: 'none'}}>
             <Typography
                 variant="button"
                 color="inherit"
                 align="center"
+                sx={{fontFamily: 'Arial Black'}}
                 noWrap>
                 {props.label}
             </Typography>

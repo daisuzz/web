@@ -1,9 +1,9 @@
 import * as React from "react"
-import PageTitle from "./atoms/PageTitle";
 // @ts-ignore
 import {container} from "./Layout.module.css"
 import Header from "./organisms/Header";
-import {CssBaseline} from "@mui/material";
+import {CssBaseline, Paper, ThemeProvider} from "@mui/material";
+import {theme} from "../assets/theme";
 
 interface Props {
     pageTitle: string
@@ -13,14 +13,16 @@ interface Props {
 
 const Layout: React.FC<Props> = ({pageTitle, children}) => {
     return (
-        <CssBaseline>
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
             <title>{pageTitle} | daisuzz.log</title>
             <Header/>
             <main>
-                <PageTitle name={pageTitle}/>
-                {children}
+                <Paper elevation={0} sx={{background: '#FFFFFF', margin: 5}}>
+                    {children}
+                </Paper>
             </main>
-        </CssBaseline>
+        </ThemeProvider>
     )
 }
 

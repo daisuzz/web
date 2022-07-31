@@ -11,7 +11,7 @@ const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
 
     if (blogEdges.length === 0) {
         return (
-            <Layout pageTitle="ブログ">
+            <Layout pageTitle="BLOG">
                 <p>
                     ブログ記事がありません。
                 </p>

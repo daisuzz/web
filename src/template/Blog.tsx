@@ -7,7 +7,7 @@ import {Typography} from "@mui/material";
 // @ts-ignore
 const BlogPostTemplate: React.FC<PageProps<Queries.MicrocmsBlogsQuery>> = ({data}) => {
     return (
-        <Layout>
+        <Layout pageTitle={data.microcmsBlogs.title}>
             <article className="memo-content" itemScope>
                 <header>
                     <PageTitle name={data.microcmsBlogs.title}/>

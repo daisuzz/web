@@ -23,7 +23,7 @@ const ResponsiveAppBar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        daisuzz.web
+                        daisuzz.dev
                     </Typography>
                     <div style={{flexGrow: 1}}></div>
                     <Box sx={{display: {md: 'flex'}}}>

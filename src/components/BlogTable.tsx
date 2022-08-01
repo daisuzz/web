@@ -1,7 +1,8 @@
-import {Link} from "gatsby"
+import {Link as GatsbyLink} from "gatsby"
 import * as React from "react"
 import {DateUtils} from "../DateUtils"
-import {Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography,} from "@mui/material";
+import {Box, Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 interface BlogArticleTableProps {
     blogs: Blog[]
@@ -15,7 +16,7 @@ export interface Blog {
 
 const BlogTable: React.FC<BlogArticleTableProps> = ({blogs}) => {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} elevation={0}>
             <Table size="small">
                 <TableBody>
                     {blogs.map(blog => {
@@ -25,28 +26,33 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs}) => {
                             "YYYY年MM月DD日 hh:mm"
                         )
                         return (
-                            <TableRow key={blog.blogsId}>
+                            <TableRow key={blog.blogsId}
+                                      sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
                                 <TableCell align="left">
-                                    <Typography
-                                        variant="body1"
-                                        color="textPrimary"
-                                        component="p"
-                                    >
+                                    <Typography variant="h6" sx={{
+                                        fontFamily: 'Arial Black',
+                                        margin: "10px auto"
+                                    }}>
                                         <Link
+                                            component={GatsbyLink}
                                             to={`/${blog.blogsId}`}
                                             rel="noreferrer noopener"
                                             target="_blank"
+                                            color="inherit"
+                                            underline="none"
                                         >
                                             {title}
                                         </Link>
                                     </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                    >
-                                        {publishedDate}
-                                    </Typography>
+                                    <Box sx={{display: {md: 'flex'}}}>
+                                        <EventAvailableIcon fontSize="small"/>
+                                        <Typography variant="body2" sx={{
+                                            margin: "auto auto auto 5px"
+                                        }}>
+                                            {publishedDate}
+                                        </Typography>
+                                    </Box>
                                 </TableCell>
                             </TableRow>
                         )

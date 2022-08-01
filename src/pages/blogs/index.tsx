@@ -33,7 +33,7 @@ const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
     )
 
     return (
-        <Layout pageTitle="ブログ">
+        <Layout pageTitle="BLOG">
             <Box style={{margin: `10px 10px 20px 10px`}}>
                 <BlogTable blogs={blogs}/>
             </Box>

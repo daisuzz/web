@@ -25,7 +25,7 @@ exports.createPages = async ({graphql, actions}) => {
 
     result.data.allMicrocmsBlogs.edges.forEach((edge, index) => {
         createPage({
-            path: edge.node.blogsId,
+            path: '/blogs/' + edge.node.blogsId,
             component: path.resolve('./src/template/Blog.tsx'),
             context: {
                 blogsId: edge.node.blogsId,

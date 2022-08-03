@@ -36,7 +36,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs}) => {
                                     }}>
                                         <Link
                                             component={GatsbyLink}
-                                            to={`/${blog.blogsId}`}
+                                            to={`/blogs/${blog.blogsId}`}
                                             rel="noreferrer noopener"
                                             target="_blank"
                                             color="inherit"

@@ -25,13 +25,13 @@ const IndexPage: React.FC = () => {
                 アプリケーションの品質を改善したり、開発生産性を向上させるための取り組みや技術が好きです。
             </Typography>
             <IconButton onClick={() => window.open("https://twitter.com/daisuzz")}>
-                <TwitterIcon sx={{fontSize: 50}}/>
+                <TwitterIcon htmlColor='#1DA1F2' sx={{fontSize: 50}}/>
             </IconButton>
             <IconButton onClick={() => window.open("https://www.linkedin.com/in/daisuzz")}>
-                <LinkedInIcon sx={{fontSize: 50}}/>
+                <LinkedInIcon htmlColor='#0A66C2' sx={{fontSize: 50}}/>
             </IconButton>
             <IconButton onClick={() => window.open("https://github.com/daisuzz")}>
-                <GitHubIcon sx={{fontSize: 50}}/>
+                <GitHubIcon htmlColor='#333333' sx={{fontSize: 50}}/>
             </IconButton>
         </Layout>
     )

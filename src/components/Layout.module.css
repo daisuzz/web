@@ -1,0 +1,12 @@
+.layout {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.paper {
+    margin: 5%;
+}
+
+

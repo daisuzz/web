@@ -1,8 +1,11 @@
 import * as React from "react"
 // @ts-ignore
 import Header from "./organisms/Header";
-import {CssBaseline, Paper, ThemeProvider} from "@mui/material";
+import {Box, CssBaseline, Paper, ThemeProvider} from "@mui/material";
 import {theme} from "../assets/theme";
+import Footer from "./organisms/Footer";
+// @ts-ignore
+import * as style from "./Layout.module.css";
 
 interface Props {
     pageTitle: string
@@ -14,12 +17,15 @@ const Layout: React.FC<Props> = ({pageTitle, children}) => {
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <title>{pageTitle} | daisuzz.log</title>
-            <Header/>
-            <main>
-                <Paper elevation={0} sx={{margin: 5}}>
-                    {children}
-                </Paper>
-            </main>
+            <Box className={style.layout}>
+                <Header/>
+                <main>
+                    <Paper elevation={0} className={style.paper}>
+                        {children}
+                    </Paper>
+                </main>
+                <Footer/>
+            </Box>
         </ThemeProvider>
     )
 }

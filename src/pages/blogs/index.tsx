@@ -7,7 +7,6 @@ import BlogTable, {Blog} from "../../components/BlogTable";
 // @ts-ignore
 const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
     const blogEdges = data.allMicrocmsBlogs.edges
-    const categories = data.allMicrocmsCategories.edges
 
     if (blogEdges.length === 0) {
         return (
@@ -44,23 +43,23 @@ const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query BlogIndexPage {
-    allMicrocmsBlogs(sort: {order: DESC, fields: publishedAt}, limit: 10) {
-        edges {
-            node {
-                blogsId
-                title
-                publishedAt
+    query BlogIndexPage {
+        allMicrocmsBlogs(sort: {order: DESC, fields: publishedAt}, limit: 10) {
+            edges {
+                node {
+                    blogsId
+                    title
+                    publishedAt
+                }
+            }
+        }
+        allMicrocmsCategories {
+            edges {
+                node {
+                    categoriesId
+                    name
+                }
             }
         }
     }
-    allMicrocmsCategories {
-        edges {
-            node {
-                categoriesId
-                name
-            }
-        }
-    }
-  }
 `

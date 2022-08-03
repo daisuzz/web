@@ -45,7 +45,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs}) => {
                                             {title}
                                         </Link>
                                     </Typography>
-                                    <Box sx={{display: {md: 'flex'}}}>
+                                    <Box sx={{display: {xs: 'flex', md: 'flex'}}}>
                                         <EventAvailableIcon fontSize="small"/>
                                         <Typography variant="body2" sx={{
                                             margin: "auto auto auto 5px"

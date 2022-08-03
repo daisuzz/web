@@ -11,7 +11,7 @@ const IndexPage: React.FC = () => {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
             }}>
-                <Typography variant="h1" align="center" sx={{
+                <Typography variant="h2" align="center" sx={{
                     fontFamily: 'Arial Black'
                 }}>
                     Daisaku Suzuki

@@ -10,7 +10,7 @@ const IndexPage: React.FC = () => {
     return (
         <Layout pageTitle="ABOUT">
             <ProfileImage/>
-            <Typography variant="h2" sx={{
+            <Typography variant="h3" sx={{
                 fontFamily: 'Arial Black',
                 margin: "10px auto"
             }}>

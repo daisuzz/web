@@ -3,7 +3,7 @@ require(`dotenv`).config()
 module.exports = {
     // gatsby-plugin-sitemapの設定
     siteMetadata: {
-        siteUrl: `https://www.daisuzz.dev/`,
+        siteUrl: `https://daisuzz.dev/`,
     },
     plugins: [
         // microCMSの設定

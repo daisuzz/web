@@ -13,10 +13,11 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({pageTitle, children}) => {
+    const title = pageTitle + ' | daisuzz.dev'
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <title>{pageTitle} - daisuzz.log</title>
+            <title>{title}</title>
             <Box className={style.layout}>
                 <Header/>
                 <main>

@@ -32,7 +32,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
     return (
         <TabContext value={value}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <TabList onChange={handleChange} aria-label="blog tabs">
+                <TabList onChange={handleChange} aria-label="blog tabs" textColor={'inherit'}>
                     <Tab label="Blogs" value="0"/>
                     <Tab label="Qiita" value="1"/>
                     <Tab label="Hatena Blog" value="2"/>

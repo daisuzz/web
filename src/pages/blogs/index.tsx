@@ -7,7 +7,7 @@ import BlogTable, {Blog, ExternalBlog} from "../../components/BlogTable";
 // @ts-ignore
 const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
     const blogEdges = data.allMicrocmsBlogs.edges
-    const qiitaEdge = data.allFeedQiita.edges
+    const qiitaEdge = data.allQiitaPosts.edges
     const hatenaBlogEdge = data.allFeedHatenaBlog.edges
 
     if (blogEdges.length === 0 && qiitaEdge.length === 0 && hatenaBlogEdge.length === 0) {
@@ -85,21 +85,13 @@ export const pageQuery = graphql`
                 }
             }
         }
-        allMicrocmsCategories {
-            edges {
-                node {
-                    categoriesId
-                    name
-                }
-            }
-        }
-        allFeedQiita(sort: {fields: pubDate, order: DESC}) {
+        allQiitaPosts(sort: {fields: pubDate, order: DESC}) {
             edges {
                 node {
                     id
                     title
-                    link
                     pubDate
+                    link
                 }
             }
         }

@@ -862,449 +862,6 @@ type FeedHatenaBlogSortInput = {
   readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
 };
 
-type FeedQiita = Node & {
-  readonly author: Maybe<Scalars['String']>;
-  readonly children: ReadonlyArray<Node>;
-  readonly content: Maybe<Scalars['String']>;
-  readonly contentSnippet: Maybe<Scalars['String']>;
-  readonly id: Scalars['ID'];
-  readonly internal: Internal;
-  readonly isoDate: Maybe<Scalars['Date']>;
-  readonly link: Maybe<Scalars['String']>;
-  readonly parent: Maybe<Node>;
-  readonly pubDate: Maybe<Scalars['Date']>;
-  readonly title: Maybe<Scalars['String']>;
-};
-
-
-type FeedQiita_isoDateArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type FeedQiita_pubDateArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-type FeedQiitaConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedQiitaEdge>;
-  readonly group: ReadonlyArray<FeedQiitaGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedQiita>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedQiitaConnection_distinctArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-
-type FeedQiitaConnection_groupArgs = {
-  field: FeedQiitaFieldsEnum;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedQiitaConnection_maxArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-
-type FeedQiitaConnection_minArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-
-type FeedQiitaConnection_sumArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-type FeedQiitaEdge = {
-  readonly next: Maybe<FeedQiita>;
-  readonly node: FeedQiita;
-  readonly previous: Maybe<FeedQiita>;
-};
-
-type FeedQiitaFieldsEnum =
-  | 'author'
-  | 'children'
-  | 'children.children'
-  | 'children.children.children'
-  | 'children.children.children.children'
-  | 'children.children.children.id'
-  | 'children.children.id'
-  | 'children.children.internal.content'
-  | 'children.children.internal.contentDigest'
-  | 'children.children.internal.description'
-  | 'children.children.internal.fieldOwners'
-  | 'children.children.internal.ignoreType'
-  | 'children.children.internal.mediaType'
-  | 'children.children.internal.owner'
-  | 'children.children.internal.type'
-  | 'children.children.parent.children'
-  | 'children.children.parent.id'
-  | 'children.id'
-  | 'children.internal.content'
-  | 'children.internal.contentDigest'
-  | 'children.internal.description'
-  | 'children.internal.fieldOwners'
-  | 'children.internal.ignoreType'
-  | 'children.internal.mediaType'
-  | 'children.internal.owner'
-  | 'children.internal.type'
-  | 'children.parent.children'
-  | 'children.parent.children.children'
-  | 'children.parent.children.id'
-  | 'children.parent.id'
-  | 'children.parent.internal.content'
-  | 'children.parent.internal.contentDigest'
-  | 'children.parent.internal.description'
-  | 'children.parent.internal.fieldOwners'
-  | 'children.parent.internal.ignoreType'
-  | 'children.parent.internal.mediaType'
-  | 'children.parent.internal.owner'
-  | 'children.parent.internal.type'
-  | 'children.parent.parent.children'
-  | 'children.parent.parent.id'
-  | 'content'
-  | 'contentSnippet'
-  | 'id'
-  | 'internal.content'
-  | 'internal.contentDigest'
-  | 'internal.description'
-  | 'internal.fieldOwners'
-  | 'internal.ignoreType'
-  | 'internal.mediaType'
-  | 'internal.owner'
-  | 'internal.type'
-  | 'isoDate'
-  | 'link'
-  | 'parent.children'
-  | 'parent.children.children'
-  | 'parent.children.children.children'
-  | 'parent.children.children.id'
-  | 'parent.children.id'
-  | 'parent.children.internal.content'
-  | 'parent.children.internal.contentDigest'
-  | 'parent.children.internal.description'
-  | 'parent.children.internal.fieldOwners'
-  | 'parent.children.internal.ignoreType'
-  | 'parent.children.internal.mediaType'
-  | 'parent.children.internal.owner'
-  | 'parent.children.internal.type'
-  | 'parent.children.parent.children'
-  | 'parent.children.parent.id'
-  | 'parent.id'
-  | 'parent.internal.content'
-  | 'parent.internal.contentDigest'
-  | 'parent.internal.description'
-  | 'parent.internal.fieldOwners'
-  | 'parent.internal.ignoreType'
-  | 'parent.internal.mediaType'
-  | 'parent.internal.owner'
-  | 'parent.internal.type'
-  | 'parent.parent.children'
-  | 'parent.parent.children.children'
-  | 'parent.parent.children.id'
-  | 'parent.parent.id'
-  | 'parent.parent.internal.content'
-  | 'parent.parent.internal.contentDigest'
-  | 'parent.parent.internal.description'
-  | 'parent.parent.internal.fieldOwners'
-  | 'parent.parent.internal.ignoreType'
-  | 'parent.parent.internal.mediaType'
-  | 'parent.parent.internal.owner'
-  | 'parent.parent.internal.type'
-  | 'parent.parent.parent.children'
-  | 'parent.parent.parent.id'
-  | 'pubDate'
-  | 'title';
-
-type FeedQiitaFilterInput = {
-  readonly author: InputMaybe<StringQueryOperatorInput>;
-  readonly children: InputMaybe<NodeFilterListInput>;
-  readonly content: InputMaybe<StringQueryOperatorInput>;
-  readonly contentSnippet: InputMaybe<StringQueryOperatorInput>;
-  readonly id: InputMaybe<StringQueryOperatorInput>;
-  readonly internal: InputMaybe<InternalFilterInput>;
-  readonly isoDate: InputMaybe<DateQueryOperatorInput>;
-  readonly link: InputMaybe<StringQueryOperatorInput>;
-  readonly parent: InputMaybe<NodeFilterInput>;
-  readonly pubDate: InputMaybe<DateQueryOperatorInput>;
-  readonly title: InputMaybe<StringQueryOperatorInput>;
-};
-
-type FeedQiitaGroupConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedQiitaEdge>;
-  readonly field: Scalars['String'];
-  readonly fieldValue: Maybe<Scalars['String']>;
-  readonly group: ReadonlyArray<FeedQiitaGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedQiita>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedQiitaGroupConnection_distinctArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-
-type FeedQiitaGroupConnection_groupArgs = {
-  field: FeedQiitaFieldsEnum;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedQiitaGroupConnection_maxArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-
-type FeedQiitaGroupConnection_minArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-
-type FeedQiitaGroupConnection_sumArgs = {
-  field: FeedQiitaFieldsEnum;
-};
-
-type FeedQiitaMeta = Node & {
-  readonly children: ReadonlyArray<Node>;
-  readonly feedUrl: Maybe<Scalars['String']>;
-  readonly id: Scalars['ID'];
-  readonly internal: Internal;
-  readonly lastBuildDate: Maybe<Scalars['Date']>;
-  readonly link: Maybe<Scalars['String']>;
-  readonly parent: Maybe<Node>;
-  readonly title: Maybe<Scalars['String']>;
-};
-
-
-type FeedQiitaMeta_lastBuildDateArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-type FeedQiitaMetaConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedQiitaMetaEdge>;
-  readonly group: ReadonlyArray<FeedQiitaMetaGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedQiitaMeta>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedQiitaMetaConnection_distinctArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-
-type FeedQiitaMetaConnection_groupArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedQiitaMetaConnection_maxArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-
-type FeedQiitaMetaConnection_minArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-
-type FeedQiitaMetaConnection_sumArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-type FeedQiitaMetaEdge = {
-  readonly next: Maybe<FeedQiitaMeta>;
-  readonly node: FeedQiitaMeta;
-  readonly previous: Maybe<FeedQiitaMeta>;
-};
-
-type FeedQiitaMetaFieldsEnum =
-  | 'children'
-  | 'children.children'
-  | 'children.children.children'
-  | 'children.children.children.children'
-  | 'children.children.children.id'
-  | 'children.children.id'
-  | 'children.children.internal.content'
-  | 'children.children.internal.contentDigest'
-  | 'children.children.internal.description'
-  | 'children.children.internal.fieldOwners'
-  | 'children.children.internal.ignoreType'
-  | 'children.children.internal.mediaType'
-  | 'children.children.internal.owner'
-  | 'children.children.internal.type'
-  | 'children.children.parent.children'
-  | 'children.children.parent.id'
-  | 'children.id'
-  | 'children.internal.content'
-  | 'children.internal.contentDigest'
-  | 'children.internal.description'
-  | 'children.internal.fieldOwners'
-  | 'children.internal.ignoreType'
-  | 'children.internal.mediaType'
-  | 'children.internal.owner'
-  | 'children.internal.type'
-  | 'children.parent.children'
-  | 'children.parent.children.children'
-  | 'children.parent.children.id'
-  | 'children.parent.id'
-  | 'children.parent.internal.content'
-  | 'children.parent.internal.contentDigest'
-  | 'children.parent.internal.description'
-  | 'children.parent.internal.fieldOwners'
-  | 'children.parent.internal.ignoreType'
-  | 'children.parent.internal.mediaType'
-  | 'children.parent.internal.owner'
-  | 'children.parent.internal.type'
-  | 'children.parent.parent.children'
-  | 'children.parent.parent.id'
-  | 'feedUrl'
-  | 'id'
-  | 'internal.content'
-  | 'internal.contentDigest'
-  | 'internal.description'
-  | 'internal.fieldOwners'
-  | 'internal.ignoreType'
-  | 'internal.mediaType'
-  | 'internal.owner'
-  | 'internal.type'
-  | 'lastBuildDate'
-  | 'link'
-  | 'parent.children'
-  | 'parent.children.children'
-  | 'parent.children.children.children'
-  | 'parent.children.children.id'
-  | 'parent.children.id'
-  | 'parent.children.internal.content'
-  | 'parent.children.internal.contentDigest'
-  | 'parent.children.internal.description'
-  | 'parent.children.internal.fieldOwners'
-  | 'parent.children.internal.ignoreType'
-  | 'parent.children.internal.mediaType'
-  | 'parent.children.internal.owner'
-  | 'parent.children.internal.type'
-  | 'parent.children.parent.children'
-  | 'parent.children.parent.id'
-  | 'parent.id'
-  | 'parent.internal.content'
-  | 'parent.internal.contentDigest'
-  | 'parent.internal.description'
-  | 'parent.internal.fieldOwners'
-  | 'parent.internal.ignoreType'
-  | 'parent.internal.mediaType'
-  | 'parent.internal.owner'
-  | 'parent.internal.type'
-  | 'parent.parent.children'
-  | 'parent.parent.children.children'
-  | 'parent.parent.children.id'
-  | 'parent.parent.id'
-  | 'parent.parent.internal.content'
-  | 'parent.parent.internal.contentDigest'
-  | 'parent.parent.internal.description'
-  | 'parent.parent.internal.fieldOwners'
-  | 'parent.parent.internal.ignoreType'
-  | 'parent.parent.internal.mediaType'
-  | 'parent.parent.internal.owner'
-  | 'parent.parent.internal.type'
-  | 'parent.parent.parent.children'
-  | 'parent.parent.parent.id'
-  | 'title';
-
-type FeedQiitaMetaFilterInput = {
-  readonly children: InputMaybe<NodeFilterListInput>;
-  readonly feedUrl: InputMaybe<StringQueryOperatorInput>;
-  readonly id: InputMaybe<StringQueryOperatorInput>;
-  readonly internal: InputMaybe<InternalFilterInput>;
-  readonly lastBuildDate: InputMaybe<DateQueryOperatorInput>;
-  readonly link: InputMaybe<StringQueryOperatorInput>;
-  readonly parent: InputMaybe<NodeFilterInput>;
-  readonly title: InputMaybe<StringQueryOperatorInput>;
-};
-
-type FeedQiitaMetaGroupConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedQiitaMetaEdge>;
-  readonly field: Scalars['String'];
-  readonly fieldValue: Maybe<Scalars['String']>;
-  readonly group: ReadonlyArray<FeedQiitaMetaGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedQiitaMeta>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedQiitaMetaGroupConnection_distinctArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-
-type FeedQiitaMetaGroupConnection_groupArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedQiitaMetaGroupConnection_maxArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-
-type FeedQiitaMetaGroupConnection_minArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-
-type FeedQiitaMetaGroupConnection_sumArgs = {
-  field: FeedQiitaMetaFieldsEnum;
-};
-
-type FeedQiitaMetaSortInput = {
-  readonly fields: InputMaybe<ReadonlyArray<InputMaybe<FeedQiitaMetaFieldsEnum>>>;
-  readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
-};
-
-type FeedQiitaSortInput = {
-  readonly fields: InputMaybe<ReadonlyArray<InputMaybe<FeedQiitaFieldsEnum>>>;
-  readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
-};
-
 type File = Node & {
   readonly absolutePath: Scalars['String'];
   readonly accessTime: Scalars['Date'];
@@ -2886,37 +2443,249 @@ type PotraceTurnPolicy =
   | 'right'
   | 'white';
 
+type QiitaPosts = Node & {
+  readonly children: ReadonlyArray<Node>;
+  readonly content: Maybe<Scalars['String']>;
+  readonly id: Scalars['ID'];
+  readonly internal: Internal;
+  readonly likesCount: Maybe<Scalars['Int']>;
+  readonly link: Maybe<Scalars['String']>;
+  readonly parent: Maybe<Node>;
+  readonly pubDate: Maybe<Scalars['Date']>;
+  readonly title: Maybe<Scalars['String']>;
+};
+
+
+type QiitaPosts_pubDateArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+type QiitaPostsConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<QiitaPostsEdge>;
+  readonly group: ReadonlyArray<QiitaPostsGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<QiitaPosts>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type QiitaPostsConnection_distinctArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+
+type QiitaPostsConnection_groupArgs = {
+  field: QiitaPostsFieldsEnum;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type QiitaPostsConnection_maxArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+
+type QiitaPostsConnection_minArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+
+type QiitaPostsConnection_sumArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+type QiitaPostsEdge = {
+  readonly next: Maybe<QiitaPosts>;
+  readonly node: QiitaPosts;
+  readonly previous: Maybe<QiitaPosts>;
+};
+
+type QiitaPostsFieldsEnum =
+  | 'children'
+  | 'children.children'
+  | 'children.children.children'
+  | 'children.children.children.children'
+  | 'children.children.children.id'
+  | 'children.children.id'
+  | 'children.children.internal.content'
+  | 'children.children.internal.contentDigest'
+  | 'children.children.internal.description'
+  | 'children.children.internal.fieldOwners'
+  | 'children.children.internal.ignoreType'
+  | 'children.children.internal.mediaType'
+  | 'children.children.internal.owner'
+  | 'children.children.internal.type'
+  | 'children.children.parent.children'
+  | 'children.children.parent.id'
+  | 'children.id'
+  | 'children.internal.content'
+  | 'children.internal.contentDigest'
+  | 'children.internal.description'
+  | 'children.internal.fieldOwners'
+  | 'children.internal.ignoreType'
+  | 'children.internal.mediaType'
+  | 'children.internal.owner'
+  | 'children.internal.type'
+  | 'children.parent.children'
+  | 'children.parent.children.children'
+  | 'children.parent.children.id'
+  | 'children.parent.id'
+  | 'children.parent.internal.content'
+  | 'children.parent.internal.contentDigest'
+  | 'children.parent.internal.description'
+  | 'children.parent.internal.fieldOwners'
+  | 'children.parent.internal.ignoreType'
+  | 'children.parent.internal.mediaType'
+  | 'children.parent.internal.owner'
+  | 'children.parent.internal.type'
+  | 'children.parent.parent.children'
+  | 'children.parent.parent.id'
+  | 'content'
+  | 'id'
+  | 'internal.content'
+  | 'internal.contentDigest'
+  | 'internal.description'
+  | 'internal.fieldOwners'
+  | 'internal.ignoreType'
+  | 'internal.mediaType'
+  | 'internal.owner'
+  | 'internal.type'
+  | 'likesCount'
+  | 'link'
+  | 'parent.children'
+  | 'parent.children.children'
+  | 'parent.children.children.children'
+  | 'parent.children.children.id'
+  | 'parent.children.id'
+  | 'parent.children.internal.content'
+  | 'parent.children.internal.contentDigest'
+  | 'parent.children.internal.description'
+  | 'parent.children.internal.fieldOwners'
+  | 'parent.children.internal.ignoreType'
+  | 'parent.children.internal.mediaType'
+  | 'parent.children.internal.owner'
+  | 'parent.children.internal.type'
+  | 'parent.children.parent.children'
+  | 'parent.children.parent.id'
+  | 'parent.id'
+  | 'parent.internal.content'
+  | 'parent.internal.contentDigest'
+  | 'parent.internal.description'
+  | 'parent.internal.fieldOwners'
+  | 'parent.internal.ignoreType'
+  | 'parent.internal.mediaType'
+  | 'parent.internal.owner'
+  | 'parent.internal.type'
+  | 'parent.parent.children'
+  | 'parent.parent.children.children'
+  | 'parent.parent.children.id'
+  | 'parent.parent.id'
+  | 'parent.parent.internal.content'
+  | 'parent.parent.internal.contentDigest'
+  | 'parent.parent.internal.description'
+  | 'parent.parent.internal.fieldOwners'
+  | 'parent.parent.internal.ignoreType'
+  | 'parent.parent.internal.mediaType'
+  | 'parent.parent.internal.owner'
+  | 'parent.parent.internal.type'
+  | 'parent.parent.parent.children'
+  | 'parent.parent.parent.id'
+  | 'pubDate'
+  | 'title';
+
+type QiitaPostsFilterInput = {
+  readonly children: InputMaybe<NodeFilterListInput>;
+  readonly content: InputMaybe<StringQueryOperatorInput>;
+  readonly id: InputMaybe<StringQueryOperatorInput>;
+  readonly internal: InputMaybe<InternalFilterInput>;
+  readonly likesCount: InputMaybe<IntQueryOperatorInput>;
+  readonly link: InputMaybe<StringQueryOperatorInput>;
+  readonly parent: InputMaybe<NodeFilterInput>;
+  readonly pubDate: InputMaybe<DateQueryOperatorInput>;
+  readonly title: InputMaybe<StringQueryOperatorInput>;
+};
+
+type QiitaPostsGroupConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<QiitaPostsEdge>;
+  readonly field: Scalars['String'];
+  readonly fieldValue: Maybe<Scalars['String']>;
+  readonly group: ReadonlyArray<QiitaPostsGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<QiitaPosts>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type QiitaPostsGroupConnection_distinctArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+
+type QiitaPostsGroupConnection_groupArgs = {
+  field: QiitaPostsFieldsEnum;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type QiitaPostsGroupConnection_maxArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+
+type QiitaPostsGroupConnection_minArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+
+type QiitaPostsGroupConnection_sumArgs = {
+  field: QiitaPostsFieldsEnum;
+};
+
+type QiitaPostsSortInput = {
+  readonly fields: InputMaybe<ReadonlyArray<InputMaybe<QiitaPostsFieldsEnum>>>;
+  readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
+};
+
 type Query = {
   readonly allDirectory: DirectoryConnection;
   readonly allFeedHatenaBlog: FeedHatenaBlogConnection;
   readonly allFeedHatenaBlogMeta: FeedHatenaBlogMetaConnection;
-  readonly allFeedQiita: FeedQiitaConnection;
-  readonly allFeedQiitaMeta: FeedQiitaMetaConnection;
   readonly allFile: FileConnection;
   readonly allImageSharp: ImageSharpConnection;
   readonly allMicrocmsBlogs: MicrocmsBlogsConnection;
   readonly allMicrocmsCategories: MicrocmsCategoriesConnection;
+  readonly allQiitaPosts: QiitaPostsConnection;
   readonly allSite: SiteConnection;
   readonly allSiteBuildMetadata: SiteBuildMetadataConnection;
   readonly allSiteFunction: SiteFunctionConnection;
   readonly allSitePage: SitePageConnection;
   readonly allSitePlugin: SitePluginConnection;
-  readonly allStaticImage: StaticImageConnection;
   readonly directory: Maybe<Directory>;
   readonly feedHatenaBlog: Maybe<FeedHatenaBlog>;
   readonly feedHatenaBlogMeta: Maybe<FeedHatenaBlogMeta>;
-  readonly feedQiita: Maybe<FeedQiita>;
-  readonly feedQiitaMeta: Maybe<FeedQiitaMeta>;
   readonly file: Maybe<File>;
   readonly imageSharp: Maybe<ImageSharp>;
   readonly microcmsBlogs: Maybe<MicrocmsBlogs>;
   readonly microcmsCategories: Maybe<MicrocmsCategories>;
+  readonly qiitaPosts: Maybe<QiitaPosts>;
   readonly site: Maybe<Site>;
   readonly siteBuildMetadata: Maybe<SiteBuildMetadata>;
   readonly siteFunction: Maybe<SiteFunction>;
   readonly sitePage: Maybe<SitePage>;
   readonly sitePlugin: Maybe<SitePlugin>;
-  readonly staticImage: Maybe<StaticImage>;
 };
 
 
@@ -2941,22 +2710,6 @@ type Query_allFeedHatenaBlogMetaArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<FeedHatenaBlogMetaSortInput>;
-};
-
-
-type Query_allFeedQiitaArgs = {
-  filter: InputMaybe<FeedQiitaFilterInput>;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-  sort: InputMaybe<FeedQiitaSortInput>;
-};
-
-
-type Query_allFeedQiitaMetaArgs = {
-  filter: InputMaybe<FeedQiitaMetaFilterInput>;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-  sort: InputMaybe<FeedQiitaMetaSortInput>;
 };
 
 
@@ -2989,6 +2742,14 @@ type Query_allMicrocmsCategoriesArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<MicrocmsCategoriesSortInput>;
+};
+
+
+type Query_allQiitaPostsArgs = {
+  filter: InputMaybe<QiitaPostsFilterInput>;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+  sort: InputMaybe<QiitaPostsSortInput>;
 };
 
 
@@ -3029,14 +2790,6 @@ type Query_allSitePluginArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<SitePluginSortInput>;
-};
-
-
-type Query_allStaticImageArgs = {
-  filter: InputMaybe<StaticImageFilterInput>;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-  sort: InputMaybe<StaticImageSortInput>;
 };
 
 
@@ -3104,33 +2857,6 @@ type Query_feedHatenaBlogMetaArgs = {
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
   lastBuildDate: InputMaybe<StringQueryOperatorInput>;
-  link: InputMaybe<StringQueryOperatorInput>;
-  parent: InputMaybe<NodeFilterInput>;
-  title: InputMaybe<StringQueryOperatorInput>;
-};
-
-
-type Query_feedQiitaArgs = {
-  author: InputMaybe<StringQueryOperatorInput>;
-  children: InputMaybe<NodeFilterListInput>;
-  content: InputMaybe<StringQueryOperatorInput>;
-  contentSnippet: InputMaybe<StringQueryOperatorInput>;
-  id: InputMaybe<StringQueryOperatorInput>;
-  internal: InputMaybe<InternalFilterInput>;
-  isoDate: InputMaybe<DateQueryOperatorInput>;
-  link: InputMaybe<StringQueryOperatorInput>;
-  parent: InputMaybe<NodeFilterInput>;
-  pubDate: InputMaybe<DateQueryOperatorInput>;
-  title: InputMaybe<StringQueryOperatorInput>;
-};
-
-
-type Query_feedQiitaMetaArgs = {
-  children: InputMaybe<NodeFilterListInput>;
-  feedUrl: InputMaybe<StringQueryOperatorInput>;
-  id: InputMaybe<StringQueryOperatorInput>;
-  internal: InputMaybe<InternalFilterInput>;
-  lastBuildDate: InputMaybe<DateQueryOperatorInput>;
   link: InputMaybe<StringQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   title: InputMaybe<StringQueryOperatorInput>;
@@ -3222,16 +2948,33 @@ type Query_microcmsCategoriesArgs = {
 };
 
 
+type Query_qiitaPostsArgs = {
+  children: InputMaybe<NodeFilterListInput>;
+  content: InputMaybe<StringQueryOperatorInput>;
+  id: InputMaybe<StringQueryOperatorInput>;
+  internal: InputMaybe<InternalFilterInput>;
+  likesCount: InputMaybe<IntQueryOperatorInput>;
+  link: InputMaybe<StringQueryOperatorInput>;
+  parent: InputMaybe<NodeFilterInput>;
+  pubDate: InputMaybe<DateQueryOperatorInput>;
+  title: InputMaybe<StringQueryOperatorInput>;
+};
+
+
 type Query_siteArgs = {
   buildTime: InputMaybe<DateQueryOperatorInput>;
   children: InputMaybe<NodeFilterListInput>;
-  graphqlTypegen: InputMaybe<BooleanQueryOperatorInput>;
+  graphqlTypegen: InputMaybe<SiteGraphqlTypegenFilterInput>;
   host: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
+  jsxRuntime: InputMaybe<StringQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
+  pathPrefix: InputMaybe<StringQueryOperatorInput>;
+  polyfill: InputMaybe<BooleanQueryOperatorInput>;
   port: InputMaybe<IntQueryOperatorInput>;
   siteMetadata: InputMaybe<SiteSiteMetadataFilterInput>;
+  trailingSlash: InputMaybe<StringQueryOperatorInput>;
 };
 
 
@@ -3290,56 +3033,20 @@ type Query_sitePluginArgs = {
   version: InputMaybe<StringQueryOperatorInput>;
 };
 
-
-type Query_staticImageArgs = {
-  absolutePath: InputMaybe<StringQueryOperatorInput>;
-  accessTime: InputMaybe<DateQueryOperatorInput>;
-  atime: InputMaybe<DateQueryOperatorInput>;
-  atimeMs: InputMaybe<FloatQueryOperatorInput>;
-  base: InputMaybe<StringQueryOperatorInput>;
-  birthTime: InputMaybe<DateQueryOperatorInput>;
-  birthtime: InputMaybe<DateQueryOperatorInput>;
-  birthtimeMs: InputMaybe<FloatQueryOperatorInput>;
-  blksize: InputMaybe<IntQueryOperatorInput>;
-  blocks: InputMaybe<IntQueryOperatorInput>;
-  changeTime: InputMaybe<DateQueryOperatorInput>;
-  children: InputMaybe<NodeFilterListInput>;
-  ctime: InputMaybe<DateQueryOperatorInput>;
-  ctimeMs: InputMaybe<FloatQueryOperatorInput>;
-  dev: InputMaybe<IntQueryOperatorInput>;
-  dir: InputMaybe<StringQueryOperatorInput>;
-  ext: InputMaybe<StringQueryOperatorInput>;
-  extension: InputMaybe<StringQueryOperatorInput>;
-  id: InputMaybe<StringQueryOperatorInput>;
-  ino: InputMaybe<IntQueryOperatorInput>;
-  internal: InputMaybe<InternalFilterInput>;
-  mode: InputMaybe<IntQueryOperatorInput>;
-  modifiedTime: InputMaybe<DateQueryOperatorInput>;
-  mtime: InputMaybe<DateQueryOperatorInput>;
-  mtimeMs: InputMaybe<FloatQueryOperatorInput>;
-  name: InputMaybe<StringQueryOperatorInput>;
-  nlink: InputMaybe<IntQueryOperatorInput>;
-  parent: InputMaybe<NodeFilterInput>;
-  prettySize: InputMaybe<StringQueryOperatorInput>;
-  rdev: InputMaybe<IntQueryOperatorInput>;
-  relativeDirectory: InputMaybe<StringQueryOperatorInput>;
-  relativePath: InputMaybe<StringQueryOperatorInput>;
-  root: InputMaybe<StringQueryOperatorInput>;
-  size: InputMaybe<IntQueryOperatorInput>;
-  sourceInstanceName: InputMaybe<StringQueryOperatorInput>;
-  uid: InputMaybe<IntQueryOperatorInput>;
-};
-
 type Site = Node & {
   readonly buildTime: Maybe<Scalars['Date']>;
   readonly children: ReadonlyArray<Node>;
-  readonly graphqlTypegen: Maybe<Scalars['Boolean']>;
+  readonly graphqlTypegen: Maybe<SiteGraphqlTypegen>;
   readonly host: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
+  readonly jsxRuntime: Maybe<Scalars['String']>;
   readonly parent: Maybe<Node>;
+  readonly pathPrefix: Maybe<Scalars['String']>;
+  readonly polyfill: Maybe<Scalars['Boolean']>;
   readonly port: Maybe<Scalars['Int']>;
   readonly siteMetadata: Maybe<SiteSiteMetadata>;
+  readonly trailingSlash: Maybe<Scalars['String']>;
 };
 
 
@@ -3640,7 +3347,7 @@ type SiteFieldsEnum =
   | 'children.parent.internal.type'
   | 'children.parent.parent.children'
   | 'children.parent.parent.id'
-  | 'graphqlTypegen'
+  | 'graphqlTypegen.typesOutputPath'
   | 'host'
   | 'id'
   | 'internal.content'
@@ -3651,6 +3358,7 @@ type SiteFieldsEnum =
   | 'internal.mediaType'
   | 'internal.owner'
   | 'internal.type'
+  | 'jsxRuntime'
   | 'parent.children'
   | 'parent.children.children'
   | 'parent.children.children.children'
@@ -3689,21 +3397,28 @@ type SiteFieldsEnum =
   | 'parent.parent.internal.type'
   | 'parent.parent.parent.children'
   | 'parent.parent.parent.id'
+  | 'pathPrefix'
+  | 'polyfill'
   | 'port'
   | 'siteMetadata.description'
   | 'siteMetadata.siteUrl'
-  | 'siteMetadata.title';
+  | 'siteMetadata.title'
+  | 'trailingSlash';
 
 type SiteFilterInput = {
   readonly buildTime: InputMaybe<DateQueryOperatorInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
-  readonly graphqlTypegen: InputMaybe<BooleanQueryOperatorInput>;
+  readonly graphqlTypegen: InputMaybe<SiteGraphqlTypegenFilterInput>;
   readonly host: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
+  readonly jsxRuntime: InputMaybe<StringQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
+  readonly pathPrefix: InputMaybe<StringQueryOperatorInput>;
+  readonly polyfill: InputMaybe<BooleanQueryOperatorInput>;
   readonly port: InputMaybe<IntQueryOperatorInput>;
   readonly siteMetadata: InputMaybe<SiteSiteMetadataFilterInput>;
+  readonly trailingSlash: InputMaybe<StringQueryOperatorInput>;
 };
 
 type SiteFunction = Node & {
@@ -3918,6 +3633,14 @@ type SiteFunctionGroupConnection_sumArgs = {
 type SiteFunctionSortInput = {
   readonly fields: InputMaybe<ReadonlyArray<InputMaybe<SiteFunctionFieldsEnum>>>;
   readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
+};
+
+type SiteGraphqlTypegen = {
+  readonly typesOutputPath: Maybe<Scalars['String']>;
+};
+
+type SiteGraphqlTypegenFilterInput = {
+  readonly typesOutputPath: InputMaybe<StringQueryOperatorInput>;
 };
 
 type SiteGroupConnection = {
@@ -4462,359 +4185,6 @@ type SortOrderEnum =
   | 'ASC'
   | 'DESC';
 
-type StaticImage = Node & {
-  readonly absolutePath: Maybe<Scalars['String']>;
-  readonly accessTime: Maybe<Scalars['Date']>;
-  readonly atime: Maybe<Scalars['Date']>;
-  readonly atimeMs: Maybe<Scalars['Float']>;
-  readonly base: Maybe<Scalars['String']>;
-  readonly birthTime: Maybe<Scalars['Date']>;
-  readonly birthtime: Maybe<Scalars['Date']>;
-  readonly birthtimeMs: Maybe<Scalars['Float']>;
-  readonly blksize: Maybe<Scalars['Int']>;
-  readonly blocks: Maybe<Scalars['Int']>;
-  readonly changeTime: Maybe<Scalars['Date']>;
-  readonly children: ReadonlyArray<Node>;
-  readonly ctime: Maybe<Scalars['Date']>;
-  readonly ctimeMs: Maybe<Scalars['Float']>;
-  readonly dev: Maybe<Scalars['Int']>;
-  readonly dir: Maybe<Scalars['String']>;
-  readonly ext: Maybe<Scalars['String']>;
-  readonly extension: Maybe<Scalars['String']>;
-  readonly id: Scalars['ID'];
-  readonly ino: Maybe<Scalars['Int']>;
-  readonly internal: Internal;
-  readonly mode: Maybe<Scalars['Int']>;
-  readonly modifiedTime: Maybe<Scalars['Date']>;
-  readonly mtime: Maybe<Scalars['Date']>;
-  readonly mtimeMs: Maybe<Scalars['Float']>;
-  readonly name: Maybe<Scalars['String']>;
-  readonly nlink: Maybe<Scalars['Int']>;
-  readonly parent: Maybe<Node>;
-  readonly prettySize: Maybe<Scalars['String']>;
-  readonly rdev: Maybe<Scalars['Int']>;
-  readonly relativeDirectory: Maybe<Scalars['String']>;
-  readonly relativePath: Maybe<Scalars['String']>;
-  readonly root: Maybe<Scalars['String']>;
-  readonly size: Maybe<Scalars['Int']>;
-  readonly sourceInstanceName: Maybe<Scalars['String']>;
-  readonly uid: Maybe<Scalars['Int']>;
-};
-
-
-type StaticImage_accessTimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_atimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_birthTimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_birthtimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_changeTimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_ctimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_modifiedTimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-
-type StaticImage_mtimeArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-type StaticImageConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<StaticImageEdge>;
-  readonly group: ReadonlyArray<StaticImageGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<StaticImage>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type StaticImageConnection_distinctArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-
-type StaticImageConnection_groupArgs = {
-  field: StaticImageFieldsEnum;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type StaticImageConnection_maxArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-
-type StaticImageConnection_minArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-
-type StaticImageConnection_sumArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-type StaticImageEdge = {
-  readonly next: Maybe<StaticImage>;
-  readonly node: StaticImage;
-  readonly previous: Maybe<StaticImage>;
-};
-
-type StaticImageFieldsEnum =
-  | 'absolutePath'
-  | 'accessTime'
-  | 'atime'
-  | 'atimeMs'
-  | 'base'
-  | 'birthTime'
-  | 'birthtime'
-  | 'birthtimeMs'
-  | 'blksize'
-  | 'blocks'
-  | 'changeTime'
-  | 'children'
-  | 'children.children'
-  | 'children.children.children'
-  | 'children.children.children.children'
-  | 'children.children.children.id'
-  | 'children.children.id'
-  | 'children.children.internal.content'
-  | 'children.children.internal.contentDigest'
-  | 'children.children.internal.description'
-  | 'children.children.internal.fieldOwners'
-  | 'children.children.internal.ignoreType'
-  | 'children.children.internal.mediaType'
-  | 'children.children.internal.owner'
-  | 'children.children.internal.type'
-  | 'children.children.parent.children'
-  | 'children.children.parent.id'
-  | 'children.id'
-  | 'children.internal.content'
-  | 'children.internal.contentDigest'
-  | 'children.internal.description'
-  | 'children.internal.fieldOwners'
-  | 'children.internal.ignoreType'
-  | 'children.internal.mediaType'
-  | 'children.internal.owner'
-  | 'children.internal.type'
-  | 'children.parent.children'
-  | 'children.parent.children.children'
-  | 'children.parent.children.id'
-  | 'children.parent.id'
-  | 'children.parent.internal.content'
-  | 'children.parent.internal.contentDigest'
-  | 'children.parent.internal.description'
-  | 'children.parent.internal.fieldOwners'
-  | 'children.parent.internal.ignoreType'
-  | 'children.parent.internal.mediaType'
-  | 'children.parent.internal.owner'
-  | 'children.parent.internal.type'
-  | 'children.parent.parent.children'
-  | 'children.parent.parent.id'
-  | 'ctime'
-  | 'ctimeMs'
-  | 'dev'
-  | 'dir'
-  | 'ext'
-  | 'extension'
-  | 'id'
-  | 'ino'
-  | 'internal.content'
-  | 'internal.contentDigest'
-  | 'internal.description'
-  | 'internal.fieldOwners'
-  | 'internal.ignoreType'
-  | 'internal.mediaType'
-  | 'internal.owner'
-  | 'internal.type'
-  | 'mode'
-  | 'modifiedTime'
-  | 'mtime'
-  | 'mtimeMs'
-  | 'name'
-  | 'nlink'
-  | 'parent.children'
-  | 'parent.children.children'
-  | 'parent.children.children.children'
-  | 'parent.children.children.id'
-  | 'parent.children.id'
-  | 'parent.children.internal.content'
-  | 'parent.children.internal.contentDigest'
-  | 'parent.children.internal.description'
-  | 'parent.children.internal.fieldOwners'
-  | 'parent.children.internal.ignoreType'
-  | 'parent.children.internal.mediaType'
-  | 'parent.children.internal.owner'
-  | 'parent.children.internal.type'
-  | 'parent.children.parent.children'
-  | 'parent.children.parent.id'
-  | 'parent.id'
-  | 'parent.internal.content'
-  | 'parent.internal.contentDigest'
-  | 'parent.internal.description'
-  | 'parent.internal.fieldOwners'
-  | 'parent.internal.ignoreType'
-  | 'parent.internal.mediaType'
-  | 'parent.internal.owner'
-  | 'parent.internal.type'
-  | 'parent.parent.children'
-  | 'parent.parent.children.children'
-  | 'parent.parent.children.id'
-  | 'parent.parent.id'
-  | 'parent.parent.internal.content'
-  | 'parent.parent.internal.contentDigest'
-  | 'parent.parent.internal.description'
-  | 'parent.parent.internal.fieldOwners'
-  | 'parent.parent.internal.ignoreType'
-  | 'parent.parent.internal.mediaType'
-  | 'parent.parent.internal.owner'
-  | 'parent.parent.internal.type'
-  | 'parent.parent.parent.children'
-  | 'parent.parent.parent.id'
-  | 'prettySize'
-  | 'rdev'
-  | 'relativeDirectory'
-  | 'relativePath'
-  | 'root'
-  | 'size'
-  | 'sourceInstanceName'
-  | 'uid';
-
-type StaticImageFilterInput = {
-  readonly absolutePath: InputMaybe<StringQueryOperatorInput>;
-  readonly accessTime: InputMaybe<DateQueryOperatorInput>;
-  readonly atime: InputMaybe<DateQueryOperatorInput>;
-  readonly atimeMs: InputMaybe<FloatQueryOperatorInput>;
-  readonly base: InputMaybe<StringQueryOperatorInput>;
-  readonly birthTime: InputMaybe<DateQueryOperatorInput>;
-  readonly birthtime: InputMaybe<DateQueryOperatorInput>;
-  readonly birthtimeMs: InputMaybe<FloatQueryOperatorInput>;
-  readonly blksize: InputMaybe<IntQueryOperatorInput>;
-  readonly blocks: InputMaybe<IntQueryOperatorInput>;
-  readonly changeTime: InputMaybe<DateQueryOperatorInput>;
-  readonly children: InputMaybe<NodeFilterListInput>;
-  readonly ctime: InputMaybe<DateQueryOperatorInput>;
-  readonly ctimeMs: InputMaybe<FloatQueryOperatorInput>;
-  readonly dev: InputMaybe<IntQueryOperatorInput>;
-  readonly dir: InputMaybe<StringQueryOperatorInput>;
-  readonly ext: InputMaybe<StringQueryOperatorInput>;
-  readonly extension: InputMaybe<StringQueryOperatorInput>;
-  readonly id: InputMaybe<StringQueryOperatorInput>;
-  readonly ino: InputMaybe<IntQueryOperatorInput>;
-  readonly internal: InputMaybe<InternalFilterInput>;
-  readonly mode: InputMaybe<IntQueryOperatorInput>;
-  readonly modifiedTime: InputMaybe<DateQueryOperatorInput>;
-  readonly mtime: InputMaybe<DateQueryOperatorInput>;
-  readonly mtimeMs: InputMaybe<FloatQueryOperatorInput>;
-  readonly name: InputMaybe<StringQueryOperatorInput>;
-  readonly nlink: InputMaybe<IntQueryOperatorInput>;
-  readonly parent: InputMaybe<NodeFilterInput>;
-  readonly prettySize: InputMaybe<StringQueryOperatorInput>;
-  readonly rdev: InputMaybe<IntQueryOperatorInput>;
-  readonly relativeDirectory: InputMaybe<StringQueryOperatorInput>;
-  readonly relativePath: InputMaybe<StringQueryOperatorInput>;
-  readonly root: InputMaybe<StringQueryOperatorInput>;
-  readonly size: InputMaybe<IntQueryOperatorInput>;
-  readonly sourceInstanceName: InputMaybe<StringQueryOperatorInput>;
-  readonly uid: InputMaybe<IntQueryOperatorInput>;
-};
-
-type StaticImageGroupConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<StaticImageEdge>;
-  readonly field: Scalars['String'];
-  readonly fieldValue: Maybe<Scalars['String']>;
-  readonly group: ReadonlyArray<StaticImageGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<StaticImage>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type StaticImageGroupConnection_distinctArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-
-type StaticImageGroupConnection_groupArgs = {
-  field: StaticImageFieldsEnum;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type StaticImageGroupConnection_maxArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-
-type StaticImageGroupConnection_minArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-
-type StaticImageGroupConnection_sumArgs = {
-  field: StaticImageFieldsEnum;
-};
-
-type StaticImageSortInput = {
-  readonly fields: InputMaybe<ReadonlyArray<InputMaybe<StaticImageFieldsEnum>>>;
-  readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
-};
-
 type StringQueryOperatorInput = {
   readonly eq: InputMaybe<Scalars['String']>;
   readonly glob: InputMaybe<Scalars['String']>;
@@ -4840,7 +4210,7 @@ type WebPOptions = {
 type BlogIndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type BlogIndexPageQuery = { readonly allMicrocmsBlogs: { readonly edges: ReadonlyArray<{ readonly node: { readonly blogsId: string | null, readonly title: string | null, readonly publishedAt: string | null } }> }, readonly allMicrocmsCategories: { readonly edges: ReadonlyArray<{ readonly node: { readonly categoriesId: string | null, readonly name: string | null } }> }, readonly allFeedQiita: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allFeedHatenaBlog: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> } };
+type BlogIndexPageQuery = { readonly allMicrocmsBlogs: { readonly edges: ReadonlyArray<{ readonly node: { readonly blogsId: string | null, readonly title: string | null, readonly publishedAt: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> }, readonly allFeedHatenaBlog: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> } };
 
 type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
 

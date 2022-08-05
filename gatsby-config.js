@@ -6,14 +6,6 @@ module.exports = {
         siteUrl: `https://daisuzz.dev/`,
     },
     plugins: [
-        // QiitaのRSSフィードから記事情報を取得するための設定
-        {
-            resolve: `gatsby-source-rss-feed`,
-            options: {
-                url: `https://qiita.com/daisuzz/feed`,
-                name: `Qiita`,
-            }
-        },
         // はてなブログのRSSフィードから記事情報を取得するための設定
         {
             resolve: `gatsby-source-rss-feed`,

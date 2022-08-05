@@ -103,7 +103,7 @@ export const pageQuery = graphql`
                 }
             }
         }
-        allFeedHatenaBlog(sort: {fields: pubDate, order: DESC}) {
+        allFeedHatenaBlog(sort: {fields: isoDate, order: DESC}) {
             edges {
                 node {
                     id

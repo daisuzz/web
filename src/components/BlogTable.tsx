@@ -34,8 +34,8 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <TabList onChange={handleChange} aria-label="blog tabs" textColor={'inherit'}>
                     <Tab label="Blog" value="0"/>
-                    <Tab label="Qiita" value="1"/>
-                    <Tab label="Hatena Blog" value="2"/>
+                    <Tab label="Hatena Blog" value="1"/>
+                    <Tab label="Qiita" value="2"/>
                 </TabList>
             </Box>
             <TabPanel value='0' sx={{padding: 0}}>
@@ -88,7 +88,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                 <TableContainer component={Paper} elevation={0}>
                     <Table size="small">
                         <TableBody>
-                            {qiitaBlogs.map(blog => {
+                            {hatenaBlogs.map(blog => {
                                 const title = blog.title || blog.id
                                 const publishedDate = DateUtils.formatDate(
                                     new Date(Date.parse(blog.publishedAt)),
@@ -134,7 +134,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                 <TableContainer component={Paper} elevation={0}>
                     <Table size="small">
                         <TableBody>
-                            {hatenaBlogs.map(blog => {
+                            {qiitaBlogs.map(blog => {
                                 const title = blog.title || blog.id
                                 const publishedDate = DateUtils.formatDate(
                                     new Date(Date.parse(blog.publishedAt)),

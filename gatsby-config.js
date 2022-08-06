@@ -6,6 +6,14 @@ module.exports = {
         siteUrl: `https://daisuzz.dev/`,
     },
     plugins: [
+        // はてなブログのRSSフィードから記事情報を取得するための設定
+        {
+            resolve: `gatsby-source-rss-feed`,
+            options: {
+                url: `https://iikanji.hatenablog.jp/rss`,
+                name: `HatenaBlog`,
+            }
+        },
         // microCMSの設定
         {
             resolve: 'gatsby-source-microcms',

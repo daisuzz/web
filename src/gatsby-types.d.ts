@@ -4589,7 +4589,7 @@ type WebPOptions = {
 type BlogIndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type BlogIndexPageQuery = { readonly allMicrocmsBlogs: { readonly edges: ReadonlyArray<{ readonly node: { readonly blogsId: string | null, readonly title: string | null, readonly publishedAt: string | null } }> }, readonly allMicrocmsCategories: { readonly edges: ReadonlyArray<{ readonly node: { readonly categoriesId: string | null, readonly name: string | null } }> } };
+type BlogIndexPageQuery = { readonly allMicrocmsBlogs: { readonly edges: ReadonlyArray<{ readonly node: { readonly blogsId: string | null, readonly title: string | null, readonly publishedAt: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> }, readonly allFeedHatenaBlog: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> } };
 
 type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
 

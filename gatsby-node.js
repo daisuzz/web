@@ -46,7 +46,6 @@ exports.sourceNodes = async ({
 
     const qiitaPosts = () => axios.get(`https://qiita.com/api/v2/items?page=1&per_page=100&query=user:daisuzz`);
     const res = await qiitaPosts();
-
     res.data.map((post, i) => {
         const postNode = {
             // Required fields
@@ -57,7 +56,6 @@ exports.sourceNodes = async ({
                 type: `QiitaPosts`,
                 contentDigest: createContentDigest(post),
             },
-            id: post.id,
             title: post.title,
             content: post.rendered_body,
             pubDate: post.created_at,

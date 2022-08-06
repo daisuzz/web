@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     branches: [ main ]
   repository_dispatch:
-    types: [update-posts]
+    types: [ update-posts ]
 
 jobs:
   build:
@@ -25,6 +25,8 @@ jobs:
         env:
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
           MICROCMS_SERVICE_ID: ${{ secrets.MICROCMS_SERVICE_ID }}
+          HATENA_NAME: ${{ secrets.HATENA_NAME }}
+          HATENA_API_KEY: ${{ secrets.HATENA_API_KEY }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

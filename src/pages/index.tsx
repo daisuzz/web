@@ -12,12 +12,14 @@ const IndexPage: React.FC = () => {
                 transform: "translate(-50%, -50%)",
             }}>
                 <Typography variant="h2" align="center" sx={{
-                    fontFamily: 'Arial Black'
+                    fontFamily: 'Open Sans',
+                    fontWeight: '800',
                 }}>
                     Daisaku Suzuki
                 </Typography>
                 <Typography variant="h6" align="center" sx={{
-                    fontFamily: 'Arial Black'
+                    fontFamily: 'Open Sans',
+                    fontWeight: '800',
                 }}>
                     Software Engineer
                 </Typography>

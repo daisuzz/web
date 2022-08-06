@@ -33,12 +33,12 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
         <TabContext value={value}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <TabList onChange={handleChange} aria-label="blog tabs" textColor={'inherit'}>
-                    <Tab label="Blogs" value="0"/>
+                    <Tab label="Blog" value="0"/>
                     <Tab label="Qiita" value="1"/>
                     <Tab label="Hatena Blog" value="2"/>
                 </TabList>
             </Box>
-            <TabPanel value='0'>
+            <TabPanel value='0' sx={{padding: 0}}>
                 <TableContainer component={Paper} elevation={0}>
                     <Table size="small">
                         <TableBody>
@@ -53,7 +53,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                                               sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
                                         <TableCell align="left">
-                                            <Typography variant="h6" sx={{
+                                            <Typography variant="body1" sx={{
                                                 fontFamily: 'Arial Black',
                                                 margin: "10px auto"
                                             }}>
@@ -84,7 +84,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                     </Table>
                 </TableContainer>
             </TabPanel>
-            <TabPanel value='1'>
+            <TabPanel value='1' sx={{padding: 0}}>
                 <TableContainer component={Paper} elevation={0}>
                     <Table size="small">
                         <TableBody>
@@ -99,7 +99,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                                               sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
                                         <TableCell align="left">
-                                            <Typography variant="h6" sx={{
+                                            <Typography variant="body1" sx={{
                                                 fontFamily: 'Arial Black',
                                                 margin: "10px auto"
                                             }}>
@@ -130,7 +130,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                     </Table>
                 </TableContainer>
             </TabPanel>
-            <TabPanel value='2'>
+            <TabPanel value='2' sx={{padding: 0}}>
                 <TableContainer component={Paper} elevation={0}>
                     <Table size="small">
                         <TableBody>
@@ -145,7 +145,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({blogs, qiitaBlogs, hatenaBl
                                               sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
                                         <TableCell align="left">
-                                            <Typography variant="h6" sx={{
+                                            <Typography variant="body1" sx={{
                                                 fontFamily: 'Arial Black',
                                                 margin: "10px auto"
                                             }}>

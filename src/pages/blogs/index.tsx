@@ -7,8 +7,8 @@ import BlogTable, {Blog, ExternalBlog} from "../../components/BlogTable";
 // @ts-ignore
 const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
     const blogEdges = data.allMicrocmsBlogs.edges
+    const hatenaBlogEdge = data.allHatenaPosts.edges
     const qiitaEdge = data.allQiitaPosts.edges
-    const hatenaBlogEdge = data.allFeedHatenaBlog.edges
 
     if (blogEdges.length === 0 && qiitaEdge.length === 0 && hatenaBlogEdge.length === 0) {
         return (
@@ -32,7 +32,7 @@ const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
             publishedAt: e.node.publishedAt,
         })
     )
-    const qiitaBlogs: ExternalBlog[] = qiitaEdge.map(
+    const hatenaBlogs: ExternalBlog[] = hatenaBlogEdge.map(
         (e: {
             node: {
                 id: string
@@ -47,7 +47,7 @@ const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {
             publishedAt: e.node.pubDate,
         })
     )
-    const hatenaBlogs: ExternalBlog[] = hatenaBlogEdge.map(
+    const qiitaBlogs: ExternalBlog[] = qiitaEdge.map(
         (e: {
             node: {
                 id: string
@@ -85,6 +85,16 @@ export const pageQuery = graphql`
                 }
             }
         }
+        allHatenaPosts(sort: {fields: pubDate, order: DESC}) {
+            edges {
+                node {
+                    id
+                    title
+                    link
+                    pubDate
+                }
+            }
+        }
         allQiitaPosts(sort: {fields: pubDate, order: DESC}) {
             edges {
                 node {
@@ -92,16 +102,6 @@ export const pageQuery = graphql`
                     title
                     pubDate
                     link
-                }
-            }
-        }
-        allFeedHatenaBlog(sort: {fields: isoDate, order: DESC}) {
-            edges {
-                node {
-                    id
-                    title
-                    link
-                    pubDate
                 }
             }
         }

@@ -27,6 +27,7 @@ jobs:
           MICROCMS_SERVICE_ID: ${{ secrets.MICROCMS_SERVICE_ID }}
           HATENA_NAME: ${{ secrets.HATENA_NAME }}
           HATENA_API_KEY: ${{ secrets.HATENA_API_KEY }}
+          GATSBY_TRACKING_ID: ${{ secrets.GATSBY_TRACKING_ID }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

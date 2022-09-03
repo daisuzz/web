@@ -6,6 +6,13 @@ module.exports = {
         siteUrl: `https://daisuzz.dev/`,
     },
     plugins: [
+        // Google Analytics
+        {
+            resolve: `gatsby-plugin-google-gtag`,
+            options: {
+                trackingIds: [process.env.GATSBY_TRACKING_ID],
+            },
+        },
         // はてなブログのRSSフィードから記事情報を取得するための設定
         {
             resolve: `gatsby-source-rss-feed`,

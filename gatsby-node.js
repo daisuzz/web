@@ -3,41 +3,6 @@ const axios = require('axios')
 const xml2js = require("xml2js");
 require(`dotenv`).config()
 
-exports.createPages = async ({graphql, actions}) => {
-    const {createPage} = actions;
-
-    const result = await graphql(
-        `
-      {
-        allMicrocmsBlogs(sort: {order: DESC, fields: publishedAt}) {
-            edges {
-                node {
-                    content
-                    blogsId
-                    title
-                    publishedAt
-                }
-            }
-        }
-      }
-    `
-    );
-
-    if (result.errors) {
-        throw result.errors;
-    }
-
-    result.data.allMicrocmsBlogs.edges.forEach((edge, index) => {
-        createPage({
-            path: '/blogs/' + edge.node.blogsId,
-            component: path.resolve('./src/template/Blog.tsx'),
-            context: {
-                blogsId: edge.node.blogsId,
-            },
-        });
-    });
-};
-
 exports.sourceNodes = async ({actions, createContentDigest}) => {
     const {createNode} = actions;
     const qiitaPosts = () => axios.get(`https://qiita.com/api/v2/items?page=1&per_page=100&query=user:daisuzz`);
@@ -101,7 +66,5 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         }
     }
     await fetchHatenaBlogs(`https://blog.hatena.ne.jp/dais39/iikanji.hatenablog.jp/atom/entry`)
-
-    return;
 }
 

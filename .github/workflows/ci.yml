@@ -23,8 +23,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci && npm run build
         env:
-          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
-          MICROCMS_SERVICE_ID: ${{ secrets.MICROCMS_SERVICE_ID }}
           HATENA_NAME: ${{ secrets.HATENA_NAME }}
           HATENA_API_KEY: ${{ secrets.HATENA_API_KEY }}
           GATSBY_TRACKING_ID: ${{ secrets.GATSBY_TRACKING_ID }}

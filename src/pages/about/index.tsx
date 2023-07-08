@@ -21,8 +21,8 @@ const IndexPage: React.FC = () => {
                 color: '#555555',
                 margin: "0 auto 10px"
             }}>
-                1993年生まれ。千葉県育ち。<br/>
-                東京でソフトウェアエンジニアとして働いています。<br/>
+                千葉県育ち。<br/>
+                ソフトウェアエンジニアとして働いています。<br/>
                 設計/アーキテクチャ/テスト/開発プロセスに関する技術や取り組みが好きです。
             </Typography>
             <IconButton onClick={() => window.open("https://twitter.com/daisuzz")}>

@@ -62,7 +62,7 @@ export default BlogIndex
 
 export const pageQuery = graphql`
     query BlogIndexPage {
-        allHatenaPosts(sort: {fields: pubDate, order: DESC}) {
+        allHatenaPosts(sort: {pubDate: DESC}) {
             edges {
                 node {
                     id
@@ -72,7 +72,7 @@ export const pageQuery = graphql`
                 }
             }
         }
-        allQiitaPosts(sort: {fields: pubDate, order: DESC}) {
+        allQiitaPosts(sort: {pubDate: DESC}) {
             edges {
                 node {
                     id

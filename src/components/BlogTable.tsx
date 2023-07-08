@@ -1,4 +1,3 @@
-import {Link as GatsbyLink} from "gatsby"
 import * as React from "react"
 import {DateUtils} from "../DateUtils"
 import {Box, Link, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
@@ -46,7 +45,6 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) =
                                     >
                                         <TableCell align="left">
                                             <Typography variant="body1" sx={{
-                                                fontFamily: 'Arial Black',
                                                 margin: "10px auto"
                                             }}>
                                                 <Link
@@ -92,7 +90,6 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) =
                                     >
                                         <TableCell align="left">
                                             <Typography variant="body1" sx={{
-                                                fontFamily: 'Arial Black',
                                                 margin: "10px auto"
                                             }}>
                                                 <Link

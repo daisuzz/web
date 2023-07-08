@@ -23,7 +23,7 @@ const IndexPage: React.FC = () => {
             }}>
                 1993年生まれ。千葉県育ち。<br/>
                 東京でソフトウェアエンジニアとして働いています。<br/>
-                アプリケーションの品質を改善したり、開発生産性を向上させるための取り組みや技術が好きです。
+                設計/アーキテクチャ/テスト/開発プロセスに関する技術や取り組みが好きです。
             </Typography>
             <IconButton onClick={() => window.open("https://twitter.com/daisuzz")}>
                 <TwitterIcon htmlColor='#1DA1F2' sx={{fontSize: 50}}/>

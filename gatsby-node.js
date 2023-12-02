@@ -38,6 +38,8 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         const parser = new xml2js.Parser({})
         const hatenaResJson = await parser.parseStringPromise(hatenaRes.data)
         hatenaResJson.feed.entry.map((post, i) => {
+            // 下書きは除外
+            if (post[`app:control`][0][`app:draft`][0] === 'yes') return
             const postNode = {
                 // Required fields
                 id: post.id[0],

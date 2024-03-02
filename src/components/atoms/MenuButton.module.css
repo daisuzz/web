@@ -1,0 +1,8 @@
+.menuButton {
+    color: inherit;
+    text-decoration: none;
+}
+
+.menuButton__text {
+    font-family: 'Arial Black', serif;
+}

@@ -1,5 +1,5 @@
 import * as React from "react"
-import {DateUtils} from "../DateUtils"
+import {DateUtils} from "../../DateUtils"
 import {Box, Link, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
 import {TabContext, TabList, TabPanel,} from "@mui/lab";
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';

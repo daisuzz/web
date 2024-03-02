@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {AppBar, Box, Container, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, Container, Toolbar, Typography} from "@mui/material";
 import MenuButton from "../atoms/MenuButton";
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import {Link} from "gatsby";
+import MenuIconButton from "../atoms/MenuIconButton";
 
 const ResponsiveAppBar = () => {
     return (
@@ -34,24 +34,9 @@ const ResponsiveAppBar = () => {
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}/>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>
-                        <IconButton
-                            component={Link}
-                            to={"/"}
-                            sx={{color: 'inherit', textDecoration: 'none'}}>
-                            <HomeIcon/>
-                        </IconButton>
-                        <IconButton
-                            component={Link}
-                            to={"/about"}
-                            sx={{color: 'inherit', textDecoration: 'none'}}>
-                            <PersonIcon/>
-                        </IconButton>
-                        <IconButton
-                            component={Link}
-                            to={"/blogs"}
-                            sx={{color: 'inherit', textDecoration: 'none'}}>
-                            <TextSnippetIcon/>
-                        </IconButton>
+                        <MenuIconButton href={"/"} icon={<HomeIcon/>}/>
+                        <MenuIconButton href={"/about"} icon={<PersonIcon/>}/>
+                        <MenuIconButton href={"/blogs"} icon={<TextSnippetIcon/>}/>
                     </Box>
                 </Toolbar>
             </Container>

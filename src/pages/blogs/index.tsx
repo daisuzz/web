@@ -2,7 +2,7 @@ import * as React from "react"
 import {graphql, PageProps} from "gatsby"
 import Layout from "../../components/Layout"
 import {Box} from "@mui/material";
-import BlogTable, {ExternalBlog} from "../../components/BlogTable";
+import BlogTable, {ExternalBlog} from "../../components/organisms/BlogTable";
 
 // @ts-ignore
 const BlogIndex: React.FC<PageProps<Queries.BlogIndexPageQuery>> = ({data}) => {

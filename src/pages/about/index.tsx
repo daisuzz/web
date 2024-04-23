@@ -25,11 +25,8 @@ const IndexPage: React.FC = () => {
                 ソフトウェアエンジニアとして働いています。<br/>
                 設計/アーキテクチャ/テスト/開発プロセスに関する技術や取り組みが好きです。
             </Typography>
-            <IconButton onClick={() => window.open("https://twitter.com/daisuzz")}>
+            <IconButton onClick={() => window.open("https://x.com/daisuzz")}>
                 <TwitterIcon htmlColor='#1DA1F2' sx={{fontSize: 50}}/>
-            </IconButton>
-            <IconButton onClick={() => window.open("https://www.linkedin.com/in/daisuzz")}>
-                <LinkedInIcon htmlColor='#0A66C2' sx={{fontSize: 50}}/>
             </IconButton>
             <IconButton onClick={() => window.open("https://github.com/daisuzz")}>
                 <GitHubIcon htmlColor='#333333' sx={{fontSize: 50}}/>

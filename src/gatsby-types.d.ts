@@ -3045,11 +3045,6 @@ type WebPOptions = {
   readonly quality: InputMaybe<Scalars['Int']>;
 };
 
-type BlogIndexPageQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type BlogIndexPageQuery = { readonly allHatenaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> } };
-
 type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
 
 type GatsbyImageSharpFixed_noBase64Fragment = { readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
@@ -3075,6 +3070,11 @@ type GatsbyImageSharpFluid_withWebp_noBase64Fragment = { readonly aspectRatio: n
 type GatsbyImageSharpFluid_withWebp_tracedSVGFragment = { readonly tracedSVG: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
 
 type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: number, readonly maxWidth: number };
+
+type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type IndexPageQuery = { readonly allHatenaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> } };
 
 
 }

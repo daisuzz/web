@@ -1,12 +1,10 @@
 .layout {
     min-height: 100vh;
     position: relative;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
     box-sizing: border-box;
 }
 
 .paper {
-    margin: 5%;
+    margin: 40px 20px 20px 20px;
 }
-
-

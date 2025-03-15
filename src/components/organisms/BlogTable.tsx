@@ -29,10 +29,10 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) =
                     <Tab label="Qiita" value="1"/>
                 </TabList>
             </Box>
-            <TabPanel value='0' sx={{padding: 0}}>
+            <TabPanel value='0' sx={{padding: '20px 0 0 0'}}>
                 {tableTemplate(hatenaBlogs)}
             </TabPanel>
-            <TabPanel value='1' sx={{padding: 0}}>
+            <TabPanel value='1' sx={{padding: '20px 0 0 0'}}>
                 {tableTemplate(qiitaBlogs)}
             </TabPanel>
         </TabContext>
@@ -63,7 +63,7 @@ function tableRowTemplate(blog: ExternalBlog): React.JSX.Element {
         >
             <TableCell align="left">
                 <Typography variant="body1" sx={{
-                    margin: "10px auto"
+                    margin: "20px auto"
                 }}>
                     <Link
                         component={"a"}
@@ -79,7 +79,7 @@ function tableRowTemplate(blog: ExternalBlog): React.JSX.Element {
                 <Box sx={{display: {xs: 'flex', md: 'flex'}}}>
                     <EventAvailableIcon fontSize="small"/>
                     <Typography variant="body2" sx={{
-                        margin: "auto auto auto 5px"
+                        margin: "auto auto auto 10px"
                     }}>
                         {publishedDate}
                     </Typography>

@@ -1,6 +1,4 @@
 import * as React from "react"
-// @ts-ignore
-import Header from "./organisms/Header";
 import {Box, CssBaseline, Paper, ThemeProvider} from "@mui/material";
 import {theme} from "../assets/theme";
 import Footer from "./organisms/Footer";
@@ -19,7 +17,6 @@ const Layout: React.FC<Props> = ({pageTitle, children}) => {
             <CssBaseline/>
             <title>{title}</title>
             <Box className={style.layout}>
-                <Header/>
                 <main>
                     <Paper elevation={0} className={style.paper}>
                         {children}

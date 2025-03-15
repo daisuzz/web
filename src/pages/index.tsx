@@ -2,7 +2,7 @@ import * as React from "react"
 import Layout from "../components/Layout"
 import ProfileImage from "../components/atoms/ProfileImage";
 import {IconButton, Typography} from "@mui/material";
-import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 const IndexPage: React.FC = () => {
@@ -25,7 +25,7 @@ const IndexPage: React.FC = () => {
                 設計/アーキテクチャ/テスト/開発プロセスに関する技術や取り組みが好きです。
             </Typography>
             <IconButton onClick={() => window.open("https://x.com/daisuzz")}>
-                <TwitterIcon htmlColor='#1DA1F2' sx={{fontSize: 50}}/>
+                <XIcon htmlColor='#333333' sx={{fontSize: 50}}/>
             </IconButton>
             <IconButton onClick={() => window.open("https://github.com/daisuzz")}>
                 <GitHubIcon htmlColor='#333333' sx={{fontSize: 50}}/>

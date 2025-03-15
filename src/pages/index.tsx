@@ -50,12 +50,12 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
             <Typography variant="h4" sx={{
                 fontFamily: 'Arial Black',
                 fontWeight: 900,
-                margin: "20px 0"
+                margin: "20px 0 20px 16px"
             }}>
                 Suzuki Daisaku
             </Typography>
             <IconButton onClick={() => window.open("https://x.com/daisuzz")}>
-                <XIcon htmlColor='#333333' sx={{fontSize: 30}}/>
+                <XIcon htmlColor='#333333' sx={{fontSize: 30, marginLeft: "8px"}}/>
             </IconButton>
             <IconButton onClick={() => window.open("https://github.com/daisuzz")}>
                 <GitHubIcon htmlColor='#333333' sx={{fontSize: 30}}/>

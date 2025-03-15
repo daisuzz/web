@@ -10,8 +10,8 @@ const IndexPage: React.FC = () => {
         <Layout pageTitle="TOP">
             <ProfileImage/>
             <Typography variant="h4" sx={{
-                fontFamily: 'Open Sans',
-                fontWeight: '800',
+                fontFamily: 'Arial Black',
+                fontWeight: 900,
                 margin: "10px auto"
             }}>
                 Suzuki Daisaku

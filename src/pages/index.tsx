@@ -4,6 +4,7 @@ import ProfileImage from "../components/atoms/ProfileImage";
 import {IconButton, Typography} from "@mui/material";
 import XIcon from '@mui/icons-material/X';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const IndexPage: React.FC = () => {
     return (
@@ -16,19 +17,14 @@ const IndexPage: React.FC = () => {
             }}>
                 Suzuki Daisaku
             </Typography>
-            <Typography variant="body1" sx={{
-                color: '#555555',
-                margin: "0 auto 10px"
-            }}>
-                千葉県育ち。<br/>
-                ソフトウェアエンジニアとして働いています。<br/>
-                設計/アーキテクチャ/テスト/開発プロセスに関する技術や取り組みが好きです。
-            </Typography>
             <IconButton onClick={() => window.open("https://x.com/daisuzz")}>
-                <XIcon htmlColor='#333333' sx={{fontSize: 50}}/>
+                <XIcon htmlColor='#333333' sx={{fontSize: 30}}/>
             </IconButton>
             <IconButton onClick={() => window.open("https://github.com/daisuzz")}>
-                <GitHubIcon htmlColor='#333333' sx={{fontSize: 50}}/>
+                <GitHubIcon htmlColor='#333333' sx={{fontSize: 30}}/>
+            </IconButton>
+            <IconButton onClick={() => window.open("https://www.linkedin.com/in/daisuzz/")}>
+                <LinkedInIcon htmlColor='#333333' sx={{fontSize: 30}}/>
             </IconButton>
         </Layout>
     )

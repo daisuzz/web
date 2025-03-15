@@ -55,7 +55,7 @@ function tableRowTemplate(blog: ExternalBlog): React.JSX.Element {
     const title = blog.title || blog.id
     const publishedDate = DateUtils.formatDate(
         new Date(Date.parse(blog.publishedAt)),
-        "YYYY年MM月DD日 hh:mm"
+        "YYYY-MM-DD hh:mm"
     )
     return (
         <TableRow key={blog.id}

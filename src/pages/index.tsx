@@ -63,8 +63,7 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
             <IconButton onClick={() => window.open("https://www.linkedin.com/in/daisuzz/")}>
                 <LinkedInIcon htmlColor='#333333' sx={{fontSize: 30}}/>
             </IconButton>
-
-            <Box style={{margin: `0`}}>
+            <Box style={{marginTop: "16px"}}>
                 <BlogTable qiitaBlogs={qiitaBlogs} hatenaBlogs={hatenaBlogs}/>
             </Box>
         </Layout>

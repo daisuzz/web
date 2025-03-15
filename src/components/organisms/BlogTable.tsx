@@ -29,10 +29,10 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) =
                     <Tab label="Qiita" value="1"/>
                 </TabList>
             </Box>
-            <TabPanel value='0' sx={{padding: '20px 0 0 0'}}>
+            <TabPanel value='0' sx={{padding: '0px'}}>
                 {tableTemplate(hatenaBlogs)}
             </TabPanel>
-            <TabPanel value='1' sx={{padding: '20px 0 0 0'}}>
+            <TabPanel value='1' sx={{padding: '0px'}}>
                 {tableTemplate(qiitaBlogs)}
             </TabPanel>
         </TabContext>

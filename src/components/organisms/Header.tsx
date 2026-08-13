@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Link} from "gatsby";
 // @ts-ignore
 import * as style from "./Header.module.css";
 
@@ -6,10 +7,10 @@ const Header: React.FC = () => {
     return (
         <header className={style.header}>
             <div className={style.inner}>
-                <a href="#top" className={style.brand}>~/daisuzz.dev</a>
+                <Link to="/" className={style.brand}>~/daisuzz.dev</Link>
                 <nav className={style.nav}>
-                    <a href="#writing">writing</a>
-                    <a href="#about">about</a>
+                    <Link to="/#writing">writing</Link>
+                    <Link to="/#about">about</Link>
                 </nav>
             </div>
         </header>

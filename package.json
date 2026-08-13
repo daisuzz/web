@@ -25,6 +25,8 @@
     "gatsby-source-filesystem": "^5.0.0",
     "gatsby-source-rss-feed": "^1.2.2",
     "gatsby-transformer-sharp": "^5.0.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet-async": "^3.0.0",

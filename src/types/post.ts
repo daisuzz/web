@@ -1,7 +1,9 @@
 export type PostBlock =
-    | { type: "paragraph"; text: string }
-    | { type: "heading"; text: string }
+    | { type: "paragraph"; html: string }
+    | { type: "heading"; depth: number; html: string }
     | { type: "code"; lang: string; code: string }
+    | { type: "blockquote"; html: string }
+    | { type: "list"; ordered: boolean; items: string[] }
 
 export interface SitePost {
     slug: string

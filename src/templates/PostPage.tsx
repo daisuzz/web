@@ -28,10 +28,23 @@ const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext}) =
 
                     {post.blocks.map((block, i) => {
                         if (block.type === "paragraph") {
-                            return <p key={i} className={style.paragraph}>{block.text}</p>
+                            return <p key={i} className={style.paragraph} dangerouslySetInnerHTML={{__html: block.html}}/>
                         }
                         if (block.type === "heading") {
-                            return <h2 key={i} className={style.heading}>{block.text}</h2>
+                            return <h2 key={i} className={style.heading} dangerouslySetInnerHTML={{__html: block.html}}/>
+                        }
+                        if (block.type === "blockquote") {
+                            return <blockquote key={i} className={style.blockquote} dangerouslySetInnerHTML={{__html: block.html}}/>
+                        }
+                        if (block.type === "list") {
+                            const ListTag = block.ordered ? "ol" : "ul"
+                            return (
+                                <ListTag key={i} className={style.list}>
+                                    {block.items.map((item, j) => (
+                                        <li key={j} dangerouslySetInnerHTML={{__html: item}}/>
+                                    ))}
+                                </ListTag>
+                            )
                         }
                         return <CodeBlock key={i} lang={block.lang} code={block.code}/>
                     })}

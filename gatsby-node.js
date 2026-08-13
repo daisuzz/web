@@ -1,11 +1,12 @@
 const path = require(`path`)
 const axios = require('axios')
 const xml2js = require("xml2js");
-const sitePosts = require("./src/content/posts.json");
+const {loadPosts} = require("./src/content/loadPosts");
 require(`dotenv`).config()
 
 exports.createPages = async ({actions}) => {
     const {createPage} = actions;
+    const sitePosts = loadPosts();
     sitePosts.forEach((post) => {
         createPage({
             path: `/posts/${post.slug}`,
@@ -17,6 +18,24 @@ exports.createPages = async ({actions}) => {
 
 exports.sourceNodes = async ({actions, createContentDigest}) => {
     const {createNode} = actions;
+    const sitePosts = loadPosts();
+    sitePosts.forEach((post) => {
+        const postNode = {
+            id: post.slug,
+            parent: null,
+            children: [],
+            internal: {
+                type: `SitePosts`,
+                contentDigest: createContentDigest(post),
+            },
+            title: post.title,
+            link: `/posts/${post.slug}`,
+            pubDate: post.date,
+        }
+
+        createNode(postNode);
+    });
+
     const qiitaPosts = () => axios.get(`https://qiita.com/api/v2/items?page=1&per_page=100&query=user:daisuzz`);
     const qiitaRes = await qiitaPosts();
     qiitaRes.data.map((post, i) => {

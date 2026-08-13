@@ -2,22 +2,30 @@ import * as React from "react"
 import {graphql, PageProps} from "gatsby"
 import Layout from "../components/Layout"
 import BlogTable, {ExternalBlog} from "../components/organisms/BlogTable";
-import postsData from "../content/posts.json"
-import {SitePost} from "../types/post"
 // @ts-ignore
 import * as style from "./index.module.css"
-
-const sitePosts: ExternalBlog[] = (postsData as SitePost[]).map((post) => ({
-    id: post.slug,
-    title: post.title,
-    link: `/posts/${post.slug}`,
-    publishedAt: post.date,
-}))
 
 // @ts-ignore
 const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
     const hatenaBlogEdge = data.allHatenaPosts.edges
     const qiitaEdge = data.allQiitaPosts.edges
+    const sitePostEdge = data.allSitePosts.edges
+
+    const sitePosts: ExternalBlog[] = sitePostEdge.map(
+        (e: {
+            node: {
+                id: string
+                title: string
+                link: string
+                pubDate: string
+            }
+        }) => ({
+            id: e.node.id,
+            title: e.node.title,
+            link: e.node.link,
+            publishedAt: e.node.pubDate,
+        })
+    )
 
     const hatenaBlogs: ExternalBlog[] = hatenaBlogEdge.map(
         (e: {
@@ -107,6 +115,16 @@ export const pageQuery = graphql`
             }
         }
         allQiitaPosts(sort: {pubDate: DESC}) {
+            edges {
+                node {
+                    id
+                    title
+                    pubDate
+                    link
+                }
+            }
+        }
+        allSitePosts(sort: {pubDate: DESC}) {
             edges {
                 node {
                     id

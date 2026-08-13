@@ -50,7 +50,8 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
                     contentDigest: createContentDigest(post),
                 },
                 title: post.title[0],
-                content: post.content[0],
+                // xml2js は { _: text, $: attrs } を返すため、文字列だけを入れて GraphQL の `_` 衝突を防ぐ
+                content: post.content?.[0]?._ ?? post.content?.[0] ?? null,
                 pubDate: post.published[0],
                 link: post.link[1].$.href,
             }

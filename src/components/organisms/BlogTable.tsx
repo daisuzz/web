@@ -1,7 +1,6 @@
 import * as React from "react"
 import {DateUtils} from "../../DateUtils"
-import {Box, Link, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
-import {TabContext, TabList, TabPanel,} from "@mui/lab";
+import {Box, Link, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography} from "@mui/material";
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 interface BlogArticleTableProps {
@@ -22,20 +21,20 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) =
         setValue(newValue);
     };
     return (
-        <TabContext value={value}>
+        <Box>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <TabList onChange={handleChange} aria-label="blog tabs" textColor={'inherit'}>
+                <Tabs value={value} onChange={handleChange} aria-label="blog tabs" textColor={'inherit'}>
                     <Tab label="Hatena Blog" value="0"/>
                     <Tab label="Qiita" value="1"/>
-                </TabList>
+                </Tabs>
             </Box>
-            <TabPanel value='0' sx={{padding: '0px'}}>
+            <Box sx={{padding: '0px'}} hidden={value !== '0'}>
                 {tableTemplate(hatenaBlogs)}
-            </TabPanel>
-            <TabPanel value='1' sx={{padding: '0px'}}>
+            </Box>
+            <Box sx={{padding: '0px'}} hidden={value !== '1'}>
                 {tableTemplate(qiitaBlogs)}
-            </TabPanel>
-        </TabContext>
+            </Box>
+        </Box>
     )
 }
 

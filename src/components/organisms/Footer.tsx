@@ -1,16 +1,15 @@
 import * as React from 'react';
-import {Typography} from "@mui/material";
 // @ts-ignore
-import * as footerStyle from "./Footer.module.css"
+import * as style from "./Footer.module.css"
 
 const Footer: React.FC = () => {
     return (
-        <Typography variant="body2" color="textSecondary" align="center" className={footerStyle.footer}>
-            {'Copyright © '}
-            {new Date().getFullYear()}
-            {' '}
-            daisuzz.dev
-        </Typography>
+        <footer className={style.footer}>
+            <div className={style.inner}>
+                <span>© {new Date().getFullYear()} daisuzz.dev</span>
+                <a href="#top">↑ top</a>
+            </div>
+        </footer>
     )
 }
 

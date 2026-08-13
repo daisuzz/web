@@ -1,12 +1,9 @@
 import * as React from "react"
 import {graphql, PageProps} from "gatsby"
 import Layout from "../components/Layout"
-import ProfileImage from "../components/atoms/ProfileImage";
-import {Box, IconButton, Typography} from "@mui/material";
-import XIcon from '@mui/icons-material/X';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import BlogTable, {ExternalBlog} from "../components/organisms/BlogTable";
+// @ts-ignore
+import * as style from "./index.module.css"
 
 // @ts-ignore
 const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
@@ -46,26 +43,42 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
 
     return (
         <Layout pageTitle="TOP">
-            <ProfileImage/>
-            <Typography variant="h4" sx={{
-                fontFamily: 'Arial Black',
-                fontWeight: 900,
-                margin: "20px 0 20px 16px"
-            }}>
-                Suzuki Daisaku
-            </Typography>
-            <IconButton onClick={() => window.open("https://x.com/daisuzz")}>
-                <XIcon htmlColor='#333333' sx={{fontSize: 30, marginLeft: "8px"}}/>
-            </IconButton>
-            <IconButton onClick={() => window.open("https://github.com/daisuzz")}>
-                <GitHubIcon htmlColor='#333333' sx={{fontSize: 30}}/>
-            </IconButton>
-            <IconButton onClick={() => window.open("https://www.linkedin.com/in/daisuzz/")}>
-                <LinkedInIcon htmlColor='#333333' sx={{fontSize: 30}}/>
-            </IconButton>
-            <Box style={{marginTop: "16px"}}>
-                <BlogTable qiitaBlogs={qiitaBlogs} hatenaBlogs={hatenaBlogs}/>
-            </Box>
+            <section className={style.hero}>
+                <p className={style.heroLabel}>$ whoami</p>
+                <h1 className={style.heroTitle}>Daisaku Suzuki</h1>
+                <p className={style.heroText}>
+                    Backend engineer, Tokyo. Kotlin / Java / Spring Framework. Writing notes on design, testing,
+                    and the tools I use day to day.
+                </p>
+                <div className={style.heroLinks}>
+                    <a href="https://github.com/daisuzz">&rarr; github</a>
+                    <a href="https://www.linkedin.com/in/daisuzz/">&rarr; linkedin</a>
+                    <a href="https://x.com/daisuzz">&rarr; x</a>
+                </div>
+            </section>
+
+            <BlogTable qiitaBlogs={qiitaBlogs} hatenaBlogs={hatenaBlogs}/>
+
+            <section id="about" className={style.about}>
+                <p className={style.aboutLabel}># about</p>
+                <div className={style.aboutGrid}>
+                    <div>
+                        <span className={style.aboutFieldLabel}>languages</span>
+                        <br/>
+                        Kotlin, Java, TypeScript
+                    </div>
+                    <div>
+                        <span className={style.aboutFieldLabel}>frameworks</span>
+                        <br/>
+                        Spring Boot, Spring Security, Thymeleaf
+                    </div>
+                    <div>
+                        <span className={style.aboutFieldLabel}>interests</span>
+                        <br/>
+                        DDD, test design, dev experience
+                    </div>
+                </div>
+            </section>
         </Layout>
     )
 }

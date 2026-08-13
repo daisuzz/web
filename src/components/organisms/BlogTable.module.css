@@ -1,0 +1,108 @@
+.section {
+    padding: 44px 0 0;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+
+.heading {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-label);
+    font-weight: 500;
+    margin: 0;
+}
+
+.filters {
+    display: flex;
+    gap: 6px;
+}
+
+.chip {
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid var(--color-border-strong);
+    background: transparent;
+    color: var(--color-muted);
+}
+
+.chipActive {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-bg);
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 88px 60px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 9px 10px;
+    margin: 0 -10px;
+    overflow: hidden;
+    border-left: 2px solid transparent;
+}
+
+.row:hover {
+    background: var(--color-row-hover);
+    border-left-color: var(--color-accent);
+}
+
+.date {
+    color: var(--color-date);
+}
+
+.tagHatena {
+    color: var(--color-accent);
+}
+
+.tagQiita {
+    color: var(--color-qiita);
+}
+
+.title {
+    color: var(--color-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.toggleWrap {
+    padding: 20px 10px 88px;
+}
+
+.toggle {
+    font-family: inherit;
+    font-size: 12px;
+    background: none;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+    color: var(--color-body);
+}
+
+.toggle:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}

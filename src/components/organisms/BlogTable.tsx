@@ -1,12 +1,7 @@
 import * as React from "react"
 import {DateUtils} from "../../DateUtils"
-import {Box, Link, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography} from "@mui/material";
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-
-interface BlogArticleTableProps {
-    qiitaBlogs: ExternalBlog[]
-    hatenaBlogs: ExternalBlog[]
-}
+// @ts-ignore
+import * as style from "./BlogTable.module.css"
 
 export interface ExternalBlog {
     id: string
@@ -15,76 +10,87 @@ export interface ExternalBlog {
     publishedAt: string
 }
 
+interface BlogArticleTableProps {
+    qiitaBlogs: ExternalBlog[]
+    hatenaBlogs: ExternalBlog[]
+}
+
+type Source = "hatena" | "qiita"
+type Filter = "all" | Source
+
+interface Post extends ExternalBlog {
+    source: Source
+}
+
+const VISIBLE_COUNT = 10
+const FILTERS: Filter[] = ["all", "hatena", "qiita"]
+const SOURCE_LABEL: Record<Source, string> = {hatena: "Hatena", qiita: "Qiita"}
+
 const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) => {
-    const [value, setValue] = React.useState('0');
-    const handleChange = (_: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
-    };
-    return (
-        <Box>
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="blog tabs" textColor={'inherit'}>
-                    <Tab label="Hatena Blog" value="0"/>
-                    <Tab label="Qiita" value="1"/>
-                </Tabs>
-            </Box>
-            <Box sx={{padding: '0px'}} hidden={value !== '0'}>
-                {tableTemplate(hatenaBlogs)}
-            </Box>
-            <Box sx={{padding: '0px'}} hidden={value !== '1'}>
-                {tableTemplate(qiitaBlogs)}
-            </Box>
-        </Box>
-    )
-}
+    const [filter, setFilter] = React.useState<Filter>("all")
+    const [expanded, setExpanded] = React.useState(false)
 
-function tableTemplate(blogs: ExternalBlog[]): React.JSX.Element {
-    return (
-        <TableContainer component={Paper} elevation={0}>
-            <Table size="small">
-                <TableBody>
-                    {blogs.map(blog => tableRowTemplate(blog))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    )
-}
+    const posts: Post[] = React.useMemo(() => {
+        const combined: Post[] = [
+            ...hatenaBlogs.map((b) => ({...b, source: "hatena" as const})),
+            ...qiitaBlogs.map((b) => ({...b, source: "qiita" as const})),
+        ]
+        return combined.sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1))
+    }, [hatenaBlogs, qiitaBlogs])
 
-function tableRowTemplate(blog: ExternalBlog): React.JSX.Element {
-    const title = blog.title || blog.id
-    const publishedDate = DateUtils.formatDate(
-        new Date(Date.parse(blog.publishedAt)),
-        "YYYY-MM-DD hh:mm"
-    )
+    const filtered = filter === "all" ? posts : posts.filter((p) => p.source === filter)
+    const shown = expanded ? filtered : filtered.slice(0, VISIBLE_COUNT)
+
+    const selectFilter = (next: Filter) => {
+        setFilter(next)
+        setExpanded(false)
+    }
+
     return (
-        <TableRow key={blog.id}
-                  sx={{'&:last-child td, &:last-child th': {border: 0}}}
-        >
-            <TableCell align="left">
-                <Typography variant="body1" sx={{
-                    margin: "20px auto"
-                }}>
-                    <Link
-                        component={"a"}
-                        href={blog.link}
-                        rel="noreferrer noopener"
-                        target="_blank"
-                        color="inherit"
-                        underline="none"
-                    >
-                        {title}
-                    </Link>
-                </Typography>
-                <Box sx={{display: {xs: 'flex', md: 'flex'}}}>
-                    <EventAvailableIcon fontSize="small"/>
-                    <Typography variant="body2" sx={{
-                        margin: "auto auto auto 10px"
-                    }}>
-                        {publishedDate}
-                    </Typography>
-                </Box>
-            </TableCell>
-        </TableRow>
+        <section id="writing" className={style.section}>
+            <div className={style.sectionHeader}>
+                <h2 className={style.heading}># writing ({posts.length})</h2>
+                <div className={style.filters}>
+                    {FILTERS.map((f) => (
+                        <button
+                            key={f}
+                            type="button"
+                            onClick={() => selectFilter(f)}
+                            className={f === filter ? `${style.chip} ${style.chipActive}` : style.chip}
+                        >
+                            {f}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <ol className={style.list}>
+                {shown.map((post) => (
+                    <li key={post.id}>
+                        <a
+                            href={post.link}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className={style.row}
+                        >
+                            <time className={style.date}>
+                                {DateUtils.formatDate(new Date(post.publishedAt), "YYYY-MM-DD")}
+                            </time>
+                            <span className={post.source === "qiita" ? style.tagQiita : style.tagHatena}>
+                                {SOURCE_LABEL[post.source]}
+                            </span>
+                            <span className={style.title}>{post.title || post.id}</span>
+                        </a>
+                    </li>
+                ))}
+            </ol>
+
+            <div className={style.toggleWrap}>
+                <button type="button" className={style.toggle} onClick={() => setExpanded((v) => !v)}>
+                    {expanded ? "collapse" : `show all (${filtered.length})`}
+                </button>
+            </div>
+        </section>
     )
 }
 

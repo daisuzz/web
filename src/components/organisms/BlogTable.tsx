@@ -1,4 +1,5 @@
 import * as React from "react"
+import {Link} from "gatsby"
 import {DateUtils} from "../../DateUtils"
 // @ts-ignore
 import * as style from "./BlogTable.module.css"
@@ -13,9 +14,10 @@ export interface ExternalBlog {
 interface BlogArticleTableProps {
     qiitaBlogs: ExternalBlog[]
     hatenaBlogs: ExternalBlog[]
+    sitePosts?: ExternalBlog[]
 }
 
-type Source = "hatena" | "qiita"
+type Source = "hatena" | "qiita" | "site"
 type Filter = "all" | Source
 
 interface Post extends ExternalBlog {
@@ -23,20 +25,22 @@ interface Post extends ExternalBlog {
 }
 
 const VISIBLE_COUNT = 10
-const FILTERS: Filter[] = ["all", "hatena", "qiita"]
-const SOURCE_LABEL: Record<Source, string> = {hatena: "Hatena", qiita: "Qiita"}
+const FILTERS: Filter[] = ["all", "site", "hatena", "qiita"]
+const SOURCE_LABEL: Record<Source, string> = {hatena: "Hatena", qiita: "Qiita", site: "Blog"}
+const TAG_STYLE: Record<Source, string> = {hatena: style.tagHatena, qiita: style.tagQiita, site: style.tagSite}
 
-const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) => {
+const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs, sitePosts = []}) => {
     const [filter, setFilter] = React.useState<Filter>("all")
     const [expanded, setExpanded] = React.useState(false)
 
     const posts: Post[] = React.useMemo(() => {
         const combined: Post[] = [
+            ...sitePosts.map((b) => ({...b, source: "site" as const})),
             ...hatenaBlogs.map((b) => ({...b, source: "hatena" as const})),
             ...qiitaBlogs.map((b) => ({...b, source: "qiita" as const})),
         ]
         return combined.sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1))
-    }, [hatenaBlogs, qiitaBlogs])
+    }, [sitePosts, hatenaBlogs, qiitaBlogs])
 
     const filtered = filter === "all" ? posts : posts.filter((p) => p.source === filter)
     const shown = expanded ? filtered : filtered.slice(0, VISIBLE_COUNT)
@@ -65,24 +69,28 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs}) =
             </div>
 
             <ol className={style.list}>
-                {shown.map((post) => (
-                    <li key={post.id}>
-                        <a
-                            href={post.link}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className={style.row}
-                        >
+                {shown.map((post) => {
+                    const row = (
+                        <>
                             <time className={style.date}>
                                 {DateUtils.formatDate(new Date(post.publishedAt), "YYYY-MM-DD")}
                             </time>
-                            <span className={post.source === "qiita" ? style.tagQiita : style.tagHatena}>
-                                {SOURCE_LABEL[post.source]}
-                            </span>
+                            <span className={TAG_STYLE[post.source]}>{SOURCE_LABEL[post.source]}</span>
                             <span className={style.title}>{post.title || post.id}</span>
-                        </a>
-                    </li>
-                ))}
+                        </>
+                    )
+                    return (
+                        <li key={post.id}>
+                            {post.source === "site" ? (
+                                <Link to={post.link} className={style.row}>{row}</Link>
+                            ) : (
+                                <a href={post.link} target="_blank" rel="noreferrer noopener" className={style.row}>
+                                    {row}
+                                </a>
+                            )}
+                        </li>
+                    )
+                })}
             </ol>
 
             <div className={style.toggleWrap}>

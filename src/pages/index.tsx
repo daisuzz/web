@@ -2,8 +2,17 @@ import * as React from "react"
 import {graphql, PageProps} from "gatsby"
 import Layout from "../components/Layout"
 import BlogTable, {ExternalBlog} from "../components/organisms/BlogTable";
+import postsData from "../content/posts.json"
+import {SitePost} from "../types/post"
 // @ts-ignore
 import * as style from "./index.module.css"
+
+const sitePosts: ExternalBlog[] = (postsData as SitePost[]).map((post) => ({
+    id: post.slug,
+    title: post.title,
+    link: `/posts/${post.slug}`,
+    publishedAt: post.date,
+}))
 
 // @ts-ignore
 const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
@@ -57,7 +66,7 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
                 </div>
             </section>
 
-            <BlogTable qiitaBlogs={qiitaBlogs} hatenaBlogs={hatenaBlogs}/>
+            <BlogTable qiitaBlogs={qiitaBlogs} hatenaBlogs={hatenaBlogs} sitePosts={sitePosts}/>
 
             <section id="about" className={style.about}>
                 <p className={style.aboutLabel}># about</p>

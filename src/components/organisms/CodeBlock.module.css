@@ -1,0 +1,40 @@
+.wrapper {
+    margin: 0 0 24px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.langLabel {
+    padding: 6px 14px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--color-label);
+    background: var(--color-code-header-bg);
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+.pre {
+    margin: 0;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.75;
+    background: var(--color-code-bg);
+}
+
+.keyword {
+    color: var(--color-qiita);
+}
+
+.string {
+    color: var(--color-accent);
+}
+
+.comment {
+    color: var(--color-comment);
+}
+
+.plain {
+    color: var(--color-code-text);
+}

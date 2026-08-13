@@ -80,6 +80,10 @@
     color: var(--color-qiita);
 }
 
+.tagSite {
+    color: var(--color-site);
+}
+
 .title {
     color: var(--color-title);
     white-space: nowrap;

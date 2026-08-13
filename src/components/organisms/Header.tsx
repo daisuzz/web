@@ -10,7 +10,6 @@ const Header: React.FC = () => {
                 <nav className={style.nav}>
                     <a href="#writing">writing</a>
                     <a href="#about">about</a>
-                    <a href="https://github.com/daisuzz">github</a>
                 </nav>
             </div>
         </header>

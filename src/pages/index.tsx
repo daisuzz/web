@@ -63,10 +63,6 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
             <section className={style.hero}>
                 <p className={style.heroLabel}>$ whoami</p>
                 <h1 className={style.heroTitle}>Daisaku Suzuki</h1>
-                <p className={style.heroText}>
-                    Backend engineer, Tokyo. Kotlin / Java / Spring Framework. Notes on reading Spring's internals,
-                    DDD, testable design, dev tooling, and the occasional book I've read.
-                </p>
                 <div className={style.heroLinks}>
                     <a href="https://github.com/daisuzz">&rarr; github</a>
                     <a href="https://www.linkedin.com/in/daisuzz/">&rarr; linkedin</a>

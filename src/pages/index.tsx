@@ -64,8 +64,8 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
                 <p className={style.heroLabel}>$ whoami</p>
                 <h1 className={style.heroTitle}>Daisaku Suzuki</h1>
                 <p className={style.heroText}>
-                    Backend engineer, Tokyo. Kotlin / Java / Spring Framework. Writing notes on design, testing,
-                    and the tools I use day to day.
+                    Backend engineer, Tokyo. Kotlin / Java / Spring Framework. Notes on reading Spring's internals,
+                    DDD, testable design, dev tooling, and the occasional book I've read.
                 </p>
                 <div className={style.heroLinks}>
                     <a href="https://github.com/daisuzz">&rarr; github</a>

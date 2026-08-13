@@ -17,12 +17,6 @@ export const theme = createTheme({
             primary: "oklch(0.88 0.008 70)",
             secondary: "oklch(0.72 0.008 60)",
         },
-        primary: {
-            main: accent,
-        },
-        secondary: {
-            main: green,
-        },
     },
     components: {
         MuiCssBaseline: {

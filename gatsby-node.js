@@ -1,7 +1,19 @@
 const path = require(`path`)
 const axios = require('axios')
 const xml2js = require("xml2js");
+const sitePosts = require("./src/content/posts.json");
 require(`dotenv`).config()
+
+exports.createPages = async ({actions}) => {
+    const {createPage} = actions;
+    sitePosts.forEach((post) => {
+        createPage({
+            path: `/posts/${post.slug}`,
+            component: path.resolve("./src/templates/PostPage.tsx"),
+            context: {post},
+        });
+    });
+}
 
 exports.sourceNodes = async ({actions, createContentDigest}) => {
     const {createNode} = actions;
@@ -70,4 +82,3 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
     }
     await fetchHatenaBlogs(`https://blog.hatena.ne.jp/dais39/iikanji.hatenablog.jp/atom/entry`)
 }
-

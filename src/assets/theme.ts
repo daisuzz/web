@@ -37,6 +37,12 @@ export const theme = createTheme({
                     "--color-accent": accent,
                     "--color-green": green,
                     "--color-qiita": "oklch(0.62 0.1 200)",
+                    "--color-site": green,
+                    "--color-site-border": "oklch(0.7 0.13 145 / 0.4)",
+                    "--color-comment": "oklch(0.5 0.008 60)",
+                    "--color-code-text": "oklch(0.82 0.008 60)",
+                    "--color-code-header-bg": "oklch(0.27 0.008 60)",
+                    "--color-code-bg": "oklch(0.24 0.006 60)",
                     "--color-selection": "oklch(0.68 0.14 55 / 0.25)",
                 },
                 body: {

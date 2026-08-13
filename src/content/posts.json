@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "hello-world",
+    "date": "2026-08-13",
+    "title": "サイト内記事機能を作った",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "これまでHatenaとQiitaの記事一覧だけだったこのサイトに、記事をサイト上で直接公開できる仕組みを追加した。これはその最初の記事で、今のところ本文はプレースホルダー。"
+      },
+      {
+        "type": "heading",
+        "text": "コードブロックの表示"
+      },
+      {
+        "type": "paragraph",
+        "text": "記事本文にはコードブロックも埋め込める。"
+      },
+      {
+        "type": "code",
+        "lang": "kotlin",
+        "code": "fun main() {\n    // 最初の記事\n    println(\"Hello, daisuzz.dev\")\n}"
+      }
+    ]
+  }
+]

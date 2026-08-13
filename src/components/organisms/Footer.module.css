@@ -1,5 +1,14 @@
 .footer {
-    width: 100%;
-    position: absolute;
-    bottom: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 22px 40px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--color-dim);
+    box-sizing: border-box;
 }

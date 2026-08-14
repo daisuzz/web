@@ -34,11 +34,21 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Comment preview URL on PR
         uses: actions/github-script@v7
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+          COMMAND_OUTPUT: ${{ steps.deploy.outputs.command-output }}
         with:
           script: |
             const marker = '<!-- cloudflare-workers-preview -->';
-            const url = `${{ steps.deploy.outputs.deployment-url }}`;
-            const body = `${marker}\n🔎 Cloudflare Workers preview: ${url}`;
+            // cloudflare/wrangler-action does not reliably set `deployment-url`
+            // for `versions upload` (https://github.com/cloudflare/wrangler-action/issues/343),
+            // so fall back to parsing the raw command output for a workers.dev URL.
+            const commandOutput = process.env.COMMAND_OUTPUT || '';
+            const match = commandOutput.match(/https:\/\/\S+\.workers\.dev\S*/);
+            const url = process.env.DEPLOYMENT_URL || (match ? match[0] : '');
+            const body = url
+              ? `${marker}\n🔎 Cloudflare Workers preview: ${url}`
+              : `${marker}\n⚠️ プレビューデプロイは成功しましたが、プレビューURLを取得できませんでした。Cloudflareダッシュボードでご確認ください。`;
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,

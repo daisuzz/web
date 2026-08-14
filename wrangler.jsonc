@@ -2,6 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "daisuzz-web",
   "compatibility_date": "2026-08-14",
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./public"
   }

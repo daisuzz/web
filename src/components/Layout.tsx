@@ -40,6 +40,9 @@ const Layout: React.FC<Props> = ({
             <title>{title}</title>
             <meta name="description" content={description}/>
             <link rel="canonical" href={url}/>
+            <link rel="icon" href="/favicon.ico" sizes="any"/>
+            <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+            <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
             <meta property="og:site_name" content={SITE_NAME}/>
             <meta property="og:type" content={type}/>
             <meta property="og:title" content={title}/>

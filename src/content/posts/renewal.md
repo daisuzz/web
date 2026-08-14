@@ -7,7 +7,7 @@ date: "2026-08-14"
 
 ## サイト全体のデザインをターミナル風のデザインにリニューアル
 
-きっかけは「サイトの見た目を作り直したい」という思いつきで、Claude Designを使っていくつかデザイン案を提案してもらい、ターミナルプロンプト風のダークテーマに変更した（[#309](https://github.com/daisuzz/web/pull/309)）。また、そこから元々発生していたCI周りの警告解消（[#308](https://github.com/daisuzz/web/pull/308)）やビルドエラーの修正（[#310](https://github.com/daisuzz/web/pull/310)）まで一気に片付けた。
+サイトの見た目を作り直したくなったので、触ったことがなかったClaude Designを使っていくつかデザイン案を提案してもらい、ターミナルプロンプト風のダークテーマに変更した（[#309](https://github.com/daisuzz/web/pull/309)）。また、そこから元々発生していたCI周りの警告解消（[#308](https://github.com/daisuzz/web/pull/308)）やビルドエラーの修正（[#310](https://github.com/daisuzz/web/pull/310)）を行なった。Claude Designを初めて触ったが、自然言語でデザインを作成してそれを簡単に手直しできる体験と、そのデザインをClaude Codeにそのまま渡せる体験がとても良かった。
 
 ## 記事をサイト上で直接書けるようにした
 
@@ -15,9 +15,9 @@ date: "2026-08-14"
 
 ## デプロイ基盤をCloudflare Workersに移行
 
-まずFirebase Hostingをやめて（[#317](https://github.com/daisuzz/web/pull/317)）Cloudflare Pagesに寄せた（[#311](https://github.com/daisuzz/web/pull/311)）。その後、CloudflareがPagesからWorkers(静的アセット)への移行を推奨していると知り、そのままWorkersに乗り換えた（[#323](https://github.com/daisuzz/web/pull/323)）。Cloudflare公式の移行ガイド([Migrate from Pages to Workers](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/))が参考になる。合わせてPR時にプレビュー用のサイトをデプロイする仕組みも導入した。
+元々Firebase Hostingを使っていたが、Cloudflare Pagesに寄せた（[#317](https://github.com/daisuzz/web/pull/317)）（[#311](https://github.com/daisuzz/web/pull/311)）。その後、CloudflareがPagesからWorkers(静的アセット)への移行を推奨していると知り、そのままWorkersに乗り換えた（[#323](https://github.com/daisuzz/web/pull/323)）。Cloudflare公式の移行ガイド([Migrate from Pages to Workers](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/))が参考になる。合わせてPR時にプレビュー用のサイトで動作確認をしてからマージができるように、プレビュー用のサイトをデプロイしてPRにURLをコメントする仕組みも導入した。
 
-## SEO/OGP対応 + 細かい修正（[#321](https://github.com/daisuzz/web/pull/321)）
+## その他機能に関する修正
 
 - description・OGP・Twitter Card・canonicalタグとJSON-LD構造化データを追加
 - robots.txtでsitemapを明示
@@ -26,7 +26,7 @@ date: "2026-08-14"
 - Qiita/HatenaのAPI呼び出しにtry/catchとtimeoutを追加し、外部APIが落ちてもビルド全体がコケないようにした
 - favicon.icoが404になっている問題に気づいたので、favicon.icoを追加
 
-## プロフィール周りの整理
+## コンテンツ周りの整理
 
 トップページの文言を実際のブログ内容に合わせて更新し（[#318](https://github.com/daisuzz/web/pull/318)）、冗長だったプロフィール文とヘッダーのGitHubリンクを削除（[#319](https://github.com/daisuzz/web/pull/319)）、ヘッダータイトルのリンクが正しくトップに戻るよう修正した（[#320](https://github.com/daisuzz/web/pull/320)）。最後にAboutセクションにroleフィールドを追加し、興味分野(interests)を実態に合わせて更新（[#325](https://github.com/daisuzz/web/pull/325)）。
 

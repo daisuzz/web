@@ -5,8 +5,21 @@ import BlogTable, {ExternalBlog} from "../components/organisms/BlogTable";
 // @ts-ignore
 import * as style from "./index.module.css"
 
+const PERSON_STRUCTURED_DATA = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Daisaku Suzuki",
+    url: "https://daisuzz.dev",
+    image: "https://daisuzz.dev/avatar/profile.jpg",
+    sameAs: [
+        "https://github.com/daisuzz",
+        "https://www.linkedin.com/in/daisuzz/",
+        "https://x.com/daisuzz",
+    ],
+}
+
 // @ts-ignore
-const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
+const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data, location}) => {
     const hatenaBlogEdge = data.allHatenaPosts.edges
     const qiitaEdge = data.allQiitaPosts.edges
     const sitePostEdge = data.allSitePosts.edges
@@ -59,7 +72,12 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data}) => {
     )
 
     return (
-        <Layout pageTitle="TOP">
+        <Layout
+            pageTitle="TOP"
+            description="Daisaku Suzukiの個人サイト。Kotlin/Java/TypeScriptを中心とした技術ブログ記事とプロフィールを掲載。"
+            path={location.pathname}
+            structuredData={PERSON_STRUCTURED_DATA}
+        >
             <section className={style.hero}>
                 <p className={style.heroLabel}>$ whoami</p>
                 <h1 className={style.heroTitle}>Daisaku Suzuki</h1>

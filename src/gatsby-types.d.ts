@@ -25,22 +25,8 @@ type Scalars = {
   Float: number;
   /** A date string, such as 2007-12-03, compliant with the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: string;
-  GatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: Record<string, unknown>;
-};
-
-type AVIFOptions = {
-  readonly lossless: InputMaybe<Scalars['Boolean']>;
-  readonly quality: InputMaybe<Scalars['Int']>;
-  readonly speed: InputMaybe<Scalars['Int']>;
-};
-
-type BlurredOptions = {
-  /** Force the output format for the low-res preview. Default is to use the same format as the input. You should rarely need to change this */
-  readonly toFormat: InputMaybe<ImageFormat>;
-  /** Width of the generated low-res preview. Default is 20px */
-  readonly width: InputMaybe<Scalars['Int']>;
 };
 
 type BooleanQueryOperatorInput = {
@@ -357,332 +343,6 @@ type DirectorySortInput = {
   readonly uid: InputMaybe<SortOrderEnum>;
 };
 
-type DuotoneGradient = {
-  readonly highlight: Scalars['String'];
-  readonly opacity: InputMaybe<Scalars['Int']>;
-  readonly shadow: Scalars['String'];
-};
-
-type FeedHatenaBlog = Node & {
-  readonly categories: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
-  readonly children: ReadonlyArray<Node>;
-  readonly content: Maybe<Scalars['String']>;
-  readonly contentSnippet: Maybe<Scalars['String']>;
-  readonly enclosure: Maybe<FeedHatenaBlogEnclosure>;
-  readonly guid: Maybe<Scalars['String']>;
-  readonly id: Scalars['ID'];
-  readonly internal: Internal;
-  readonly isoDate: Maybe<Scalars['Date']>;
-  readonly link: Maybe<Scalars['String']>;
-  readonly parent: Maybe<Node>;
-  readonly pubDate: Maybe<Scalars['String']>;
-  readonly title: Maybe<Scalars['String']>;
-};
-
-
-type FeedHatenaBlog_isoDateArgs = {
-  difference: InputMaybe<Scalars['String']>;
-  formatString: InputMaybe<Scalars['String']>;
-  fromNow: InputMaybe<Scalars['Boolean']>;
-  locale: InputMaybe<Scalars['String']>;
-};
-
-type FeedHatenaBlogConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedHatenaBlogEdge>;
-  readonly group: ReadonlyArray<FeedHatenaBlogGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedHatenaBlog>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedHatenaBlogConnection_distinctArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-
-type FeedHatenaBlogConnection_groupArgs = {
-  field: FeedHatenaBlogFieldSelector;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedHatenaBlogConnection_maxArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-
-type FeedHatenaBlogConnection_minArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-
-type FeedHatenaBlogConnection_sumArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-type FeedHatenaBlogEdge = {
-  readonly next: Maybe<FeedHatenaBlog>;
-  readonly node: FeedHatenaBlog;
-  readonly previous: Maybe<FeedHatenaBlog>;
-};
-
-type FeedHatenaBlogEnclosure = {
-  readonly length: Maybe<Scalars['String']>;
-  readonly type: Maybe<Scalars['String']>;
-  readonly url: Maybe<Scalars['String']>;
-};
-
-type FeedHatenaBlogEnclosureFieldSelector = {
-  readonly length: InputMaybe<FieldSelectorEnum>;
-  readonly type: InputMaybe<FieldSelectorEnum>;
-  readonly url: InputMaybe<FieldSelectorEnum>;
-};
-
-type FeedHatenaBlogEnclosureFilterInput = {
-  readonly length: InputMaybe<StringQueryOperatorInput>;
-  readonly type: InputMaybe<StringQueryOperatorInput>;
-  readonly url: InputMaybe<StringQueryOperatorInput>;
-};
-
-type FeedHatenaBlogEnclosureSortInput = {
-  readonly length: InputMaybe<SortOrderEnum>;
-  readonly type: InputMaybe<SortOrderEnum>;
-  readonly url: InputMaybe<SortOrderEnum>;
-};
-
-type FeedHatenaBlogFieldSelector = {
-  readonly categories: InputMaybe<FieldSelectorEnum>;
-  readonly children: InputMaybe<NodeFieldSelector>;
-  readonly content: InputMaybe<FieldSelectorEnum>;
-  readonly contentSnippet: InputMaybe<FieldSelectorEnum>;
-  readonly enclosure: InputMaybe<FeedHatenaBlogEnclosureFieldSelector>;
-  readonly guid: InputMaybe<FieldSelectorEnum>;
-  readonly id: InputMaybe<FieldSelectorEnum>;
-  readonly internal: InputMaybe<InternalFieldSelector>;
-  readonly isoDate: InputMaybe<FieldSelectorEnum>;
-  readonly link: InputMaybe<FieldSelectorEnum>;
-  readonly parent: InputMaybe<NodeFieldSelector>;
-  readonly pubDate: InputMaybe<FieldSelectorEnum>;
-  readonly title: InputMaybe<FieldSelectorEnum>;
-};
-
-type FeedHatenaBlogFilterInput = {
-  readonly categories: InputMaybe<StringQueryOperatorInput>;
-  readonly children: InputMaybe<NodeFilterListInput>;
-  readonly content: InputMaybe<StringQueryOperatorInput>;
-  readonly contentSnippet: InputMaybe<StringQueryOperatorInput>;
-  readonly enclosure: InputMaybe<FeedHatenaBlogEnclosureFilterInput>;
-  readonly guid: InputMaybe<StringQueryOperatorInput>;
-  readonly id: InputMaybe<StringQueryOperatorInput>;
-  readonly internal: InputMaybe<InternalFilterInput>;
-  readonly isoDate: InputMaybe<DateQueryOperatorInput>;
-  readonly link: InputMaybe<StringQueryOperatorInput>;
-  readonly parent: InputMaybe<NodeFilterInput>;
-  readonly pubDate: InputMaybe<StringQueryOperatorInput>;
-  readonly title: InputMaybe<StringQueryOperatorInput>;
-};
-
-type FeedHatenaBlogGroupConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedHatenaBlogEdge>;
-  readonly field: Scalars['String'];
-  readonly fieldValue: Maybe<Scalars['String']>;
-  readonly group: ReadonlyArray<FeedHatenaBlogGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedHatenaBlog>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedHatenaBlogGroupConnection_distinctArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-
-type FeedHatenaBlogGroupConnection_groupArgs = {
-  field: FeedHatenaBlogFieldSelector;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedHatenaBlogGroupConnection_maxArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-
-type FeedHatenaBlogGroupConnection_minArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-
-type FeedHatenaBlogGroupConnection_sumArgs = {
-  field: FeedHatenaBlogFieldSelector;
-};
-
-type FeedHatenaBlogMeta = Node & {
-  readonly children: ReadonlyArray<Node>;
-  readonly description: Maybe<Scalars['String']>;
-  readonly docs: Maybe<Scalars['String']>;
-  readonly generator: Maybe<Scalars['String']>;
-  readonly id: Scalars['ID'];
-  readonly internal: Internal;
-  readonly lastBuildDate: Maybe<Scalars['String']>;
-  readonly link: Maybe<Scalars['String']>;
-  readonly parent: Maybe<Node>;
-  readonly title: Maybe<Scalars['String']>;
-};
-
-type FeedHatenaBlogMetaConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedHatenaBlogMetaEdge>;
-  readonly group: ReadonlyArray<FeedHatenaBlogMetaGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedHatenaBlogMeta>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedHatenaBlogMetaConnection_distinctArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-
-type FeedHatenaBlogMetaConnection_groupArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedHatenaBlogMetaConnection_maxArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-
-type FeedHatenaBlogMetaConnection_minArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-
-type FeedHatenaBlogMetaConnection_sumArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-type FeedHatenaBlogMetaEdge = {
-  readonly next: Maybe<FeedHatenaBlogMeta>;
-  readonly node: FeedHatenaBlogMeta;
-  readonly previous: Maybe<FeedHatenaBlogMeta>;
-};
-
-type FeedHatenaBlogMetaFieldSelector = {
-  readonly children: InputMaybe<NodeFieldSelector>;
-  readonly description: InputMaybe<FieldSelectorEnum>;
-  readonly docs: InputMaybe<FieldSelectorEnum>;
-  readonly generator: InputMaybe<FieldSelectorEnum>;
-  readonly id: InputMaybe<FieldSelectorEnum>;
-  readonly internal: InputMaybe<InternalFieldSelector>;
-  readonly lastBuildDate: InputMaybe<FieldSelectorEnum>;
-  readonly link: InputMaybe<FieldSelectorEnum>;
-  readonly parent: InputMaybe<NodeFieldSelector>;
-  readonly title: InputMaybe<FieldSelectorEnum>;
-};
-
-type FeedHatenaBlogMetaFilterInput = {
-  readonly children: InputMaybe<NodeFilterListInput>;
-  readonly description: InputMaybe<StringQueryOperatorInput>;
-  readonly docs: InputMaybe<StringQueryOperatorInput>;
-  readonly generator: InputMaybe<StringQueryOperatorInput>;
-  readonly id: InputMaybe<StringQueryOperatorInput>;
-  readonly internal: InputMaybe<InternalFilterInput>;
-  readonly lastBuildDate: InputMaybe<StringQueryOperatorInput>;
-  readonly link: InputMaybe<StringQueryOperatorInput>;
-  readonly parent: InputMaybe<NodeFilterInput>;
-  readonly title: InputMaybe<StringQueryOperatorInput>;
-};
-
-type FeedHatenaBlogMetaGroupConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<FeedHatenaBlogMetaEdge>;
-  readonly field: Scalars['String'];
-  readonly fieldValue: Maybe<Scalars['String']>;
-  readonly group: ReadonlyArray<FeedHatenaBlogMetaGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<FeedHatenaBlogMeta>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type FeedHatenaBlogMetaGroupConnection_distinctArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-
-type FeedHatenaBlogMetaGroupConnection_groupArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type FeedHatenaBlogMetaGroupConnection_maxArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-
-type FeedHatenaBlogMetaGroupConnection_minArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-
-type FeedHatenaBlogMetaGroupConnection_sumArgs = {
-  field: FeedHatenaBlogMetaFieldSelector;
-};
-
-type FeedHatenaBlogMetaSortInput = {
-  readonly children: InputMaybe<NodeSortInput>;
-  readonly description: InputMaybe<SortOrderEnum>;
-  readonly docs: InputMaybe<SortOrderEnum>;
-  readonly generator: InputMaybe<SortOrderEnum>;
-  readonly id: InputMaybe<SortOrderEnum>;
-  readonly internal: InputMaybe<InternalSortInput>;
-  readonly lastBuildDate: InputMaybe<SortOrderEnum>;
-  readonly link: InputMaybe<SortOrderEnum>;
-  readonly parent: InputMaybe<NodeSortInput>;
-  readonly title: InputMaybe<SortOrderEnum>;
-};
-
-type FeedHatenaBlogSortInput = {
-  readonly categories: InputMaybe<SortOrderEnum>;
-  readonly children: InputMaybe<NodeSortInput>;
-  readonly content: InputMaybe<SortOrderEnum>;
-  readonly contentSnippet: InputMaybe<SortOrderEnum>;
-  readonly enclosure: InputMaybe<FeedHatenaBlogEnclosureSortInput>;
-  readonly guid: InputMaybe<SortOrderEnum>;
-  readonly id: InputMaybe<SortOrderEnum>;
-  readonly internal: InputMaybe<InternalSortInput>;
-  readonly isoDate: InputMaybe<SortOrderEnum>;
-  readonly link: InputMaybe<SortOrderEnum>;
-  readonly parent: InputMaybe<NodeSortInput>;
-  readonly pubDate: InputMaybe<SortOrderEnum>;
-  readonly title: InputMaybe<SortOrderEnum>;
-};
-
 type FieldSelectorEnum =
   | 'SELECT';
 
@@ -698,11 +358,7 @@ type File = Node & {
   /** @deprecated Use `birthTime` instead */
   readonly birthtimeMs: Maybe<Scalars['Float']>;
   readonly changeTime: Scalars['Date'];
-  /** Returns the first child node of type ImageSharp or null if there are no children of given type on this node */
-  readonly childImageSharp: Maybe<ImageSharp>;
   readonly children: ReadonlyArray<Node>;
-  /** Returns all children nodes filtered by type ImageSharp */
-  readonly childrenImageSharp: Maybe<ReadonlyArray<Maybe<ImageSharp>>>;
   readonly ctime: Scalars['Date'];
   readonly ctimeMs: Scalars['Float'];
   readonly dev: Scalars['Int'];
@@ -841,9 +497,7 @@ type FileFieldSelector = {
   readonly birthtime: InputMaybe<FieldSelectorEnum>;
   readonly birthtimeMs: InputMaybe<FieldSelectorEnum>;
   readonly changeTime: InputMaybe<FieldSelectorEnum>;
-  readonly childImageSharp: InputMaybe<ImageSharpFieldSelector>;
   readonly children: InputMaybe<NodeFieldSelector>;
-  readonly childrenImageSharp: InputMaybe<ImageSharpFieldSelector>;
   readonly ctime: InputMaybe<FieldSelectorEnum>;
   readonly ctimeMs: InputMaybe<FieldSelectorEnum>;
   readonly dev: InputMaybe<FieldSelectorEnum>;
@@ -881,9 +535,7 @@ type FileFilterInput = {
   readonly birthtime: InputMaybe<DateQueryOperatorInput>;
   readonly birthtimeMs: InputMaybe<FloatQueryOperatorInput>;
   readonly changeTime: InputMaybe<DateQueryOperatorInput>;
-  readonly childImageSharp: InputMaybe<ImageSharpFilterInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
-  readonly childrenImageSharp: InputMaybe<ImageSharpFilterListInput>;
   readonly ctime: InputMaybe<DateQueryOperatorInput>;
   readonly ctimeMs: InputMaybe<FloatQueryOperatorInput>;
   readonly dev: InputMaybe<IntQueryOperatorInput>;
@@ -962,9 +614,7 @@ type FileSortInput = {
   readonly birthtime: InputMaybe<SortOrderEnum>;
   readonly birthtimeMs: InputMaybe<SortOrderEnum>;
   readonly changeTime: InputMaybe<SortOrderEnum>;
-  readonly childImageSharp: InputMaybe<ImageSharpSortInput>;
   readonly children: InputMaybe<NodeSortInput>;
-  readonly childrenImageSharp: InputMaybe<ImageSharpSortInput>;
   readonly ctime: InputMaybe<SortOrderEnum>;
   readonly ctimeMs: InputMaybe<SortOrderEnum>;
   readonly dev: InputMaybe<SortOrderEnum>;
@@ -1003,35 +653,9 @@ type FloatQueryOperatorInput = {
   readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']>>>;
 };
 
-type GatsbyImageDataQueryOperatorInput = {
-  readonly eq: InputMaybe<Scalars['GatsbyImageData']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['GatsbyImageData']>>>;
-  readonly ne: InputMaybe<Scalars['GatsbyImageData']>;
-  readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['GatsbyImageData']>>>;
-};
-
-type GatsbyImageFormat =
-  | 'auto'
-  | 'avif'
-  | 'jpg'
-  | ''
-  | 'png'
-  | 'webp';
-
-type GatsbyImageLayout =
-  | 'constrained'
-  | 'fixed'
-  | 'fullWidth';
-
-type GatsbyImagePlaceholder =
-  | 'blurred'
-  | 'dominantColor'
-  | 'none'
-  | 'tracedSVG';
-
 type HatenaPosts = Node & {
   readonly children: ReadonlyArray<Node>;
-  readonly content: Maybe<HatenaPostsContent>;
+  readonly content: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
   readonly link: Maybe<Scalars['String']>;
@@ -1087,22 +711,6 @@ type HatenaPostsConnection_sumArgs = {
   field: HatenaPostsFieldSelector;
 };
 
-type HatenaPostsContent = {
-  readonly _: Maybe<Scalars['String']>;
-};
-
-type HatenaPostsContentFieldSelector = {
-  readonly _: InputMaybe<FieldSelectorEnum>;
-};
-
-type HatenaPostsContentFilterInput = {
-  readonly _: InputMaybe<StringQueryOperatorInput>;
-};
-
-type HatenaPostsContentSortInput = {
-  readonly _: InputMaybe<SortOrderEnum>;
-};
-
 type HatenaPostsEdge = {
   readonly next: Maybe<HatenaPosts>;
   readonly node: HatenaPosts;
@@ -1111,7 +719,7 @@ type HatenaPostsEdge = {
 
 type HatenaPostsFieldSelector = {
   readonly children: InputMaybe<NodeFieldSelector>;
-  readonly content: InputMaybe<HatenaPostsContentFieldSelector>;
+  readonly content: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
   readonly link: InputMaybe<FieldSelectorEnum>;
@@ -1122,7 +730,7 @@ type HatenaPostsFieldSelector = {
 
 type HatenaPostsFilterInput = {
   readonly children: InputMaybe<NodeFilterListInput>;
-  readonly content: InputMaybe<HatenaPostsContentFilterInput>;
+  readonly content: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
   readonly link: InputMaybe<StringQueryOperatorInput>;
@@ -1174,455 +782,13 @@ type HatenaPostsGroupConnection_sumArgs = {
 
 type HatenaPostsSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
-  readonly content: InputMaybe<HatenaPostsContentSortInput>;
+  readonly content: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
   readonly link: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly pubDate: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;
-};
-
-type ImageCropFocus =
-  | 17
-  | 0
-  | 2
-  | 16
-  | 1
-  | 5
-  | 8
-  | 3
-  | 6
-  | 7
-  | 4;
-
-type ImageFit =
-  | 'contain'
-  | 'cover'
-  | 'fill'
-  | 'inside'
-  | 'outside';
-
-type ImageFormat =
-  | ''
-  | 'avif'
-  | 'jpg'
-  | ''
-  | 'png'
-  | 'webp';
-
-type ImageLayout =
-  | 'constrained'
-  | 'fixed'
-  | 'fullWidth';
-
-type ImagePlaceholder =
-  | 'blurred'
-  | 'dominantColor'
-  | 'none'
-  | 'tracedSVG';
-
-type ImageSharp = Node & {
-  readonly children: ReadonlyArray<Node>;
-  readonly fixed: Maybe<ImageSharpFixed>;
-  readonly fluid: Maybe<ImageSharpFluid>;
-  readonly gatsbyImageData: Scalars['GatsbyImageData'];
-  readonly id: Scalars['ID'];
-  readonly internal: Internal;
-  readonly original: Maybe<ImageSharpOriginal>;
-  readonly parent: Maybe<Node>;
-  readonly resize: Maybe<ImageSharpResize>;
-};
-
-
-type ImageSharp_fixedArgs = {
-  background?: InputMaybe<Scalars['String']>;
-  base64Width: InputMaybe<Scalars['Int']>;
-  cropFocus?: InputMaybe<ImageCropFocus>;
-  duotone: InputMaybe<DuotoneGradient>;
-  fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  height: InputMaybe<Scalars['Int']>;
-  jpegProgressive?: InputMaybe<Scalars['Boolean']>;
-  jpegQuality: InputMaybe<Scalars['Int']>;
-  pngCompressionSpeed?: InputMaybe<Scalars['Int']>;
-  pngQuality: InputMaybe<Scalars['Int']>;
-  quality: InputMaybe<Scalars['Int']>;
-  rotate?: InputMaybe<Scalars['Int']>;
-  toFormat?: InputMaybe<ImageFormat>;
-  toFormatBase64?: InputMaybe<ImageFormat>;
-  traceSVG: InputMaybe<Potrace>;
-  trim?: InputMaybe<Scalars['Float']>;
-  webpQuality: InputMaybe<Scalars['Int']>;
-  width: InputMaybe<Scalars['Int']>;
-};
-
-
-type ImageSharp_fluidArgs = {
-  background?: InputMaybe<Scalars['String']>;
-  base64Width: InputMaybe<Scalars['Int']>;
-  cropFocus?: InputMaybe<ImageCropFocus>;
-  duotone: InputMaybe<DuotoneGradient>;
-  fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  jpegProgressive?: InputMaybe<Scalars['Boolean']>;
-  jpegQuality: InputMaybe<Scalars['Int']>;
-  maxHeight: InputMaybe<Scalars['Int']>;
-  maxWidth: InputMaybe<Scalars['Int']>;
-  pngCompressionSpeed?: InputMaybe<Scalars['Int']>;
-  pngQuality: InputMaybe<Scalars['Int']>;
-  quality: InputMaybe<Scalars['Int']>;
-  rotate?: InputMaybe<Scalars['Int']>;
-  sizes?: InputMaybe<Scalars['String']>;
-  srcSetBreakpoints?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']>>>;
-  toFormat?: InputMaybe<ImageFormat>;
-  toFormatBase64?: InputMaybe<ImageFormat>;
-  traceSVG: InputMaybe<Potrace>;
-  trim?: InputMaybe<Scalars['Float']>;
-  webpQuality: InputMaybe<Scalars['Int']>;
-};
-
-
-type ImageSharp_gatsbyImageDataArgs = {
-  aspectRatio: InputMaybe<Scalars['Float']>;
-  avifOptions: InputMaybe<AVIFOptions>;
-  backgroundColor: InputMaybe<Scalars['String']>;
-  blurredOptions: InputMaybe<BlurredOptions>;
-  breakpoints: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']>>>;
-  formats: InputMaybe<ReadonlyArray<InputMaybe<ImageFormat>>>;
-  height: InputMaybe<Scalars['Int']>;
-  jpgOptions: InputMaybe<JPGOptions>;
-  layout?: InputMaybe<ImageLayout>;
-  outputPixelDensities: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']>>>;
-  placeholder: InputMaybe<ImagePlaceholder>;
-  pngOptions: InputMaybe<PNGOptions>;
-  quality: InputMaybe<Scalars['Int']>;
-  sizes: InputMaybe<Scalars['String']>;
-  tracedSVGOptions: InputMaybe<Potrace>;
-  transformOptions: InputMaybe<TransformOptions>;
-  webpOptions: InputMaybe<WebPOptions>;
-  width: InputMaybe<Scalars['Int']>;
-};
-
-
-type ImageSharp_resizeArgs = {
-  background?: InputMaybe<Scalars['String']>;
-  base64?: InputMaybe<Scalars['Boolean']>;
-  cropFocus?: InputMaybe<ImageCropFocus>;
-  duotone: InputMaybe<DuotoneGradient>;
-  fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  height: InputMaybe<Scalars['Int']>;
-  jpegProgressive?: InputMaybe<Scalars['Boolean']>;
-  jpegQuality: InputMaybe<Scalars['Int']>;
-  pngCompressionLevel?: InputMaybe<Scalars['Int']>;
-  pngCompressionSpeed?: InputMaybe<Scalars['Int']>;
-  pngQuality: InputMaybe<Scalars['Int']>;
-  quality: InputMaybe<Scalars['Int']>;
-  rotate?: InputMaybe<Scalars['Int']>;
-  toFormat?: InputMaybe<ImageFormat>;
-  traceSVG: InputMaybe<Potrace>;
-  trim?: InputMaybe<Scalars['Float']>;
-  webpQuality: InputMaybe<Scalars['Int']>;
-  width: InputMaybe<Scalars['Int']>;
-};
-
-type ImageSharpConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<ImageSharpEdge>;
-  readonly group: ReadonlyArray<ImageSharpGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<ImageSharp>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type ImageSharpConnection_distinctArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-
-type ImageSharpConnection_groupArgs = {
-  field: ImageSharpFieldSelector;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type ImageSharpConnection_maxArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-
-type ImageSharpConnection_minArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-
-type ImageSharpConnection_sumArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-type ImageSharpEdge = {
-  readonly next: Maybe<ImageSharp>;
-  readonly node: ImageSharp;
-  readonly previous: Maybe<ImageSharp>;
-};
-
-type ImageSharpFieldSelector = {
-  readonly children: InputMaybe<NodeFieldSelector>;
-  readonly fixed: InputMaybe<ImageSharpFixedFieldSelector>;
-  readonly fluid: InputMaybe<ImageSharpFluidFieldSelector>;
-  readonly gatsbyImageData: InputMaybe<FieldSelectorEnum>;
-  readonly id: InputMaybe<FieldSelectorEnum>;
-  readonly internal: InputMaybe<InternalFieldSelector>;
-  readonly original: InputMaybe<ImageSharpOriginalFieldSelector>;
-  readonly parent: InputMaybe<NodeFieldSelector>;
-  readonly resize: InputMaybe<ImageSharpResizeFieldSelector>;
-};
-
-type ImageSharpFilterInput = {
-  readonly children: InputMaybe<NodeFilterListInput>;
-  readonly fixed: InputMaybe<ImageSharpFixedFilterInput>;
-  readonly fluid: InputMaybe<ImageSharpFluidFilterInput>;
-  readonly gatsbyImageData: InputMaybe<GatsbyImageDataQueryOperatorInput>;
-  readonly id: InputMaybe<StringQueryOperatorInput>;
-  readonly internal: InputMaybe<InternalFilterInput>;
-  readonly original: InputMaybe<ImageSharpOriginalFilterInput>;
-  readonly parent: InputMaybe<NodeFilterInput>;
-  readonly resize: InputMaybe<ImageSharpResizeFilterInput>;
-};
-
-type ImageSharpFilterListInput = {
-  readonly elemMatch: InputMaybe<ImageSharpFilterInput>;
-};
-
-type ImageSharpFixed = {
-  readonly aspectRatio: Maybe<Scalars['Float']>;
-  readonly base64: Maybe<Scalars['String']>;
-  readonly height: Scalars['Float'];
-  readonly originalName: Maybe<Scalars['String']>;
-  readonly src: Scalars['String'];
-  readonly srcSet: Scalars['String'];
-  readonly srcSetWebp: Maybe<Scalars['String']>;
-  readonly srcWebp: Maybe<Scalars['String']>;
-  readonly tracedSVG: Maybe<Scalars['String']>;
-  readonly width: Scalars['Float'];
-};
-
-type ImageSharpFixedFieldSelector = {
-  readonly aspectRatio: InputMaybe<FieldSelectorEnum>;
-  readonly base64: InputMaybe<FieldSelectorEnum>;
-  readonly height: InputMaybe<FieldSelectorEnum>;
-  readonly originalName: InputMaybe<FieldSelectorEnum>;
-  readonly src: InputMaybe<FieldSelectorEnum>;
-  readonly srcSet: InputMaybe<FieldSelectorEnum>;
-  readonly srcSetWebp: InputMaybe<FieldSelectorEnum>;
-  readonly srcWebp: InputMaybe<FieldSelectorEnum>;
-  readonly tracedSVG: InputMaybe<FieldSelectorEnum>;
-  readonly width: InputMaybe<FieldSelectorEnum>;
-};
-
-type ImageSharpFixedFilterInput = {
-  readonly aspectRatio: InputMaybe<FloatQueryOperatorInput>;
-  readonly base64: InputMaybe<StringQueryOperatorInput>;
-  readonly height: InputMaybe<FloatQueryOperatorInput>;
-  readonly originalName: InputMaybe<StringQueryOperatorInput>;
-  readonly src: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSet: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSetWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly srcWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly tracedSVG: InputMaybe<StringQueryOperatorInput>;
-  readonly width: InputMaybe<FloatQueryOperatorInput>;
-};
-
-type ImageSharpFixedSortInput = {
-  readonly aspectRatio: InputMaybe<SortOrderEnum>;
-  readonly base64: InputMaybe<SortOrderEnum>;
-  readonly height: InputMaybe<SortOrderEnum>;
-  readonly originalName: InputMaybe<SortOrderEnum>;
-  readonly src: InputMaybe<SortOrderEnum>;
-  readonly srcSet: InputMaybe<SortOrderEnum>;
-  readonly srcSetWebp: InputMaybe<SortOrderEnum>;
-  readonly srcWebp: InputMaybe<SortOrderEnum>;
-  readonly tracedSVG: InputMaybe<SortOrderEnum>;
-  readonly width: InputMaybe<SortOrderEnum>;
-};
-
-type ImageSharpFluid = {
-  readonly aspectRatio: Scalars['Float'];
-  readonly base64: Maybe<Scalars['String']>;
-  readonly originalImg: Maybe<Scalars['String']>;
-  readonly originalName: Maybe<Scalars['String']>;
-  readonly presentationHeight: Scalars['Int'];
-  readonly presentationWidth: Scalars['Int'];
-  readonly sizes: Scalars['String'];
-  readonly src: Scalars['String'];
-  readonly srcSet: Scalars['String'];
-  readonly srcSetWebp: Maybe<Scalars['String']>;
-  readonly srcWebp: Maybe<Scalars['String']>;
-  readonly tracedSVG: Maybe<Scalars['String']>;
-};
-
-type ImageSharpFluidFieldSelector = {
-  readonly aspectRatio: InputMaybe<FieldSelectorEnum>;
-  readonly base64: InputMaybe<FieldSelectorEnum>;
-  readonly originalImg: InputMaybe<FieldSelectorEnum>;
-  readonly originalName: InputMaybe<FieldSelectorEnum>;
-  readonly presentationHeight: InputMaybe<FieldSelectorEnum>;
-  readonly presentationWidth: InputMaybe<FieldSelectorEnum>;
-  readonly sizes: InputMaybe<FieldSelectorEnum>;
-  readonly src: InputMaybe<FieldSelectorEnum>;
-  readonly srcSet: InputMaybe<FieldSelectorEnum>;
-  readonly srcSetWebp: InputMaybe<FieldSelectorEnum>;
-  readonly srcWebp: InputMaybe<FieldSelectorEnum>;
-  readonly tracedSVG: InputMaybe<FieldSelectorEnum>;
-};
-
-type ImageSharpFluidFilterInput = {
-  readonly aspectRatio: InputMaybe<FloatQueryOperatorInput>;
-  readonly base64: InputMaybe<StringQueryOperatorInput>;
-  readonly originalImg: InputMaybe<StringQueryOperatorInput>;
-  readonly originalName: InputMaybe<StringQueryOperatorInput>;
-  readonly presentationHeight: InputMaybe<IntQueryOperatorInput>;
-  readonly presentationWidth: InputMaybe<IntQueryOperatorInput>;
-  readonly sizes: InputMaybe<StringQueryOperatorInput>;
-  readonly src: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSet: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSetWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly srcWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly tracedSVG: InputMaybe<StringQueryOperatorInput>;
-};
-
-type ImageSharpFluidSortInput = {
-  readonly aspectRatio: InputMaybe<SortOrderEnum>;
-  readonly base64: InputMaybe<SortOrderEnum>;
-  readonly originalImg: InputMaybe<SortOrderEnum>;
-  readonly originalName: InputMaybe<SortOrderEnum>;
-  readonly presentationHeight: InputMaybe<SortOrderEnum>;
-  readonly presentationWidth: InputMaybe<SortOrderEnum>;
-  readonly sizes: InputMaybe<SortOrderEnum>;
-  readonly src: InputMaybe<SortOrderEnum>;
-  readonly srcSet: InputMaybe<SortOrderEnum>;
-  readonly srcSetWebp: InputMaybe<SortOrderEnum>;
-  readonly srcWebp: InputMaybe<SortOrderEnum>;
-  readonly tracedSVG: InputMaybe<SortOrderEnum>;
-};
-
-type ImageSharpGroupConnection = {
-  readonly distinct: ReadonlyArray<Scalars['String']>;
-  readonly edges: ReadonlyArray<ImageSharpEdge>;
-  readonly field: Scalars['String'];
-  readonly fieldValue: Maybe<Scalars['String']>;
-  readonly group: ReadonlyArray<ImageSharpGroupConnection>;
-  readonly max: Maybe<Scalars['Float']>;
-  readonly min: Maybe<Scalars['Float']>;
-  readonly nodes: ReadonlyArray<ImageSharp>;
-  readonly pageInfo: PageInfo;
-  readonly sum: Maybe<Scalars['Float']>;
-  readonly totalCount: Scalars['Int'];
-};
-
-
-type ImageSharpGroupConnection_distinctArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-
-type ImageSharpGroupConnection_groupArgs = {
-  field: ImageSharpFieldSelector;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-};
-
-
-type ImageSharpGroupConnection_maxArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-
-type ImageSharpGroupConnection_minArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-
-type ImageSharpGroupConnection_sumArgs = {
-  field: ImageSharpFieldSelector;
-};
-
-type ImageSharpOriginal = {
-  readonly height: Maybe<Scalars['Float']>;
-  readonly src: Maybe<Scalars['String']>;
-  readonly width: Maybe<Scalars['Float']>;
-};
-
-type ImageSharpOriginalFieldSelector = {
-  readonly height: InputMaybe<FieldSelectorEnum>;
-  readonly src: InputMaybe<FieldSelectorEnum>;
-  readonly width: InputMaybe<FieldSelectorEnum>;
-};
-
-type ImageSharpOriginalFilterInput = {
-  readonly height: InputMaybe<FloatQueryOperatorInput>;
-  readonly src: InputMaybe<StringQueryOperatorInput>;
-  readonly width: InputMaybe<FloatQueryOperatorInput>;
-};
-
-type ImageSharpOriginalSortInput = {
-  readonly height: InputMaybe<SortOrderEnum>;
-  readonly src: InputMaybe<SortOrderEnum>;
-  readonly width: InputMaybe<SortOrderEnum>;
-};
-
-type ImageSharpResize = {
-  readonly aspectRatio: Maybe<Scalars['Float']>;
-  readonly height: Maybe<Scalars['Int']>;
-  readonly originalName: Maybe<Scalars['String']>;
-  readonly src: Maybe<Scalars['String']>;
-  readonly tracedSVG: Maybe<Scalars['String']>;
-  readonly width: Maybe<Scalars['Int']>;
-};
-
-type ImageSharpResizeFieldSelector = {
-  readonly aspectRatio: InputMaybe<FieldSelectorEnum>;
-  readonly height: InputMaybe<FieldSelectorEnum>;
-  readonly originalName: InputMaybe<FieldSelectorEnum>;
-  readonly src: InputMaybe<FieldSelectorEnum>;
-  readonly tracedSVG: InputMaybe<FieldSelectorEnum>;
-  readonly width: InputMaybe<FieldSelectorEnum>;
-};
-
-type ImageSharpResizeFilterInput = {
-  readonly aspectRatio: InputMaybe<FloatQueryOperatorInput>;
-  readonly height: InputMaybe<IntQueryOperatorInput>;
-  readonly originalName: InputMaybe<StringQueryOperatorInput>;
-  readonly src: InputMaybe<StringQueryOperatorInput>;
-  readonly tracedSVG: InputMaybe<StringQueryOperatorInput>;
-  readonly width: InputMaybe<IntQueryOperatorInput>;
-};
-
-type ImageSharpResizeSortInput = {
-  readonly aspectRatio: InputMaybe<SortOrderEnum>;
-  readonly height: InputMaybe<SortOrderEnum>;
-  readonly originalName: InputMaybe<SortOrderEnum>;
-  readonly src: InputMaybe<SortOrderEnum>;
-  readonly tracedSVG: InputMaybe<SortOrderEnum>;
-  readonly width: InputMaybe<SortOrderEnum>;
-};
-
-type ImageSharpSortInput = {
-  readonly children: InputMaybe<NodeSortInput>;
-  readonly fixed: InputMaybe<ImageSharpFixedSortInput>;
-  readonly fluid: InputMaybe<ImageSharpFluidSortInput>;
-  readonly gatsbyImageData: InputMaybe<SortOrderEnum>;
-  readonly id: InputMaybe<SortOrderEnum>;
-  readonly internal: InputMaybe<InternalSortInput>;
-  readonly original: InputMaybe<ImageSharpOriginalSortInput>;
-  readonly parent: InputMaybe<NodeSortInput>;
-  readonly resize: InputMaybe<ImageSharpResizeSortInput>;
 };
 
 type IntQueryOperatorInput = {
@@ -1684,11 +850,6 @@ type InternalSortInput = {
   readonly type: InputMaybe<SortOrderEnum>;
 };
 
-type JPGOptions = {
-  readonly progressive: InputMaybe<Scalars['Boolean']>;
-  readonly quality: InputMaybe<Scalars['Int']>;
-};
-
 type JSONQueryOperatorInput = {
   readonly eq: InputMaybe<Scalars['JSON']>;
   readonly glob: InputMaybe<Scalars['JSON']>;
@@ -1731,11 +892,6 @@ type NodeSortInput = {
   readonly parent: InputMaybe<NodeSortInput>;
 };
 
-type PNGOptions = {
-  readonly compressionSpeed: InputMaybe<Scalars['Int']>;
-  readonly quality: InputMaybe<Scalars['Int']>;
-};
-
 type PageInfo = {
   readonly currentPage: Scalars['Int'];
   readonly hasNextPage: Scalars['Boolean'];
@@ -1745,26 +901,6 @@ type PageInfo = {
   readonly perPage: Maybe<Scalars['Int']>;
   readonly totalCount: Scalars['Int'];
 };
-
-type Potrace = {
-  readonly alphaMax: InputMaybe<Scalars['Float']>;
-  readonly background: InputMaybe<Scalars['String']>;
-  readonly blackOnWhite: InputMaybe<Scalars['Boolean']>;
-  readonly color: InputMaybe<Scalars['String']>;
-  readonly optCurve: InputMaybe<Scalars['Boolean']>;
-  readonly optTolerance: InputMaybe<Scalars['Float']>;
-  readonly threshold: InputMaybe<Scalars['Int']>;
-  readonly turdSize: InputMaybe<Scalars['Float']>;
-  readonly turnPolicy: InputMaybe<PotraceTurnPolicy>;
-};
-
-type PotraceTurnPolicy =
-  | 'black'
-  | 'left'
-  | 'majority'
-  | 'minority'
-  | 'right'
-  | 'white';
 
 type QiitaPosts = Node & {
   readonly children: ReadonlyArray<Node>;
@@ -1910,29 +1046,25 @@ type QiitaPostsSortInput = {
 
 type Query = {
   readonly allDirectory: DirectoryConnection;
-  readonly allFeedHatenaBlog: FeedHatenaBlogConnection;
-  readonly allFeedHatenaBlogMeta: FeedHatenaBlogMetaConnection;
   readonly allFile: FileConnection;
   readonly allHatenaPosts: HatenaPostsConnection;
-  readonly allImageSharp: ImageSharpConnection;
   readonly allQiitaPosts: QiitaPostsConnection;
   readonly allSite: SiteConnection;
   readonly allSiteBuildMetadata: SiteBuildMetadataConnection;
   readonly allSiteFunction: SiteFunctionConnection;
   readonly allSitePage: SitePageConnection;
   readonly allSitePlugin: SitePluginConnection;
+  readonly allSitePosts: SitePostsConnection;
   readonly directory: Maybe<Directory>;
-  readonly feedHatenaBlog: Maybe<FeedHatenaBlog>;
-  readonly feedHatenaBlogMeta: Maybe<FeedHatenaBlogMeta>;
   readonly file: Maybe<File>;
   readonly hatenaPosts: Maybe<HatenaPosts>;
-  readonly imageSharp: Maybe<ImageSharp>;
   readonly qiitaPosts: Maybe<QiitaPosts>;
   readonly site: Maybe<Site>;
   readonly siteBuildMetadata: Maybe<SiteBuildMetadata>;
   readonly siteFunction: Maybe<SiteFunction>;
   readonly sitePage: Maybe<SitePage>;
   readonly sitePlugin: Maybe<SitePlugin>;
+  readonly sitePosts: Maybe<SitePosts>;
 };
 
 
@@ -1941,22 +1073,6 @@ type Query_allDirectoryArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<ReadonlyArray<InputMaybe<DirectorySortInput>>>;
-};
-
-
-type Query_allFeedHatenaBlogArgs = {
-  filter: InputMaybe<FeedHatenaBlogFilterInput>;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-  sort: InputMaybe<ReadonlyArray<InputMaybe<FeedHatenaBlogSortInput>>>;
-};
-
-
-type Query_allFeedHatenaBlogMetaArgs = {
-  filter: InputMaybe<FeedHatenaBlogMetaFilterInput>;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-  sort: InputMaybe<ReadonlyArray<InputMaybe<FeedHatenaBlogMetaSortInput>>>;
 };
 
 
@@ -1973,14 +1089,6 @@ type Query_allHatenaPostsArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<ReadonlyArray<InputMaybe<HatenaPostsSortInput>>>;
-};
-
-
-type Query_allImageSharpArgs = {
-  filter: InputMaybe<ImageSharpFilterInput>;
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-  sort: InputMaybe<ReadonlyArray<InputMaybe<ImageSharpSortInput>>>;
 };
 
 
@@ -2032,6 +1140,14 @@ type Query_allSitePluginArgs = {
 };
 
 
+type Query_allSitePostsArgs = {
+  filter: InputMaybe<SitePostsFilterInput>;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+  sort: InputMaybe<ReadonlyArray<InputMaybe<SitePostsSortInput>>>;
+};
+
+
 type Query_directoryArgs = {
   absolutePath: InputMaybe<StringQueryOperatorInput>;
   accessTime: InputMaybe<DateQueryOperatorInput>;
@@ -2071,37 +1187,6 @@ type Query_directoryArgs = {
 };
 
 
-type Query_feedHatenaBlogArgs = {
-  categories: InputMaybe<StringQueryOperatorInput>;
-  children: InputMaybe<NodeFilterListInput>;
-  content: InputMaybe<StringQueryOperatorInput>;
-  contentSnippet: InputMaybe<StringQueryOperatorInput>;
-  enclosure: InputMaybe<FeedHatenaBlogEnclosureFilterInput>;
-  guid: InputMaybe<StringQueryOperatorInput>;
-  id: InputMaybe<StringQueryOperatorInput>;
-  internal: InputMaybe<InternalFilterInput>;
-  isoDate: InputMaybe<DateQueryOperatorInput>;
-  link: InputMaybe<StringQueryOperatorInput>;
-  parent: InputMaybe<NodeFilterInput>;
-  pubDate: InputMaybe<StringQueryOperatorInput>;
-  title: InputMaybe<StringQueryOperatorInput>;
-};
-
-
-type Query_feedHatenaBlogMetaArgs = {
-  children: InputMaybe<NodeFilterListInput>;
-  description: InputMaybe<StringQueryOperatorInput>;
-  docs: InputMaybe<StringQueryOperatorInput>;
-  generator: InputMaybe<StringQueryOperatorInput>;
-  id: InputMaybe<StringQueryOperatorInput>;
-  internal: InputMaybe<InternalFilterInput>;
-  lastBuildDate: InputMaybe<StringQueryOperatorInput>;
-  link: InputMaybe<StringQueryOperatorInput>;
-  parent: InputMaybe<NodeFilterInput>;
-  title: InputMaybe<StringQueryOperatorInput>;
-};
-
-
 type Query_fileArgs = {
   absolutePath: InputMaybe<StringQueryOperatorInput>;
   accessTime: InputMaybe<DateQueryOperatorInput>;
@@ -2112,9 +1197,7 @@ type Query_fileArgs = {
   birthtime: InputMaybe<DateQueryOperatorInput>;
   birthtimeMs: InputMaybe<FloatQueryOperatorInput>;
   changeTime: InputMaybe<DateQueryOperatorInput>;
-  childImageSharp: InputMaybe<ImageSharpFilterInput>;
   children: InputMaybe<NodeFilterListInput>;
-  childrenImageSharp: InputMaybe<ImageSharpFilterListInput>;
   ctime: InputMaybe<DateQueryOperatorInput>;
   ctimeMs: InputMaybe<FloatQueryOperatorInput>;
   dev: InputMaybe<IntQueryOperatorInput>;
@@ -2145,26 +1228,13 @@ type Query_fileArgs = {
 
 type Query_hatenaPostsArgs = {
   children: InputMaybe<NodeFilterListInput>;
-  content: InputMaybe<HatenaPostsContentFilterInput>;
+  content: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
   link: InputMaybe<StringQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   pubDate: InputMaybe<DateQueryOperatorInput>;
   title: InputMaybe<StringQueryOperatorInput>;
-};
-
-
-type Query_imageSharpArgs = {
-  children: InputMaybe<NodeFilterListInput>;
-  fixed: InputMaybe<ImageSharpFixedFilterInput>;
-  fluid: InputMaybe<ImageSharpFluidFilterInput>;
-  gatsbyImageData: InputMaybe<GatsbyImageDataQueryOperatorInput>;
-  id: InputMaybe<StringQueryOperatorInput>;
-  internal: InputMaybe<InternalFilterInput>;
-  original: InputMaybe<ImageSharpOriginalFilterInput>;
-  parent: InputMaybe<NodeFilterInput>;
-  resize: InputMaybe<ImageSharpResizeFilterInput>;
 };
 
 
@@ -2251,6 +1321,17 @@ type Query_sitePluginArgs = {
   resolve: InputMaybe<StringQueryOperatorInput>;
   ssrAPIs: InputMaybe<StringQueryOperatorInput>;
   version: InputMaybe<StringQueryOperatorInput>;
+};
+
+
+type Query_sitePostsArgs = {
+  children: InputMaybe<NodeFilterListInput>;
+  id: InputMaybe<StringQueryOperatorInput>;
+  internal: InputMaybe<InternalFilterInput>;
+  link: InputMaybe<StringQueryOperatorInput>;
+  parent: InputMaybe<NodeFilterInput>;
+  pubDate: InputMaybe<DateQueryOperatorInput>;
+  title: InputMaybe<StringQueryOperatorInput>;
 };
 
 type Site = Node & {
@@ -2979,6 +2060,140 @@ type SitePluginSortInput = {
   readonly version: InputMaybe<SortOrderEnum>;
 };
 
+type SitePosts = Node & {
+  readonly children: ReadonlyArray<Node>;
+  readonly id: Scalars['ID'];
+  readonly internal: Internal;
+  readonly link: Maybe<Scalars['String']>;
+  readonly parent: Maybe<Node>;
+  readonly pubDate: Maybe<Scalars['Date']>;
+  readonly title: Maybe<Scalars['String']>;
+};
+
+
+type SitePosts_pubDateArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+type SitePostsConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<SitePostsEdge>;
+  readonly group: ReadonlyArray<SitePostsGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<SitePosts>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type SitePostsConnection_distinctArgs = {
+  field: SitePostsFieldSelector;
+};
+
+
+type SitePostsConnection_groupArgs = {
+  field: SitePostsFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type SitePostsConnection_maxArgs = {
+  field: SitePostsFieldSelector;
+};
+
+
+type SitePostsConnection_minArgs = {
+  field: SitePostsFieldSelector;
+};
+
+
+type SitePostsConnection_sumArgs = {
+  field: SitePostsFieldSelector;
+};
+
+type SitePostsEdge = {
+  readonly next: Maybe<SitePosts>;
+  readonly node: SitePosts;
+  readonly previous: Maybe<SitePosts>;
+};
+
+type SitePostsFieldSelector = {
+  readonly children: InputMaybe<NodeFieldSelector>;
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly link: InputMaybe<FieldSelectorEnum>;
+  readonly parent: InputMaybe<NodeFieldSelector>;
+  readonly pubDate: InputMaybe<FieldSelectorEnum>;
+  readonly title: InputMaybe<FieldSelectorEnum>;
+};
+
+type SitePostsFilterInput = {
+  readonly children: InputMaybe<NodeFilterListInput>;
+  readonly id: InputMaybe<StringQueryOperatorInput>;
+  readonly internal: InputMaybe<InternalFilterInput>;
+  readonly link: InputMaybe<StringQueryOperatorInput>;
+  readonly parent: InputMaybe<NodeFilterInput>;
+  readonly pubDate: InputMaybe<DateQueryOperatorInput>;
+  readonly title: InputMaybe<StringQueryOperatorInput>;
+};
+
+type SitePostsGroupConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<SitePostsEdge>;
+  readonly field: Scalars['String'];
+  readonly fieldValue: Maybe<Scalars['String']>;
+  readonly group: ReadonlyArray<SitePostsGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<SitePosts>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type SitePostsGroupConnection_distinctArgs = {
+  field: SitePostsFieldSelector;
+};
+
+
+type SitePostsGroupConnection_groupArgs = {
+  field: SitePostsFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type SitePostsGroupConnection_maxArgs = {
+  field: SitePostsFieldSelector;
+};
+
+
+type SitePostsGroupConnection_minArgs = {
+  field: SitePostsFieldSelector;
+};
+
+
+type SitePostsGroupConnection_sumArgs = {
+  field: SitePostsFieldSelector;
+};
+
+type SitePostsSortInput = {
+  readonly children: InputMaybe<NodeSortInput>;
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly internal: InputMaybe<InternalSortInput>;
+  readonly link: InputMaybe<SortOrderEnum>;
+  readonly parent: InputMaybe<NodeSortInput>;
+  readonly pubDate: InputMaybe<SortOrderEnum>;
+  readonly title: InputMaybe<SortOrderEnum>;
+};
+
 type SiteSiteMetadata = {
   readonly description: Maybe<Scalars['String']>;
   readonly siteUrl: Maybe<Scalars['String']>;
@@ -3032,49 +2247,10 @@ type StringQueryOperatorInput = {
   readonly regex: InputMaybe<Scalars['String']>;
 };
 
-type TransformOptions = {
-  readonly cropFocus: InputMaybe<ImageCropFocus>;
-  readonly duotone: InputMaybe<DuotoneGradient>;
-  readonly fit: InputMaybe<ImageFit>;
-  readonly grayscale: InputMaybe<Scalars['Boolean']>;
-  readonly rotate: InputMaybe<Scalars['Int']>;
-  readonly trim: InputMaybe<Scalars['Float']>;
-};
-
-type WebPOptions = {
-  readonly quality: InputMaybe<Scalars['Int']>;
-};
-
-type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
-
-type GatsbyImageSharpFixed_noBase64Fragment = { readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
-
-type GatsbyImageSharpFixed_tracedSVGFragment = { readonly tracedSVG: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
-
-type GatsbyImageSharpFixed_withWebpFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbyImageSharpFixed_withWebp_noBase64Fragment = { readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbyImageSharpFixed_withWebp_tracedSVGFragment = { readonly tracedSVG: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbyImageSharpFluidFragment = { readonly base64: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly sizes: string };
-
-type GatsbyImageSharpFluid_noBase64Fragment = { readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly sizes: string };
-
-type GatsbyImageSharpFluid_tracedSVGFragment = { readonly tracedSVG: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly sizes: string };
-
-type GatsbyImageSharpFluid_withWebpFragment = { readonly base64: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
-
-type GatsbyImageSharpFluid_withWebp_noBase64Fragment = { readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
-
-type GatsbyImageSharpFluid_withWebp_tracedSVGFragment = { readonly tracedSVG: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
-
-type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: number, readonly maxWidth: number };
-
 type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexPageQuery = { readonly allHatenaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> } };
+type IndexPageQuery = { readonly allHatenaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> }, readonly allSitePosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> } };
 
 
 }

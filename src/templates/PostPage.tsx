@@ -10,11 +10,43 @@ interface PostPageContext {
     post: SitePost
 }
 
-const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext}) => {
+const SITE_URL = "https://daisuzz.dev"
+
+function stripHtml(html: string): string {
+    return html.replace(/<[^>]*>/g, "")
+}
+
+function buildDescription(post: SitePost): string {
+    const firstParagraph = post.blocks.find((block) => block.type === "paragraph")
+    if (!firstParagraph || firstParagraph.type !== "paragraph") return post.title
+    const text = stripHtml(firstParagraph.html)
+    return text.length > 120 ? `${text.slice(0, 120)}…` : text
+}
+
+const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, location}) => {
     const {post} = pageContext
+    const description = buildDescription(post)
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: post.title,
+        datePublished: post.date,
+        url: `${SITE_URL}${location.pathname}`,
+        author: {
+            "@type": "Person",
+            name: "Daisaku Suzuki",
+            url: SITE_URL,
+        },
+    }
 
     return (
-        <Layout pageTitle={post.title}>
+        <Layout
+            pageTitle={post.title}
+            description={description}
+            path={location.pathname}
+            type="article"
+            structuredData={structuredData}
+        >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
                     <Link to="/#writing">~/writing</Link> / {post.slug}

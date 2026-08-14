@@ -36,36 +36,46 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         createNode(postNode);
     });
 
-    const qiitaPosts = () => axios.get(`https://qiita.com/api/v2/items?page=1&per_page=100&query=user:daisuzz`);
-    const qiitaRes = await qiitaPosts();
-    qiitaRes.data.map((post, i) => {
-        const postNode = {
-            // Required fields
-            id: post.id,
-            parent: null,
-            children: [],
-            internal: {
-                type: `QiitaPosts`,
-                contentDigest: createContentDigest(post),
-            },
-            title: post.title,
-            content: post.rendered_body,
-            pubDate: post.created_at,
-            likesCount: post.likes_count,
-            link: post.url,
-        }
+    const EXTERNAL_API_TIMEOUT_MS = 10000
 
-        // Create node with the gatsby createNode() API
-        createNode(postNode);
-    });
+    try {
+        const qiitaRes = await axios.get(
+            `https://qiita.com/api/v2/items?page=1&per_page=100&query=user:daisuzz`,
+            {timeout: EXTERNAL_API_TIMEOUT_MS}
+        );
+        qiitaRes.data.map((post, i) => {
+            const postNode = {
+                // Required fields
+                id: post.id,
+                parent: null,
+                children: [],
+                internal: {
+                    type: `QiitaPosts`,
+                    contentDigest: createContentDigest(post),
+                },
+                title: post.title,
+                content: post.rendered_body,
+                pubDate: post.created_at,
+                likesCount: post.likes_count,
+                link: post.url,
+            }
+
+            // Create node with the gatsby createNode() API
+            createNode(postNode);
+        });
+    } catch (error) {
+        // Qiita APIが落ちていてもビルド全体を失敗させない
+        console.warn(`[gatsby-node] Qiitaの記事取得に失敗しました: ${error.message}`);
+    }
+
     const fetchHatenaBlogs = async (url) => {
-        const hatenaPosts = () => axios.get(url, {
+        const hatenaRes = await axios.get(url, {
             auth: {
                 username: process.env.HATENA_NAME,
                 password: process.env.HATENA_API_KEY
-            }
+            },
+            timeout: EXTERNAL_API_TIMEOUT_MS,
         });
-        const hatenaRes = await hatenaPosts();
         const parser = new xml2js.Parser({})
         const hatenaResJson = await parser.parseStringPromise(hatenaRes.data)
         hatenaResJson.feed.entry.map((post, i) => {
@@ -99,5 +109,11 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
             await fetchHatenaBlogs(nextLink.$.href)
         }
     }
-    await fetchHatenaBlogs(`https://blog.hatena.ne.jp/dais39/iikanji.hatenablog.jp/atom/entry`)
+
+    try {
+        await fetchHatenaBlogs(`https://blog.hatena.ne.jp/dais39/iikanji.hatenablog.jp/atom/entry`)
+    } catch (error) {
+        // はてなブログAPIが落ちていてもビルド全体を失敗させない
+        console.warn(`[gatsby-node] はてなブログの記事取得に失敗しました: ${error.message}`);
+    }
 }

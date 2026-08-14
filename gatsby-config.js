@@ -13,18 +13,7 @@ module.exports = {
                 trackingIds: [process.env.GATSBY_TRACKING_ID],
             },
         },
-        // はてなブログのRSSフィードから記事情報を取得するための設定
-        {
-            resolve: `gatsby-source-rss-feed`,
-            options: {
-                url: `https://iikanji.hatenablog.jp/rss`,
-                name: `HatenaBlog`,
-            }
-        },
         `gatsby-plugin-sitemap`,
-        `gatsby-plugin-image`,
-        `gatsby-plugin-sharp`,
-        `gatsby-transformer-sharp`
     ].filter(Boolean),
 
     // GraphQL Typegenを有効にする

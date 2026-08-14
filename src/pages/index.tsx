@@ -104,9 +104,14 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data, location}
                         Spring Boot, Spring Security, Thymeleaf
                     </div>
                     <div>
+                        <span className={style.aboutFieldLabel}>role</span>
+                        <br/>
+                        Dev team lead (30+), Scrum Master
+                    </div>
+                    <div>
                         <span className={style.aboutFieldLabel}>interests</span>
                         <br/>
-                        DDD, test design, dev experience
+                        DDD, DevEx, Software Design
                     </div>
                 </div>
             </section>

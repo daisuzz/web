@@ -94,19 +94,19 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({data, location}
                 <p className={style.aboutLabel}># about</p>
                 <div className={style.aboutGrid}>
                     <div>
-                        <span className={style.aboutFieldLabel}>languages</span>
+                        <span className={style.aboutFieldLabel}>stack</span>
                         <br/>
-                        Kotlin, Java, TypeScript
+                        Kotlin, Java, Spring Boot
                     </div>
                     <div>
-                        <span className={style.aboutFieldLabel}>frameworks</span>
+                        <span className={style.aboutFieldLabel}>role</span>
                         <br/>
-                        Spring Boot, Spring Security, Thymeleaf
+                        Dev team lead (30+), Scrum Master
                     </div>
                     <div>
                         <span className={style.aboutFieldLabel}>interests</span>
                         <br/>
-                        DDD, test design, dev experience
+                        DDD, DevEx, Software Design
                     </div>
                 </div>
             </section>

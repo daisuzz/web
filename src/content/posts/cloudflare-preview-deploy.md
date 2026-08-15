@@ -10,11 +10,12 @@ PRを作成した時点でCloudflare上に実際に動くプレビューをデ�
 
 mainブランチへのPR作成/更新をトリガーに、`wrangler-action`で`versions upload`コマンドを実行し、Cloudflare Workersに新しいバージョンをアップロードするワークフローを追加した（[#323](https://github.com/daisuzz/web/pull/323)）。
 
-特別難しいことを実装したわけではなく、Cloudflareを操作するCLI[Wrangler](https://developers.cloudflare.com/workers/wrangler/)の設定ファイル`wrangler.jsonc`の中で、`workers_dev: true`・`preview_urls: true`を有効にしておくことで、アップロードしたバージョンごとに固有のプレビュー用URLが払い出されるようになる。
+特別難しいことを実装したわけではなく、Cloudflareを操作するCLIである[Wrangler](https://developers.cloudflare.com/workers/wrangler/)の設定ファイル`wrangler.jsonc`の中で、`workers_dev: true`・`preview_urls: true`を有効にしておくことで、アップロードしたバージョンごとに固有のプレビュー用URLが払い出されるようになる。
 
 ## PRへのプレビューURL自動コメント
 
 毎回Actionsのログからプレビュー用URLを確認するのが手間なので、アップロード結果からプレビューURLを取得し、`actions/github-script`でPRにコメントするようにした。
+
 また、同じPRに再pushしたときに新規コメントが増え続けないよう、目印用のHTMLコメント（`<!-- cloudflare-workers-preview -->`）を埋め込んで、既存コメントがあれば更新するようにした。
 
 ## プレビューURLにCloudflare Accessで認証をかけた

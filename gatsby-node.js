@@ -31,6 +31,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
             title: post.title,
             link: `/posts/${post.slug}`,
             pubDate: post.date,
+            content: post.content,
         }
 
         createNode(postNode);

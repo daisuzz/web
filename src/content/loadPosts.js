@@ -39,6 +39,7 @@ function parsePost(filePath) {
         title: data.title || slug,
         date: data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date),
         blocks,
+        content: marked.parse(content),
     }
 }
 

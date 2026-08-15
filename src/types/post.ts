@@ -10,4 +10,5 @@ export interface SitePost {
     date: string
     title: string
     blocks: PostBlock[]
+    content: string
 }

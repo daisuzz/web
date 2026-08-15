@@ -1,5 +1,16 @@
 require(`dotenv`).config()
 
+const DESCRIPTION_MAX_LENGTH = 200
+
+function stripHtml(html) {
+    return (html || ``).replace(/<[^>]*>/g, ``).trim()
+}
+
+function buildDescription(html) {
+    const text = stripHtml(html)
+    return text.length > DESCRIPTION_MAX_LENGTH ? `${text.slice(0, DESCRIPTION_MAX_LENGTH)}…` : text
+}
+
 module.exports = {
     // gatsby-plugin-sitemap, gatsby-plugin-feedの設定
     siteMetadata: {
@@ -47,18 +58,24 @@ module.exports = {
                                     date: node.pubDate,
                                     url: `${siteUrl}${node.link}`,
                                     guid: `${siteUrl}${node.link}`,
+                                    description: buildDescription(node.content),
+                                    custom_elements: [{"content:encoded": node.content}],
                                 })),
                                 ...allQiitaPosts.edges.map(({node}) => ({
                                     title: node.title,
                                     date: node.pubDate,
                                     url: node.link,
                                     guid: node.link,
+                                    description: buildDescription(node.content),
+                                    custom_elements: [{"content:encoded": node.content}],
                                 })),
                                 ...allHatenaPosts.edges.map(({node}) => ({
                                     title: node.title,
                                     date: node.pubDate,
                                     url: node.link,
                                     guid: node.link,
+                                    description: buildDescription(node.content),
+                                    custom_elements: [{"content:encoded": node.content}],
                                 })),
                             ]
 
@@ -74,6 +91,7 @@ module.exports = {
                                             title
                                             link
                                             pubDate
+                                            content
                                         }
                                     }
                                 }
@@ -83,6 +101,7 @@ module.exports = {
                                             title
                                             link
                                             pubDate
+                                            content
                                         }
                                     }
                                 }
@@ -92,6 +111,7 @@ module.exports = {
                                             title
                                             link
                                             pubDate
+                                            content
                                         }
                                     }
                                 }

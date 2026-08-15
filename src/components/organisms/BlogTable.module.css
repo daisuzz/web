@@ -91,6 +91,28 @@
     text-overflow: ellipsis;
 }
 
+/* PC版のグリッド1行+ellipsisだとモバイルでタイトルが見切れるため、
+   1段目に日付+出典、2段目にタイトルを全幅で折り返す2段組みに切り替える */
+@media (max-width: 640px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 12px;
+        row-gap: 6px;
+        align-items: baseline;
+        overflow: visible;
+    }
+
+    .title {
+        flex: 1 0 100%;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        overflow-wrap: anywhere;
+        line-height: 1.6;
+    }
+}
+
 .toggleWrap {
     padding: 20px 10px 88px;
 }

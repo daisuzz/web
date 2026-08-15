@@ -11,6 +11,13 @@ Daisaku Suzuki（daisuzz）の個人サイト
 - [MUI](https://mui.com/)
 - [Cloudflare Workers](https://workers.cloudflare.com/)
 
+## アクセス制限
+
+本番用（独自ドメイン）とプレビュー用（`workers.dev`）で、それぞれ異なる制限をかけています。
+
+- 本番: CloudflareのWAF Custom Rulesで、日本・アメリカ以外の国（`ip.geoip.country`）からのアクセスをエッジ側でブロックしています。Workerが起動する前に弾かれるため、Workersのリクエスト数は消費しません。
+- プレビュー: PRごとのプレビューURL・ベースの`workers.dev`URLはCloudflare Accessで保護しており、認証済みの本人以外はアクセスできません。こちらもAccessの認証チェックがWorker起動前に行われるため、未認証アクセスはWorkersのリクエスト数を消費しません。
+
 ## セットアップ
 
 ```bash

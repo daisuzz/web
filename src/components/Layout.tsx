@@ -43,6 +43,7 @@ const Layout: React.FC<Props> = ({
             <link rel="icon" href="/favicon.ico" sizes="any"/>
             <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
             <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+            <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} RSS Feed`} href={`${SITE_URL}/rss.xml`}/>
             <meta property="og:site_name" content={SITE_NAME}/>
             <meta property="og:type" content={type}/>
             <meta property="og:title" content={title}/>

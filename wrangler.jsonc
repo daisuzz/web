@@ -4,10 +4,8 @@
   "compatibility_date": "2026-08-14",
   "workers_dev": true,
   "preview_urls": true,
-  "main": "src/worker/index.ts",
   "assets": {
     "directory": "./public",
-    "binding": "ASSETS",
     "not_found_handling": "404-page"
   }
 }

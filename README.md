@@ -18,8 +18,6 @@ Daisaku Suzuki（daisuzz）の個人サイト
 - **本番（独自ドメイン）**: CloudflareのWAF Custom Rulesで、日本・アメリカ以外の国（`ip.geoip.country`）からのアクセスをエッジ側でブロックしています。Workerが起動する前に弾かれるため、Workersのリクエスト数は消費しません。
 - **プレビュー（`workers.dev`）**: PRごとのプレビューURL・ベースの`workers.dev`URLはCloudflare Accessで保護しており、認証済みの本人以外はアクセスできません。こちらもAccessの認証チェックがWorker起動前に行われるため、未認証アクセスはWorkersのリクエスト数を消費しません。
 
-加えて、[`src/worker/index.ts`](./src/worker/index.ts) でも [`request.cf.country`](https://developers.cloudflare.com/workers/runtime-apis/request/#incomingrequestcfproperties) を見て日本・アメリカ以外からのアクセスを403で拒否しており、WAF/Accessをすり抜けた場合の保険として機能します。
-
 ## セットアップ
 
 ```bash

@@ -53,7 +53,7 @@ const BlogTable: React.FC<BlogArticleTableProps> = ({qiitaBlogs, hatenaBlogs, si
     return (
         <section id="writing" className={style.section}>
             <div className={style.sectionHeader}>
-                <h2 className={style.heading}># writing ({posts.length})</h2>
+                <h1 className={style.heading}># writing ({posts.length})</h1>
                 <div className={style.filters}>
                     {FILTERS.map((f) => (
                         <button

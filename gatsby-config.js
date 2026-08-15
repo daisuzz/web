@@ -15,7 +15,12 @@ module.exports = {
                 trackingIds: [process.env.GATSBY_TRACKING_ID],
             },
         },
-        `gatsby-plugin-sitemap`,
+        {
+            resolve: `gatsby-plugin-sitemap`,
+            options: {
+                excludes: [`/404.html`, `/404/`, `/dev-404-page/`],
+            },
+        },
         // RSSフィードの生成(自サイト・Qiita・はてなブログの記事をまとめて配信)
         {
             resolve: `gatsby-plugin-feed`,

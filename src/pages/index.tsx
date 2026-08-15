@@ -10,6 +10,7 @@ const PERSON_STRUCTURED_DATA = {
     name: "Daisaku Suzuki",
     url: "https://daisuzz.dev",
     image: "https://daisuzz.dev/avatar/profile.jpg",
+    jobTitle: "Dev team lead",
     sameAs: [
         "https://github.com/daisuzz",
         "https://www.linkedin.com/in/daisuzz/",
@@ -21,7 +22,7 @@ const PERSON_STRUCTURED_DATA = {
 const IndexPage: React.FC<PageProps> = ({location}) => {
     return (
         <Layout
-            pageTitle="TOP"
+            pageTitle="Daisaku Suzuki"
             description="Daisaku Suzukiの個人サイト。Kotlin/Java/TypeScriptを中心とした技術ブログ記事とプロフィールを掲載。"
             path={location.pathname}
             structuredData={PERSON_STRUCTURED_DATA}

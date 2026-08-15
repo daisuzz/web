@@ -9,8 +9,8 @@ const Header: React.FC = () => {
             <div className={style.inner}>
                 <Link to="/" className={style.brand}>~/daisuzz.dev</Link>
                 <nav className={style.nav}>
-                    <Link to="/">about</Link>
-                    <Link to="/writing">writing</Link>
+                    <Link to="/">writing</Link>
+                    <Link to="/about">about</Link>
                     <a
                         href="/rss.xml"
                         target="_blank"

@@ -1,27 +1,29 @@
 ---
-title: PRごとにCloudflareへプレビューデプロイする仕組みを作った
+title: PRごとにCloudflareへプレビューをデプロイして動作確認できるようにした
 date: "2026-08-15"
 ---
 
-これまでこのサイトはmainにマージした後でしか本番反映後の見た目を確認できず、レイアウト崩れなどをマージ後に気づくことがあった。PRの時点でCloudflare上に実際に動く状態を作ってレビューできるようにしたので、その仕組みを記録しておく。
+今までこのサイトに変更を加えるときは、mainにマージした後でしか本番反映後の見た目を確認できない状態だったので、レイアウト崩れなどをマージ後に気づくことがあった。
+PRを作成した時点でCloudflare上に実際に動くプレビューをデプロイして、レビューできるようにしたので、備忘録として残す。
 
 ## 仕組みの概要
 
-`pull_request`（対象: main）をトリガーに、`wrangler-action`で`versions upload`コマンドを実行し、Cloudflare Workersに新しい「バージョン」としてアップロードするワークフローを追加した（[#323](https://github.com/daisuzz/web/pull/323)）。本番反映用の`deploy`コマンド（push to main時に実行）とは別のワークフローとして分離してあるので、影響範囲を切り分けやすい。
+mainブランチへのPR作成/更新をトリガーに、`wrangler-action`で`versions upload`コマンドを実行し、Cloudflare Workersに新しいバージョンをアップロードするワークフローを追加した（[#323](https://github.com/daisuzz/web/pull/323)）。
 
-`wrangler.jsonc`側で`workers_dev: true`・`preview_urls: true`を有効にしておくことで、アップロードしたバージョンごとに固有のworkers.dev URLが払い出されるようになる。
+特別難しいことを実装したわけではなく、Cloudflareを操作するCLI[Wrangler](https://developers.cloudflare.com/workers/wrangler/)の設定ファイル`wrangler.jsonc`の中で、`workers_dev: true`・`preview_urls: true`を有効にしておくことで、アップロードしたバージョンごとに固有のプレビュー用URLが払い出されるようになる。
 
 ## PRへのプレビューURL自動コメント
 
-デプロイ結果からプレビューURLを取得し、`actions/github-script`でPRにコメントする。同じPRに再pushしたときに新規コメントが増え続けないよう、目印用のHTMLコメント（`<!-- cloudflare-workers-preview -->`）を埋め込んで、既存コメントがあれば更新するだけにした。
+毎回Actionsのログからプレビュー用URLを確認するのが手間なので、アップロード結果からプレビューURLを取得し、`actions/github-script`でPRにコメントするようにした。
+また、同じPRに再pushしたときに新規コメントが増え続けないよう、目印用のHTMLコメント（`<!-- cloudflare-workers-preview -->`）を埋め込んで、既存コメントがあれば更新するようにした。
 
 ## プレビューURLにCloudflare Accessで認証をかけた
 
-仕組みを入れてしばらく経ってから、PRコメントに貼られるプレビューURLがそのままworkers.devの公開URLであることに気づいた。PRコメントを見られる人なら誰でもアクセスできてしまうので、下書き中の記事やレイアウトが崩れた状態の画面を第三者に見られる可能性があるのが気になった。
+このままだと、PRコメントに貼られるプレビューURLは誰でもアクセスできてしまうので、認証の仕組みをかけるようにした。
 
-そこでCloudflare Zero TrustのAccessをダッシュボードから設定し、プレビュー用のworkers.devサブドメインへのアクセスにログインを要求するようにした。認証方式はCloudflareアカウントでのSSOにして、自分以外はアクセスできない状態にしている。この設定はリポジトリのコードには表れず、Cloudflareダッシュボード側だけで完結する変更なので、後から見返す用に記録として残しておく。
+認証の仕組み自体は、Cloudflare Accessをダッシュボードから有効にして、プレビュー用のURLへのアクセスに対してログインを要求するようにした。認証はCloudflareアカウントを使ってこのサイトのプロジェクトへのアクセス権がある人のみpassするようにした。
 
-## まとめ
+## 参考
 
-- PRごとにCloudflare Workersへプレビューデプロイし、URLをPRにコメントする仕組みを導入した
-- 公開URLがそのままPRコメントに貼られてしまう問題は、Cloudflare Accessで認証をかけて対処した
+* [Preview URLs](https://developers.cloudflare.com/workers/versions-and-deployments/preview-urls/)
+* [Manage access to Preview URLs](https://developers.cloudflare.com/workers/versions-and-deployments/preview-urls/#manage-access-to-preview-urls)

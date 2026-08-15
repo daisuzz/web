@@ -51,8 +51,7 @@ const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, lo
             "@type": "BreadcrumbList",
             itemListElement: [
                 {"@type": "ListItem", position: 1, name: "daisuzz.dev", item: SITE_URL},
-                {"@type": "ListItem", position: 2, name: "Writing", item: `${SITE_URL}/writing`},
-                {"@type": "ListItem", position: 3, name: post.title, item: url},
+                {"@type": "ListItem", position: 2, name: post.title, item: url},
             ],
         },
     ]
@@ -67,7 +66,7 @@ const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, lo
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
-                    <Link to="/writing">~/writing</Link> / {post.slug}
+                    <Link to="/">~/writing</Link> / {post.slug}
                 </div>
                 <article className={style.article}>
                     <div className={style.meta}>
@@ -100,7 +99,7 @@ const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, lo
                     })}
 
                     <div className={style.backLink}>
-                        <Link to="/writing">&larr; back to writing</Link>
+                        <Link to="/">&larr; back to writing</Link>
                     </div>
                 </article>
             </div>

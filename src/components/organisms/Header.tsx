@@ -9,8 +9,8 @@ const Header: React.FC = () => {
             <div className={style.inner}>
                 <Link to="/" className={style.brand}>~/daisuzz.dev</Link>
                 <nav className={style.nav}>
-                    <Link to="/writing">writing</Link>
                     <Link to="/">about</Link>
+                    <Link to="/writing">writing</Link>
                     <a
                         href="/rss.xml"
                         target="_blank"
@@ -33,7 +33,6 @@ const Header: React.FC = () => {
                             <path d="M4 4a16 16 0 0 1 16 16"/>
                             <circle cx="5" cy="19" r="1"/>
                         </svg>
-                        rss
                     </a>
                 </nav>
             </div>

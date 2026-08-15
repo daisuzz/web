@@ -63,6 +63,7 @@ typings/
 .cache
 **/.cache
 public
+.wrangler
 
 .idea
 .vscode

@@ -11,6 +11,10 @@ Daisaku Suzuki（daisuzz）の個人サイト
 - [MUI](https://mui.com/)
 - [Cloudflare Workers](https://workers.cloudflare.com/)
 
+## アクセス制限
+
+[`src/worker/index.ts`](./src/worker/index.ts) で、[`request.cf.country`](https://developers.cloudflare.com/workers/runtime-apis/request/#incomingrequestcfproperties) を見て日本・アメリカ以外からのアクセスを 403 で拒否しています。
+
 ## セットアップ
 
 ```bash

@@ -9,7 +9,7 @@ import * as style from "./Layout.module.css";
 const SITE_URL = "https://daisuzz.dev"
 const SITE_NAME = "daisuzz.dev"
 const DEFAULT_DESCRIPTION = "Daisaku Suzukiの個人サイト。Kotlin/Java/TypeScriptを中心とした技術ブログとプロフィールを掲載。"
-const DEFAULT_IMAGE = "/avatar/profile.jpg"
+const DEFAULT_IMAGE = "/og-image.png"
 
 interface Props {
     pageTitle: string
@@ -17,7 +17,8 @@ interface Props {
     path?: string
     image?: string
     type?: "website" | "article"
-    structuredData?: object
+    structuredData?: object | object[]
+    noindex?: boolean
     children: React.ReactNode
 }
 
@@ -28,6 +29,7 @@ const Layout: React.FC<Props> = ({
     image = DEFAULT_IMAGE,
     type = "website",
     structuredData,
+    noindex = false,
     children,
 }) => {
     const title = pageTitle + ' | daisuzz.dev'
@@ -39,6 +41,7 @@ const Layout: React.FC<Props> = ({
             <CssBaseline/>
             <title>{title}</title>
             <meta name="description" content={description}/>
+            {noindex && <meta name="robots" content="noindex"/>}
             <link rel="canonical" href={url}/>
             <link rel="icon" href="/favicon.ico" sizes="any"/>
             <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
@@ -50,7 +53,9 @@ const Layout: React.FC<Props> = ({
             <meta property="og:description" content={description}/>
             <meta property="og:url" content={url}/>
             <meta property="og:image" content={imageUrl}/>
-            <meta name="twitter:card" content="summary"/>
+            {image === DEFAULT_IMAGE && <meta property="og:image:width" content="1200"/>}
+            {image === DEFAULT_IMAGE && <meta property="og:image:height" content="630"/>}
+            <meta name="twitter:card" content="summary_large_image"/>
             <meta name="twitter:title" content={title}/>
             <meta name="twitter:description" content={description}/>
             <meta name="twitter:image" content={imageUrl}/>

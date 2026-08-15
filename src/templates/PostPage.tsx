@@ -11,6 +11,7 @@ interface PostPageContext {
 }
 
 const SITE_URL = "https://daisuzz.dev"
+const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`
 
 function stripHtml(html: string): string {
     return html.replace(/<[^>]*>/g, "")
@@ -26,18 +27,35 @@ function buildDescription(post: SitePost): string {
 const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, location}) => {
     const {post} = pageContext
     const description = buildDescription(post)
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: post.title,
-        datePublished: post.date,
-        url: `${SITE_URL}${location.pathname}`,
-        author: {
-            "@type": "Person",
-            name: "Daisaku Suzuki",
-            url: SITE_URL,
+    const url = `${SITE_URL}${location.pathname}`
+    const structuredData = [
+        {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            datePublished: post.date,
+            url,
+            image: DEFAULT_IMAGE,
+            mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": url,
+            },
+            author: {
+                "@type": "Person",
+                name: "Daisaku Suzuki",
+                url: SITE_URL,
+            },
         },
-    }
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+                {"@type": "ListItem", position: 1, name: "daisuzz.dev", item: SITE_URL},
+                {"@type": "ListItem", position: 2, name: "Writing", item: `${SITE_URL}/writing`},
+                {"@type": "ListItem", position: 3, name: post.title, item: url},
+            ],
+        },
+    ]
 
     return (
         <Layout
@@ -49,7 +67,7 @@ const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, lo
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
-                    <Link to="/#writing">~/writing</Link> / {post.slug}
+                    <Link to="/writing">~/writing</Link> / {post.slug}
                 </div>
                 <article className={style.article}>
                     <div className={style.meta}>
@@ -82,7 +100,7 @@ const PostPage: React.FC<PageProps<object, PostPageContext>> = ({pageContext, lo
                     })}
 
                     <div className={style.backLink}>
-                        <Link to="/#writing">&larr; back to writing</Link>
+                        <Link to="/writing">&larr; back to writing</Link>
                     </div>
                 </article>
             </div>

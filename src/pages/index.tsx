@@ -14,6 +14,7 @@ const PERSON_STRUCTURED_DATA = {
         "https://github.com/daisuzz",
         "https://www.linkedin.com/in/daisuzz/",
         "https://x.com/daisuzz",
+        "https://www.instagram.com/_daisuzz_frtg/",
     ],
 }
 
@@ -32,6 +33,7 @@ const IndexPage: React.FC<PageProps> = ({location}) => {
                     <a href="https://github.com/daisuzz">&rarr; github</a>
                     <a href="https://www.linkedin.com/in/daisuzz/">&rarr; linkedin</a>
                     <a href="https://x.com/daisuzz">&rarr; x</a>
+                    <a href="https://www.instagram.com/_daisuzz_frtg/">&rarr; instagram</a>
                 </div>
             </section>
 

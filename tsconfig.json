@@ -1,6 +1,10 @@
 {
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "gatsby-node.ts",
+        "gatsby-config.ts",
+        "gatsby-ssr.ts",
+        "gatsby-browser.ts"
     ],
   "compilerOptions": {
     "jsx": "react",

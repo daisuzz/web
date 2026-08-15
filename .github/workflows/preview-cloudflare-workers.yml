@@ -36,16 +36,10 @@ jobs:
         uses: actions/github-script@v8
         env:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
-          COMMAND_OUTPUT: ${{ steps.deploy.outputs.command-output }}
         with:
           script: |
             const marker = '<!-- cloudflare-workers-preview -->';
-            // cloudflare/wrangler-action does not reliably set `deployment-url`
-            // for `versions upload` (https://github.com/cloudflare/wrangler-action/issues/343),
-            // so fall back to parsing the raw command output for a workers.dev URL.
-            const commandOutput = process.env.COMMAND_OUTPUT || '';
-            const match = commandOutput.match(/https:\/\/\S+\.workers\.dev\S*/);
-            const url = process.env.DEPLOYMENT_URL || (match ? match[0] : '');
+            const url = process.env.DEPLOYMENT_URL || '';
             const body = url
               ? `${marker}\n🔎 Cloudflare Workers preview: ${url}`
               : `${marker}\n⚠️ プレビューデプロイは成功しましたが、プレビューURLを取得できませんでした。Cloudflareダッシュボードでご確認ください。`;

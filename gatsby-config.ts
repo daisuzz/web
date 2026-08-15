@@ -1,17 +1,39 @@
-require(`dotenv`).config()
+import type {GatsbyConfig} from "gatsby"
+
+import "dotenv/config"
 
 const DESCRIPTION_MAX_LENGTH = 200
 
-function stripHtml(html) {
+function stripHtml(html: string): string {
     return (html || ``).replace(/<[^>]*>/g, ``).trim()
 }
 
-function buildDescription(html) {
+function buildDescription(html: string): string {
     const text = stripHtml(html)
     return text.length > DESCRIPTION_MAX_LENGTH ? `${text.slice(0, DESCRIPTION_MAX_LENGTH)}…` : text
 }
 
-module.exports = {
+interface FeedPostNode {
+    title: string
+    link: string
+    pubDate: string
+    content: string
+}
+
+interface FeedQueryResult {
+    site: {
+        siteMetadata: {
+            title: string
+            description: string
+            siteUrl: string
+        }
+    }
+    allSitePosts: { edges: { node: FeedPostNode }[] }
+    allQiitaPosts: { edges: { node: FeedPostNode }[] }
+    allHatenaPosts: { edges: { node: FeedPostNode }[] }
+}
+
+const config: GatsbyConfig = {
     // gatsby-plugin-sitemap, gatsby-plugin-feedの設定
     siteMetadata: {
         title: `daisuzz.dev`,
@@ -49,7 +71,7 @@ module.exports = {
                 `,
                 feeds: [
                     {
-                        serialize: ({query: {site, allSitePosts, allQiitaPosts, allHatenaPosts}}) => {
+                        serialize: ({query: {site, allSitePosts, allQiitaPosts, allHatenaPosts}}: {query: FeedQueryResult}) => {
                             const siteUrl = site.siteMetadata.siteUrl.replace(/\/$/, "")
 
                             const items = [
@@ -128,3 +150,5 @@ module.exports = {
     // GraphQL Typegenを有効にする
     graphqlTypegen: true,
 }
+
+export default config

@@ -1,24 +1,51 @@
-const path = require(`path`)
-const axios = require('axios')
-const xml2js = require("xml2js");
-const {loadPosts} = require("./src/content/loadPosts");
-require(`dotenv`).config()
+import path from "path"
+import axios from "axios"
+import xml2js from "xml2js"
+import type {GatsbyNode} from "gatsby"
+import {loadPosts} from "./src/content/loadPosts"
 
-exports.createPages = async ({actions}) => {
-    const {createPage} = actions;
-    const sitePosts = loadPosts();
+import "dotenv/config"
+
+interface QiitaPost {
+    id: string
+    title: string
+    rendered_body: string
+    created_at: string
+    likes_count: number
+    url: string
+}
+
+interface HatenaEntry {
+    id: string[]
+    title: string[]
+    published: string[]
+    content?: [{ _?: string } | string]
+    link: { $: { rel: string; href: string } }[]
+    "app:control": [{ "app:draft": string[] }]
+}
+
+interface HatenaFeed {
+    feed: {
+        entry: HatenaEntry[]
+        link: { $: { rel: string; href: string } }[]
+    }
+}
+
+export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
+    const {createPage} = actions
+    const sitePosts = loadPosts()
     sitePosts.forEach((post) => {
         createPage({
             path: `/posts/${post.slug}`,
             component: path.resolve("./src/templates/PostPage.tsx"),
             context: {post},
-        });
-    });
+        })
+    })
 }
 
-exports.sourceNodes = async ({actions, createContentDigest}) => {
-    const {createNode} = actions;
-    const sitePosts = loadPosts();
+export const sourceNodes: GatsbyNode["sourceNodes"] = async ({actions, createContentDigest}) => {
+    const {createNode} = actions
+    const sitePosts = loadPosts()
     sitePosts.forEach((post) => {
         const postNode = {
             id: post.slug,
@@ -34,17 +61,17 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
             content: post.content,
         }
 
-        createNode(postNode);
-    });
+        createNode(postNode)
+    })
 
     const EXTERNAL_API_TIMEOUT_MS = 10000
 
     try {
-        const qiitaRes = await axios.get(
+        const qiitaRes = await axios.get<QiitaPost[]>(
             `https://qiita.com/api/v2/items?page=1&per_page=100&query=user:daisuzz`,
             {timeout: EXTERNAL_API_TIMEOUT_MS}
-        );
-        qiitaRes.data.map((post, i) => {
+        )
+        qiitaRes.data.map((post) => {
             const postNode = {
                 // Required fields
                 id: post.id,
@@ -62,26 +89,27 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
             }
 
             // Create node with the gatsby createNode() API
-            createNode(postNode);
-        });
+            createNode(postNode)
+        })
     } catch (error) {
         // Qiita APIが落ちていてもビルド全体を失敗させない
-        console.warn(`[gatsby-node] Qiitaの記事取得に失敗しました: ${error.message}`);
+        console.warn(`[gatsby-node] Qiitaの記事取得に失敗しました: ${(error as Error).message}`)
     }
 
-    const fetchHatenaBlogs = async (url) => {
+    const fetchHatenaBlogs = async (url: string): Promise<void> => {
         const hatenaRes = await axios.get(url, {
             auth: {
-                username: process.env.HATENA_NAME,
-                password: process.env.HATENA_API_KEY
+                username: process.env.HATENA_NAME ?? "",
+                password: process.env.HATENA_API_KEY ?? "",
             },
             timeout: EXTERNAL_API_TIMEOUT_MS,
-        });
+        })
         const parser = new xml2js.Parser({})
-        const hatenaResJson = await parser.parseStringPromise(hatenaRes.data)
-        hatenaResJson.feed.entry.map((post, i) => {
+        const hatenaResJson: HatenaFeed = await parser.parseStringPromise(hatenaRes.data)
+        hatenaResJson.feed.entry.map((post) => {
             // 下書きは除外
-            if (post[`app:control`][0][`app:draft`][0] === 'yes') return
+            if (post[`app:control`][0][`app:draft`][0] === "yes") return
+            const content = post.content?.[0]
             const postNode = {
                 // Required fields
                 id: post.id[0],
@@ -93,19 +121,19 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
                 },
                 title: post.title[0],
                 // xml2js は { _: text, $: attrs } を返すため、文字列だけを入れて GraphQL の `_` 衝突を防ぐ
-                content: post.content?.[0]?._ ?? post.content?.[0] ?? null,
+                content: (typeof content === "object" ? content?._ : content) ?? null,
                 pubDate: post.published[0],
                 link: post.link[1].$.href,
             }
 
             // Create node with the gatsby createNode() API
-            createNode(postNode);
-        });
+            createNode(postNode)
+        })
 
         // はてなブログの記事取得APIはデフォルトで7件までしか一括で取得できない。
         // 次の7件はrel属性がnextになっているlinkタグの中に含まれているURLを叩くことで取得できる
         // ここでは全件取得したいので、rel属性がnextになっているlinkタグの中に含まれているURLが取れなくなるまで再帰的にAPIをcallする
-        const nextLink = hatenaResJson.feed.link.find(e => e.$.rel === 'next')
+        const nextLink = hatenaResJson.feed.link.find((e) => e.$.rel === "next")
         if (nextLink) {
             await fetchHatenaBlogs(nextLink.$.href)
         }
@@ -115,6 +143,6 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         await fetchHatenaBlogs(`https://blog.hatena.ne.jp/dais39/iikanji.hatenablog.jp/atom/entry`)
     } catch (error) {
         // はてなブログAPIが落ちていてもビルド全体を失敗させない
-        console.warn(`[gatsby-node] はてなブログの記事取得に失敗しました: ${error.message}`);
+        console.warn(`[gatsby-node] はてなブログの記事取得に失敗しました: ${(error as Error).message}`)
     }
 }

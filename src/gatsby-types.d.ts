@@ -2247,10 +2247,10 @@ type StringQueryOperatorInput = {
   readonly regex: InputMaybe<Scalars['String']>;
 };
 
-type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
+type WritingPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexPageQuery = { readonly allHatenaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> }, readonly allSitePosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> } };
+type WritingPageQuery = { readonly allHatenaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly link: string | null, readonly pubDate: string | null } }> }, readonly allQiitaPosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> }, readonly allSitePosts: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly title: string | null, readonly pubDate: string | null, readonly link: string | null } }> } };
 
 
 }

@@ -2,42 +2,42 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Commands
+## コマンド
 
 ```bash
-npm install       # install dependencies
-npm run develop   # dev server at http://localhost:8000 (also: npm start)
-npm run build     # production build into public/
-npm run serve     # serve the built public/ directory locally
-npm run clean     # remove Gatsby's .cache/ and public/
+npm install       # 依存パッケージのインストール
+npm run develop   # 開発サーバーを起動 (http://localhost:8000、npm start でも同じ)
+npm run build     # public/ に本番ビルドを出力
+npm run serve     # ビルド済みの public/ をローカルで配信
+npm run clean     # Gatsbyの .cache/ と public/ を削除
 ```
 
-There is no lint or test script configured in this repository.
+このリポジトリにlint/testのスクリプトは用意されていない。
 
-`npm run build` requires `GATSBY_TRACKING_ID` to be set (even to a dummy value) or `gatsby-plugin-google-gtag` fails validation with `trackingIds[0] must not be a sparse array item`. `HATENA_NAME`/`HATENA_API_KEY` are optional locally — the Hatena/Qiita API calls in `gatsby-node.ts` are wrapped in try/catch with a timeout, so a missing or failing external API only logs a warning and does not fail the build.
+`npm run build` を実行するには `GATSBY_TRACKING_ID`（ダミー値でも可）を設定する必要がある。未設定だと `gatsby-plugin-google-gtag` のバリデーションで `trackingIds[0] must not be a sparse array item` エラーになりビルドが失敗する。`HATENA_NAME`/`HATENA_API_KEY` はローカルでは未設定でも問題ない。`gatsby-node.ts` 内のHatena/Qiita APIへのリクエストはtry/catchとタイムアウトでラップされているため、外部APIが失敗・未設定でも警告が出るだけでビルド全体は失敗しない。
 
-## Architecture
+## アーキテクチャ
 
-Gatsby 5 + TypeScript personal site/blog, deployed as static assets to Cloudflare Workers (see `wrangler.jsonc`). Despite being a Gatsby site, it deliberately avoids Gatsby's usual content stack: there is no MDX, no `gatsby-transformer-remark`, and no `gatsby-source-filesystem`. Markdown content is parsed with a hand-rolled pipeline (`marked` lexer/renderer + `gray-matter` for frontmatter), and pages are created in `gatsby-node.ts`'s `createPages` by resolving content in plain TypeScript and passing the fully-parsed object straight into `pageContext` — the page templates read `pageContext` directly and do not run GraphQL queries. Keep new content types consistent with this pattern rather than introducing GraphQL-based content sourcing for them.
+Gatsby 5 + TypeScriptで構築された個人サイト/ブログで、静的アセットとしてCloudflare Workersにデプロイされている（`wrangler.jsonc` 参照）。Gatsbyサイトではあるが、意図的に一般的なコンテンツ管理の仕組み（MDX、`gatsby-transformer-remark`、`gatsby-source-filesystem`）は使っていない。Markdownコンテンツは手組みのパイプライン（`marked` のlexer/renderer + frontmatter解析用の `gray-matter`）でパースし、ページは `gatsby-node.ts` の `createPages`内でTypeScriptとしてコンテンツを解決した上で、パース済みオブジェクトをそのまま `pageContext` に渡して生成している——各ページテンプレートは `pageContext` を直接読むだけで、GraphQLクエリは実行しない。新しいコンテンツ種別を追加する際も、GraphQLベースのソーシングを導入するのではなく、この方式に合わせること。
 
-### Two parallel content pipelines: posts and notes
+### 2系統並行するコンテンツパイプライン: posts と notes
 
-**Posts** (`/posts/<slug>`, the blog): `src/content/posts/*.md` → `src/content/loadPosts.ts` parses frontmatter (`title`, `date`) and lexes the body into a `PostBlock[]` (paragraph/heading/code/blockquote/list only — anything else `marked` emits is silently dropped) → `gatsby-node.ts` `createPages` calls `createPage({path: "/posts/<slug>", component: PostPage.tsx, context: {post}})`.
+**posts**（`/posts/<slug>`、ブログ記事）: `src/content/posts/*.md` → `src/content/loadPosts.ts` がfrontmatter（`title`、`date`）を解析し、本文を `PostBlock[]`（paragraph/heading/code/blockquote/listのみ。`marked` が出力するそれ以外のトークンは黙って捨てられる）にレクシングする → `gatsby-node.ts` の `createPages` が `createPage({path: "/posts/<slug>", component: PostPage.tsx, context: {post}})` を呼ぶ。
 
-**Notes** (`/notes/<slug>`, a Zettelkasten-style personal wiki): `src/content/notes/*.md` → `src/content/loadNotes.ts` in two passes — pass 1 reads every file to build a `slug -> title` index (title is the first `# heading` line in the body, not frontmatter; frontmatter only carries `created`/`updated`), pass 2 re-parses each file with that index available. Before handing text to `marked`, `src/content/noteMarkdown.ts` preprocesses it: `[[wikilink]]` is rewritten into a normal Markdown link (or a `<span class="wikilink-missing">` if the target slug doesn't exist, with a `console.warn` at build time), and `#tag` is rewritten into a link to `/notes/tags/<tag>` (ASCII tags are lowercased, non-ASCII tags are left as-is). Both transforms operate only on the non-code regions of the source (fenced/inline code spans are split out first), so `[[...]]`/`#tag` inside code blocks are left untouched. ` ```mermaid ` code fences become a distinct `{type: "mermaid"}` block instead of a regular code block. `loadNotes()` also computes the reverse-link graph (`backlinks`) and a tag index across all notes. `gatsby-node.ts` uses these to create `/notes/<slug>` (`NotePage.tsx`), `/notes/` (`NotesIndexPage.tsx`), `/notes/tags/` (`NoteTagsIndexPage.tsx`), and `/notes/tags/<tag>` (`NoteTagPage.tsx`). Mermaid diagrams render client-side only: `src/components/organisms/Mermaid.tsx` dynamically `import("mermaid")` inside `useEffect`, so the `mermaid` bundle is only fetched when a note page actually contains a mermaid block. Notes are not sourced into GraphQL and are not part of the RSS feed — they're an intentionally separate namespace from posts.
+**notes**（`/notes/<slug>`、Zettelkasten風の個人Wiki）: `src/content/notes/*.md` → `src/content/loadNotes.ts` が2パス構成で処理する——1パス目で全ファイルを読み `slug -> title` のインデックスを構築する（タイトルはfrontmatterではなく本文先頭の `# 見出し` 行から取る。frontmatterが持つのは `created`/`updated` のみ）。2パス目でそのインデックスを使って各ファイルを再パースする。`marked` に渡す前に `src/content/noteMarkdown.ts` が前処理を行い、`[[wikilink]]` を通常のMarkdownリンクに書き換える（対象のslugが存在しなければ `<span class="wikilink-missing">` に置換し、build時に `console.warn` を出す）。`#tag` は `/notes/tags/<tag>` へのリンクに書き換える（ASCIIタグは小文字化、それ以外の言語のタグはそのまま）。どちらの変換も本文中のコード領域を除いた部分にのみ適用される（フェンスドコードブロックとインラインコードは先に分離される）ため、コードブロック内の `[[...]]`/`#tag` はそのまま残る。` ```mermaid ` のコードフェンスは通常のcodeブロックではなく専用の `{type: "mermaid"}` ブロックになる。`loadNotes()` は全ノートを横断した逆リンクグラフ（`backlinks`）とタグインデックスも計算する。`gatsby-node.ts` はこれらを使って `/notes/<slug>`（`NotePage.tsx`）、`/notes/`（`NotesIndexPage.tsx`）、`/notes/tags/`（`NoteTagsIndexPage.tsx`）、`/notes/tags/<tag>`（`NoteTagPage.tsx`）を生成する。Mermaid図はクライアントサイドのみで描画される: `src/components/organisms/Mermaid.tsx` が `useEffect` 内で動的に `import("mermaid")` するため、mermaidバンドルはMermaidブロックを含むノートページを開いたときだけ取得される。notesはGraphQLにソーシングされておらず、RSSフィードにも含まれない——postsとは意図的に別の名前空間として扱われている。
 
-### GraphQL nodes vs. pageContext
+### GraphQLノードと pageContext の使い分け
 
-`sourceNodes` in `gatsby-node.ts` creates three custom node types by calling `createNode()` directly (not via `gatsby-source-filesystem`): `SitePosts` (from `loadPosts()`), `QiitaPosts` (fetched live from the Qiita API), and `HatenaPosts` (fetched live from the Hatena Blog Atom feed, paginated recursively by following `rel=next` links). `allSitePosts`/`allQiitaPosts`/`allHatenaPosts` are the only GraphQL queries in the app, used by `src/pages/index.tsx` (the home "writing" list) and the `gatsby-plugin-feed` RSS query in `gatsby-config.ts`. Individual post pages, and the entire notes feature, bypass GraphQL entirely.
+`gatsby-node.ts` の `sourceNodes` は、`gatsby-source-filesystem` を使わず `createNode()` を直接呼ぶことで3種類のカスタムノードを作成している: `SitePosts`（`loadPosts()` から）、`QiitaPosts`（Qiita APIからライブ取得）、`HatenaPosts`（Hatenaブログの Atom フィードからライブ取得。`rel=next` のリンクを再帰的にたどってページネーションする）。`allSitePosts`/`allQiitaPosts`/`allHatenaPosts` はアプリ内で唯一のGraphQLクエリで、`src/pages/index.tsx`（トップページの「writing」一覧）と `gatsby-config.ts` の `gatsby-plugin-feed` によるRSSクエリで使われている。個別の記事ページ、およびnotes機能全体はGraphQLを一切経由しない。
 
-### Styling and theming
+### スタイリングとテーマ
 
-CSS Modules (`*.module.css`, imported as `import * as style from "./X.module.css"` with `// @ts-ignore` since there's no generated type declaration for them) combined with MUI's `ThemeProvider`/`CssBaseline`. `src/assets/theme.ts` defines a single hardcoded dark theme (there is no light mode or theme toggle anywhere in the codebase) and exposes the palette as CSS custom properties (`--color-*`) that the `.module.css` files consume — reuse these variables rather than hardcoding colors.
+CSS Modules（`*.module.css`。型定義が生成されていないため `import * as style from "./X.module.css"` の直前に `// @ts-ignore` を付けてimportしている）と、MUIの `ThemeProvider`/`CssBaseline` を組み合わせている。`src/assets/theme.ts` は単一のダークテーマをハードコードしており（このコードベースにライトモードやテーマ切り替えは存在しない）、パレットをCSSカスタムプロパティ（`--color-*`）として公開し、各 `.module.css` がそれを参照している——新しいスタイルを書く際も色をハードコードせずこの変数を再利用すること。
 
-### Head tags / SEO
+### headタグ / SEO
 
-There is no `react-helmet` / `gatsby-plugin-react-helmet`. `src/components/Layout.tsx` sets `<title>`, `<meta>`, OG/Twitter tags, canonical link, and JSON-LD structured data directly as JSX, relying on Gatsby 5's built-in `<head>` support.
+`react-helmet` / `gatsby-plugin-react-helmet` は使っていない。`src/components/Layout.tsx` がGatsby 5の組み込み `<head>` サポートに乗る形で、`<title>`・`<meta>`・OG/Twitterタグ・canonicalリンク・JSON-LD構造化データをJSXとして直接設定している。
 
-### Deployment
+### デプロイ
 
-`.github/workflows/deploy-cloudflare-workers.yml` runs `npm run build` and deploys the `public/` directory to Cloudflare Workers static assets on every push to `main`, and additionally on a daily cron — the cron run exists to refresh the live Qiita/Hatena content even when no code has changed. `preview-cloudflare-workers.yml` deploys PR branches to preview URLs. Production access is restricted at Cloudflare's edge to Japan/US traffic; preview URLs are protected by Cloudflare Access (see `README.md` for details).
+`.github/workflows/deploy-cloudflare-workers.yml` が `main` へのpushのたびに `npm run build` を実行し、`public/` ディレクトリをCloudflare Workersの静的アセットとしてデプロイする。それに加えて毎日1回のcronでも実行される——これはコードに変更がなくてもQiita/Hatenaのライブコンテンツを最新化するための仕組み。`preview-cloudflare-workers.yml` はPRブランチをプレビューURLにデプロイする。本番へのアクセスはCloudflareのエッジで日本・アメリカからのトラフィックのみに制限されており、プレビューURLはCloudflare Accessで保護されている（詳細は `README.md` を参照）。

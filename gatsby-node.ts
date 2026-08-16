@@ -3,6 +3,7 @@ import axios from "axios"
 import xml2js from "xml2js"
 import type {GatsbyNode} from "gatsby"
 import {loadPosts} from "./src/content/loadPosts"
+import {loadNotes} from "./src/content/loadNotes"
 
 import "dotenv/config"
 
@@ -39,6 +40,37 @@ export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
             path: `/posts/${post.slug}`,
             component: path.resolve("./src/templates/PostPage.tsx"),
             context: {post},
+        })
+    })
+
+    const {notes, tagIndex} = loadNotes()
+    notes.forEach((note) => {
+        createPage({
+            path: `/notes/${note.slug}`,
+            component: path.resolve("./src/templates/NotePage.tsx"),
+            context: {note},
+        })
+    })
+
+    createPage({
+        path: `/notes/`,
+        component: path.resolve("./src/templates/NotesIndexPage.tsx"),
+        context: {notes},
+    })
+
+    createPage({
+        path: `/notes/tags/`,
+        component: path.resolve("./src/templates/NoteTagsIndexPage.tsx"),
+        context: {
+            tags: [...tagIndex.entries()].map(([tag, taggedNotes]) => ({tag, count: taggedNotes.length})),
+        },
+    })
+
+    tagIndex.forEach((taggedNotes, tag) => {
+        createPage({
+            path: `/notes/tags/${tag}`,
+            component: path.resolve("./src/templates/NoteTagPage.tsx"),
+            context: {tag, notes: taggedNotes},
         })
     })
 }

@@ -1,0 +1,52 @@
+.wrap {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.breadcrumb {
+    padding: 28px 0 0;
+    font-size: 12px;
+    color: var(--color-dim);
+}
+
+.breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--color-heading);
+    margin: 20px 0 28px;
+}
+
+.empty {
+    color: var(--color-muted);
+    font-size: 14px;
+    padding-bottom: 72px;
+}
+
+.cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    padding-bottom: 72px;
+    align-items: baseline;
+}
+
+.tag {
+    color: var(--color-accent);
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.tag:hover {
+    text-decoration: underline;
+}
+
+.count {
+    font-size: 10px;
+    color: var(--color-dim);
+}

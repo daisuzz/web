@@ -23,6 +23,7 @@
     "gatsby-plugin-sitemap": "^6.0.0",
     "gray-matter": "^4.0.3",
     "marked": "^18.0.9",
+    "mermaid": "^11.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "xml2js": "^0.6.0"

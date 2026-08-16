@@ -10,6 +10,7 @@ const Header: React.FC = () => {
                 <Link to="/" className={style.brand}>~/daisuzz.dev</Link>
                 <nav className={style.nav}>
                     <Link to="/">writing</Link>
+                    <Link to="/notes/">notes</Link>
                     <Link to="/about">about</Link>
                     <a
                         href="/rss.xml"

@@ -65,7 +65,7 @@ bun build ./index.ts --compile --outfile myapp
 
 ## RustへのRewrite（2026年時点）
 
-Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrite Bun in Rust`, PR #30412）が2026年5月にマージされた。`bun upgrade --canary`で試用できる状態になっているが、2026年8月時点ではLinux x64限定の実験的なもので、安定版(1.3.x系)は引き続きZig実装で提供されている。正式リリースの時期は公表されていない。
+Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrite Bun in Rust`, PR `#30412`）が2026年5月にマージされた。`bun upgrade --canary`で試用できる状態になっているが、2026年8月時点ではLinux x64限定の実験的なもので、安定版(1.3.x系)は引き続きZig実装で提供されている。正式リリースの時期は公表されていない。
 
 ## 出典
 
@@ -73,7 +73,7 @@ Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrit
 - [Bun Docs - Welcome to Bun](https://bun.com/docs)
 - [Bun Docs - Installation](https://bun.com/docs/installation)
 - [Bun Docs - Test runner](https://bun.com/docs/test)
-- [Rewrite Bun in Rust (PR #30412) · oven-sh/bun](https://github.com/oven-sh/bun/pull/30412)
+- [Rewrite Bun in Rust (PR `#30412`) · oven-sh/bun](https://github.com/oven-sh/bun/pull/30412)
 - [Bun (software) - Wikipedia](https://en.wikipedia.org/wiki/Bun_(software))
 
 #bun #javascript #typescript #ランタイム #ツール

@@ -69,10 +69,6 @@ Go / npm / Ruby gem / Python(pipx) / Homebrew / apt / winget など多数の手�
 
 pre-commitは複数リポジトリ間でフック定義を共有する用途に強く、Lefthookはローカルでの実行速度とリポジトリ単位での構造化された実行に強い、という使い分けが語られている。
 
-## このリポジトリへの適用について
-
-このサイト（daisuzz/web）はnpmベースのGatsbyプロジェクトで単一言語スタックのため、Lefthookの「多言語統合」というメリットよりは「単一バイナリ・並列実行での高速さ」「YAML一本でのシンプルさ」の方が刺さる。`CLAUDE.md`には「このリポジトリにlint/testのスクリプトは用意されていない」とあり、現状Git hooksの仕組みも未導入。
-
 ## 出典
 
 - [GitHub - evilmartians/lefthook](https://github.com/evilmartians/lefthook)

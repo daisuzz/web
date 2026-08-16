@@ -69,13 +69,6 @@ herdr agent prompt reviewer "現在のdiffをレビューして" --wait --timeou
 
 `agent prompt` はテキスト送信とEnterキー送信をアトミックに行う。`--wait` を付けると `idle`/`done`/`blocked` のいずれかに状態が落ち着くまで待機してくれる。
 
-## 覚えておきたい安全上のルール
-
-- 自分が作成していないワークスペース/タブ/ペイン/セッションを勝手に閉じない
-- `herdr server stop` はメインのHerdrプロセスを落とすので、明示的に意図した場合以外は実行しない
-- 別クライアントがフォーカスしているペインに依存せず、`--current`・明示的なペインID・ユニークなagent名のいずれかを使う
-- IDはJSONレスポンスから読み取る。サイドバーの表示順や例から類推しない
-
 ## 出典
 
 - [Herdr: Terminal Multiplexer with Built-in AI Agent State Awareness](https://betterstack.com/community/guides/ai/herdr-ai-agent/)

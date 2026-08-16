@@ -33,7 +33,7 @@ flowchart TB
 
 ## 主な特徴
 
-- **エンジン**: SafariのJSエンジンであるJavaScriptCoreを採用（Node.js/Denoが使うV8ではない）
+- **エンジン**: SafariのJSエンジンである[[javascript-core]]を採用（Node.js/Denoが使うV8ではない）
 - **実装言語**: 元々はZigで実装されている。起動時間の短さ・メモリ使用量の少なさに寄与している
 - **オールインワン**: `bun install`（パッケージ管理）、`bun run`（実行）、`bun test`（Jest互換テストランナー）、`bun build`（バンドラー、単一実行ファイル生成）を1バイナリで提供
 - **TypeScript/JSXをネイティブ実行**: 設定なしで`.ts`/`.tsx`を透過的にトランスパイルして実行できる

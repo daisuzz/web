@@ -11,7 +11,7 @@ Node.jsの作者であるRyan Dahlが2018年のJSConf EUで「10 Things I Regret
 
 ## アーキテクチャ
 
-Deno本体はRustで書かれた単一バイナリ。JS/TSコードの実行自体はNode.jsと同じV8エンジンが担うが、ファイルI/O・ネットワークなど「システムコールに相当する処理」はRustの拡張(`extensions`/`ops`)として実装され、非同期処理は[[tokio]](Rust製の非同期ランタイム)が担当する。Node.jsが同じ役割をC++バインディングと`libuv`(C言語製のイベントループライブラリ)でこなしているのと対比すると、系統の違う土台の上に同じV8を載せている構図になる。
+Deno本体はRustで書かれた単一バイナリ。JS/TSコードの実行自体はNode.jsと同じV8エンジンが担うが、ファイルI/O・ネットワークなど「システムコールに相当する処理」はRustの拡張(`extensions`/`ops`)として実装され、非同期処理は[[tokio]](Rust製の[[async-runtime]])が担当する。Node.jsが同じ役割をC++バインディングと`libuv`(C言語製のイベントループライブラリ)でこなしているのと対比すると、系統の違う土台の上に同じV8を載せている構図になる。
 
 ```mermaid
 flowchart TB

@@ -19,10 +19,17 @@ function extractTitleAndBody(content: string): { title: string | null; body: str
     return {title: null, body: content}
 }
 
-function normalizeDate(value: unknown): string | undefined {
-    if (value instanceof Date) return value.toISOString().slice(0, 10)
-    if (typeof value === "string") return value
+// frontmatterのcreated/updatedは日付("2026-08-17")または日時("2026-08-17T14:30:00+09:00")の
+// どちらでも受け付ける。ソートは常にこの生の値(日時があれば日時)で行い、画面表示用には
+// toDisplayDate() で日付部分だけに切り詰める。
+function normalizeDateTime(value: unknown): string | undefined {
+    if (value instanceof Date) return value.toISOString()
+    if (typeof value === "string") return value.trim()
     return undefined
+}
+
+function toDisplayDate(value: string | undefined): string {
+    return value ? value.slice(0, 10) : ""
 }
 
 function renderListItems(items: { text: string }[]): string[] {
@@ -72,7 +79,12 @@ function buildSlugIndex(files: string[]): Map<string, string> {
     return index
 }
 
-function parseNoteFile(filePath: string, slugIndex: Map<string, string>): SiteNote {
+interface ParsedNote {
+    note: SiteNote
+    createdAtMs: number
+}
+
+function parseNoteFile(filePath: string, slugIndex: Map<string, string>): ParsedNote {
     const raw = fs.readFileSync(filePath, "utf-8")
     const {data, content} = matter(raw)
     const slug = slugOf(filePath, data)
@@ -94,29 +106,38 @@ function parseNoteFile(filePath: string, slugIndex: Map<string, string>): SiteNo
         .map(tokenToBlock)
         .filter((block): block is NoteBlock => block !== null)
 
-    const created = normalizeDate(data.created) ?? ""
-    const updated = normalizeDate(data.updated) ?? created
+    const createdRaw = normalizeDateTime(data.created) ?? ""
+    const updatedRaw = normalizeDateTime(data.updated) ?? createdRaw
 
-    if (!created) {
+    if (!createdRaw) {
         console.warn(`[loadNotes] ${slug}: frontmatterに created がありません`)
     }
 
+    // 日付のみ("2026-08-17")の場合はUTC 0時、日時が指定されていればそのオフセットを
+    // 踏まえた絶対時刻としてパースする。Dateとして不正な値はNaNとなり、常に末尾に回る。
+    const createdAtMs = createdRaw ? Date.parse(createdRaw) : NaN
+
     return {
-        slug,
-        title,
-        created,
-        updated,
-        tags: [...tags],
-        blocks,
-        links: [...links],
-        backlinks: [],
+        note: {
+            slug,
+            title,
+            created: toDisplayDate(createdRaw),
+            updated: toDisplayDate(updatedRaw),
+            tags: [...tags],
+            blocks,
+            links: [...links],
+            backlinks: [],
+        },
+        createdAtMs,
     }
 }
 
 export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote[]> } {
     const files = readAllFiles()
     const slugIndex = buildSlugIndex(files)
-    const notes = files.map((filePath) => parseNoteFile(filePath, slugIndex))
+    const parsed = files.map((filePath) => parseNoteFile(filePath, slugIndex))
+    const notes = parsed.map((p) => p.note)
+    const createdAtMsBySlug = new Map(parsed.map((p) => [p.note.slug, p.createdAtMs]))
 
     const notesBySlug = new Map(notes.map((note) => [note.slug, note]))
     notes.forEach((note) => {
@@ -128,7 +149,17 @@ export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote
         })
     })
 
-    notes.sort((a, b) => (a.updated < b.updated ? 1 : -1))
+    // 表示上のcreatedは日付に切り詰めているが、並び順は切り詰め前の日時(createdAtMsBySlug)で
+    // 判定する。同日中に複数ノートを作成した場合でもfrontmatterに時刻まで書けば厳密な作成順になる。
+    // created未設定(NaN)のノートは常に末尾に回す。
+    notes.sort((a, b) => {
+        const aAt = createdAtMsBySlug.get(a.slug) ?? NaN
+        const bAt = createdAtMsBySlug.get(b.slug) ?? NaN
+        if (Number.isNaN(aAt) && Number.isNaN(bAt)) return 0
+        if (Number.isNaN(aAt)) return 1
+        if (Number.isNaN(bAt)) return -1
+        return bAt - aAt
+    })
 
     const tagIndex = new Map<string, SiteNote[]>()
     notes.forEach((note) => {

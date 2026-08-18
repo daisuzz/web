@@ -73,7 +73,7 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
                 </div>
                 <article className={style.article}>
                     <div className={style.meta}>
-                        <time>{note.updated}</time>
+                        <time>{note.created}</time>
                         {note.tags.map((tag) => (
                             <Link key={tag} to={`/notes/tags/${tag}`} className={style.tag}>
                                 #{tag}

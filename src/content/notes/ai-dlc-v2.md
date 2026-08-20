@@ -1,5 +1,6 @@
 ---
 created: "2026-08-18"
+updated: "2026-08-20"
 ---
 # AI-DLC v2
 
@@ -58,14 +59,14 @@ v1の3フェーズ（Inception/Construction/Operations）は、v2の実装レベ
 
 ## リリースの経緯
 
-`awslabs/aidlc-workflows`は元々v0.1系・v1.0系としてルールベースの実装を重ねてきたリポジトリで、v1.0系のある時点で「AIDLC v2 alpha」対応が追加され、その後2025年11月の発表でTypeScriptによる全面書き換え版としてv2が一般公開（GA）された、という順序で進化している。個々のリリース日付はCHANGELOG.md参照だが、この文書の裏取り時点では正確な年月日の確認までは取れていない。
+`awslabs/aidlc-workflows`は元々v0.1系・v1.0系としてルールベースの実装を重ねてきたリポジトリで、v1.0系のある時点で「AIDLC v2 alpha」対応が追加された。2025年11月の発表（DevOpsブログ公開）でTypeScriptによる全面書き換え版としてv2が公開されたが、この時点はREADMEの告知バナーが "Announcing 2.0 (Preview)" であり、プレビューリリースという位置づけだった。その後2026年7月22日、READMEの告知バナーが "Announcing 2.0 (GA)" に更新され、v2が正式に一般提供（GA）された。
 
 ## 出典
 
 - [awslabs/aidlc-workflows (GitHub)](https://github.com/awslabs/aidlc-workflows)
 - [awslabs/aidlc-workflows v2ブランチ](https://github.com/awslabs/aidlc-workflows/tree/v2)
 - [Open-Sourcing Adaptive Workflows for AI-Driven Development Life Cycle (AI-DLC) | AWS DevOps & Developer Productivity Blog](https://aws.amazon.com/blogs/devops/open-sourcing-adaptive-workflows-for-ai-driven-development-life-cycle-ai-dlc/)
-- [AI-DLC Workflows v2 GitHub検索結果まとめ](https://github.com/awslabs/aidlc-workflows/tree/v2)
 - [awslabs/aidlc-workflows CHANGELOG.md](https://raw.githubusercontent.com/awslabs/aidlc-workflows/main/CHANGELOG.md)
+- [GAへの変更コミット (README: Preview → GA)](https://github.com/awslabs/aidlc-workflows/commit/35415ff93eb76c60cf782b4bdbb48b99a23995b4)
 
 #ai-dlc #aws #software-development #methodology #ai-agent

@@ -3,7 +3,7 @@ created: "2026-08-20"
 ---
 # Amazon Bedrock AgentCore
 
-AIエージェントを本番環境で安全に・大規模に動かすためのAWSのマネージドサービス群。2025年7月にプレビュー公開され、2025年10月13日にRuntime/Memory/Gateway/Identity/Observability/Browser/Code Interpreterの中核コンポーネントが東京を含む9リージョンでGA（一般提供）した。Bedrockという名前がついているが特定の基盤モデルに縛られず、モデル・フレームワーク・プロトコルを問わず使える「エージェントのためのインフラ」という位置づけ。
+AIエージェントを本番環境で安全に・大規模に動かすためのAWSのマネージドサービス群。2025年7月にプレビュー公開され、2025年10月13日にRuntime / Memory / Gateway / Identity / Observability / Browser / Code Interpreterの中核コンポーネントが東京を含む9リージョンでGA（一般提供）した。Bedrockという名前がついているが特定の基盤モデルに縛られず、モデル・フレームワーク・プロトコルを問わず使える「エージェントのためのインフラ」という位置づけ。
 
 ## 設計思想: フレームワーク非依存・モデル非依存
 

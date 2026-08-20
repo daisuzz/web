@@ -7,7 +7,7 @@ Claude Codeの利用状況を監視・可視化する仕組み。大きく分け
 
 ## OpenTelemetry (OTel) 統合
 
-metrics・logs・traces（β）をOTLPで外部のobservability基盤にエクスポートできる仕組み。
+[[opentelemetry]]のmetrics・logs・traces（β）をOTLPで外部のobservability基盤にエクスポートできる仕組み。
 
 - Datadog、Grafana、Honeycombなど任意のOTel対応backendに送れる
 - プロトコルはgRPC/HTTP、Prometheus形式にも対応。mTLS認証も可能

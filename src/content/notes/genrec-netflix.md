@@ -1,5 +1,6 @@
 ---
 created: 2026-08-18
+updated: 2026-08-20
 ---
 # GenRec (Netflix)
 
@@ -34,3 +35,5 @@ Netflixトラフィックの約10%を対象にした大規模A/Bテストで、�
 - [GenRec: Towards LLM-Native Recommendation at Netflix (Netflix TechBlog)](https://netflixtechblog.com/genrec-towards-llm-native-recommendation-at-netflix-f20be6f643e3)
 - [Netflix: LLM-Native Recommendation System at Scale (ZenML LLMOps Database)](https://www.zenml.io/llmops-database/llm-native-recommendation-system-at-scale)
 - [Towards Generalizable and Efficient Large-Scale Generative Recommenders (Netflix Technology Blog / Medium)](https://netflixtechblog.medium.com/towards-generalizable-and-efficient-large-scale-generative-recommenders-a7db648aa257)
+
+#recommendation-system #llm #netflix #ai

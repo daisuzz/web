@@ -1,5 +1,5 @@
 ---
-created: "2026-08-20"
+created: "2026-08-20T20:17:50+09:00"
 ---
 # OpenTelemetry
 

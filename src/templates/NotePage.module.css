@@ -54,6 +54,7 @@
     line-height: 1.95;
     color: var(--color-body);
     margin: 0 0 22px;
+    overflow-wrap: anywhere;
 }
 
 .heading {
@@ -63,6 +64,7 @@
     margin: 36px 0 16px;
     border-left: 2px solid var(--color-accent);
     padding-left: 12px;
+    overflow-wrap: anywhere;
 }
 
 .list {
@@ -71,6 +73,7 @@
     color: var(--color-body);
     margin: 0 0 22px;
     padding-left: 22px;
+    overflow-wrap: anywhere;
 }
 
 .list li {
@@ -84,6 +87,7 @@
     margin: 0 0 22px;
     padding-left: 14px;
     border-left: 2px solid var(--color-border);
+    overflow-wrap: anywhere;
 }
 
 .paragraph a,

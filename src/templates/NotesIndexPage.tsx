@@ -37,7 +37,7 @@ const NotesIndexPage: React.FC<PageProps<object, NotesIndexPageContext>> = ({pag
                                     {note.title}
                                 </Link>
                                 <div className={style.itemMeta}>
-                                    <time>{note.updated}</time>
+                                    <time>{note.created}</time>
                                     {note.tags.map((tag) => (
                                         <Link key={tag} to={`/notes/tags/${tag}`} className={style.tag}>
                                             #{tag}

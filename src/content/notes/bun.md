@@ -34,7 +34,7 @@ flowchart TB
 
 ## 主な特徴
 
-- **エンジン**: SafariのJSエンジンである[[javascript-core]]を採用（Node.js/Denoが使うV8ではない）
+- **エンジン**: SafariのJSエンジンである[[javascript-core]]を採用（Node.js/[[deno]]が使うV8ではない）
 - **実装言語**: 元々はZigで実装されていたが、後述のRustへのリライトを経て2026年8月リリースのBun 1.4からRust実装が標準になった
 - **オールインワン**: `bun install`（パッケージ管理）、`bun run`（実行）、`bun test`（Jest互換テストランナー）、`bun build`（バンドラー、単一実行ファイル生成）を1バイナリで提供
 - **TypeScript/JSXをネイティブ実行**: 設定なしで`.ts`/`.tsx`を透過的にトランスパイルして実行できる

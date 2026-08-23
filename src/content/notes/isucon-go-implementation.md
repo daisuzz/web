@@ -1,5 +1,6 @@
 ---
 created: 2026-08-22
+updated: 2026-08-23
 ---
 
 # ISUCONにおけるGo実装
@@ -18,6 +19,20 @@ created: 2026-08-22
 - **goccy/go-json**: 標準の`encoding/json`と互換のドロップイン高速JSONエンコーダ/デコーダ。
 - **golang.org/x/sync/singleflight**: 同一キーへの同時リクエストを1つの実行にまとめる。キャッシュのthundering herd対策に使える。
 - **mazrean/isucon-go-tools**: ISUCON向けにprofiler・cache・DB・HTTP・コネクションプールまわりの計装やコード書き換えを提供するユーティリティ集。
+
+## 過去のボトルネックと解消事例
+
+定石を機械的に当てはめるのではなく、alp/pprof/pt-query-digestの実測結果に基づいて手を入れる箇所を決める必要がある。あるISUCON13参加チームは、N+1クエリを解消してもスコアが伸びず、pt-query-digestで見ると実は別のクエリが支配的ボトルネックだったと報告している。
+
+- **N+1クエリ**: ループ内で1件ずつSELECTしているケース。JOINへの書き換え、`IN`句でのバルクフェッチ、インメモリキャッシュ化で対処するのが定石。
+- **キャッシュ更新時のThundering Herd**: キャッシュミス時に大量リクエストが同時にDBへ殺到する問題。`golang.org/x/sync/singleflight`で同一キーへの同時実行を1本化して解消する。ISUCON12優勝チームはこれで20万〜27万点の間で不安定だったスコアを安定化させたと報告している。
+- **CPU重い処理（bcryptなど）**: パスワードハッシュ計算のようなCPUバウンドな処理がボトルネックになるケース。pprofのCPUプロファイルで発覚するのが定番パターン。コストパラメータの見直しや検証結果のキャッシュで対処する。
+- **静的ファイル配信**: 画像・JS・CSS等をアプリケーションサーバー経由で返している場合、nginxに配信を委譲してAPサーバーの負荷を下げるのが定番の初手。
+- **画像/アイコン配信**: `/api/user/.../icon`のような画像配信エンドポイントがボトルネック化しやすい。ハッシュ値をインメモリキャッシュしつつ画像本体はローカルファイルシステムに配置し、`/initialize`実行時にキャッシュをパージする実装が典型的。
+- **セッションストア**: セッションをMySQL等のRDBに保存していると大量I/Oでボトルネック化する。Redis/Memcachedなどのin-memory KVSに移行してDBの負荷を分離するのが定番の対処。
+- **外部HTTPリクエスト**: `http.Client`を毎回生成、または`http.DefaultClient`をそのまま使うと、`Transport`の`MaxIdleConnsPerHost`のデフォルト値(2)が並列リクエストのボトルネックになる。`http.Client`/`Transport`をグローバルで使い回し、`MaxIdleConnsPerHost`を大きめ（1000など）に設定する。レスポンスボディを確実に読み切ってCloseし、コネクション再利用を成立させる。
+- **DNS解決**: DNSレコードのTTL・cache-ttl設定が0でキャッシュが効かず、毎回名前解決が走るケース。TTL/cache-ttl設定を見直してキャッシュを有効化する。
+- **CPU以外のリソース**: 全ホストでCPU使用率に余裕があるのにスコアが伸びない場合、ネットワーク帯域やファイルディスクリプタ数がボトルネックになっていることがある。CPUだけでなく多面的にリソースを監視する必要がある。
 
 ## ハマりどころ・注意点
 
@@ -41,5 +56,9 @@ created: 2026-08-22
 - [sql.DBのチューニング方法 - Qiita](https://qiita.com/go_sagawa/items/11929cd0883608a6888d)
 - [mercari_go_isucon.md (catatsuy)](https://gist.github.com/catatsuy/e627aaf118fbe001f2e7c665fda48146)
 - [GitHub - catatsuy/memo_isucon](https://github.com/catatsuy/memo_isucon)
+- [ISUCON12で優勝しました(チーム NaruseJun) - Zenn](https://zenn.dev/tohutohu/articles/8c34d1187e1b21)
+- [ISUCON11予選惨敗してきました - Zenn (catatsuy)](https://zenn.dev/catatsuy/articles/6265ca623545ed)
+- [ISUCON13に参加した話 - くっきーの備忘録](https://blog.ck9.jp/post/240/)
+- [GoのキャッシュライブラリRapidashをISUCON問題で試す - Qiita](https://qiita.com/kanataxa/items/981e16e1db97e7187b64)
 
 #isucon #go #パフォーマンスチューニング #pprof

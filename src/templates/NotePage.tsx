@@ -102,6 +102,30 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
                                 </ListTag>
                             )
                         }
+                        if (block.type === "table") {
+                            return (
+                                <div key={i} className={style.tableWrap}>
+                                    <table className={style.table}>
+                                        <thead>
+                                            <tr>
+                                                {block.header.map((cell, j) => (
+                                                    <th key={j} style={{textAlign: block.align[j] || undefined}} dangerouslySetInnerHTML={{__html: cell}}/>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {block.rows.map((row, r) => (
+                                                <tr key={r}>
+                                                    {row.map((cell, c) => (
+                                                        <td key={c} style={{textAlign: block.align[c] || undefined}} dangerouslySetInnerHTML={{__html: cell}}/>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )
+                        }
                         if (block.type === "mermaid") {
                             return <Mermaid key={i} code={block.code}/>
                         }

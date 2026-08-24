@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
-import {marked, Token} from "marked"
+import {marked, Token, Tokens} from "marked"
 import {NoteBlock, SiteNote} from "../types/note"
 import {preprocessNoteMarkdown} from "./noteMarkdown"
 
@@ -49,6 +49,13 @@ function tokenToBlock(token: Token): NoteBlock | null {
             return {type: "blockquote", html: marked.parseInline(token.text) as string}
         case "list":
             return {type: "list", ordered: token.ordered, items: renderListItems(token.items)}
+        case "table":
+            return {
+                type: "table",
+                align: token.align,
+                header: token.header.map((cell: Tokens.TableCell) => marked.parseInline(cell.text) as string),
+                rows: token.rows.map((row: Tokens.TableCell[]) => row.map((cell) => marked.parseInline(cell.text) as string)),
+            }
         case "paragraph":
             return {type: "paragraph", html: marked.parseInline(token.text) as string}
         default:

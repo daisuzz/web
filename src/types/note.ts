@@ -5,6 +5,7 @@ export type NoteBlock =
     | { type: "mermaid"; code: string }
     | { type: "blockquote"; html: string }
     | { type: "list"; ordered: boolean; items: string[] }
+    | { type: "table"; align: Array<"center" | "left" | "right" | null>; header: string[]; rows: string[][] }
 
 export interface NoteBacklink {
     slug: string

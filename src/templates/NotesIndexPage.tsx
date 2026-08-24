@@ -17,6 +17,7 @@ const NotesIndexPage: React.FC<PageProps<object, NotesIndexPageContext>> = ({pag
             pageTitle="Notes"
             description="Daisaku Suzukiの個人ノート一覧。相互リンクとタグで整理された走り書き集。"
             path={location.pathname}
+            noindex
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>

@@ -51,7 +51,7 @@ const config: GatsbyConfig = {
         {
             resolve: `gatsby-plugin-sitemap`,
             options: {
-                excludes: [`/404.html`, `/404/`, `/dev-404-page/`],
+                excludes: [`/404.html`, `/404/`, `/dev-404-page/`, `/notes/**`],
             },
         },
         // RSSフィードの生成(自サイト・Qiita・はてなブログの記事をまとめて配信)

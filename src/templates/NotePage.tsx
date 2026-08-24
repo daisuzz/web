@@ -66,6 +66,7 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
             path={location.pathname}
             type="article"
             structuredData={structuredData}
+            noindex
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>

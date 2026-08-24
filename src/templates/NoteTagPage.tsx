@@ -18,6 +18,7 @@ const NoteTagPage: React.FC<PageProps<object, NoteTagPageContext>> = ({pageConte
             pageTitle={`#${tag}`}
             description={`「#${tag}」タグが付いたノート一覧。`}
             path={location.pathname}
+            noindex
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>

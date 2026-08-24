@@ -32,6 +32,7 @@ const NoteTagsIndexPage: React.FC<PageProps<object, NoteTagsIndexPageContext>> =
             pageTitle="Tags"
             description="daisuzz.devのノートに付けられたタグ一覧。"
             path={location.pathname}
+            noindex
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>

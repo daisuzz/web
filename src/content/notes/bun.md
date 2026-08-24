@@ -1,5 +1,6 @@
 ---
 created: "2026-08-17"
+updated: "2026-08-23"
 ---
 # Bun
 
@@ -34,7 +35,7 @@ flowchart TB
 ## 主な特徴
 
 - **エンジン**: SafariのJSエンジンである[[javascript-core]]を採用（Node.js/[[deno]]が使うV8ではない）
-- **実装言語**: 元々はZigで実装されている。起動時間の短さ・メモリ使用量の少なさに寄与している
+- **実装言語**: 元々はZigで実装されていたが、後述のRustへのリライトを経て2026年8月リリースのBun 1.4からRust実装が標準になった
 - **オールインワン**: `bun install`（パッケージ管理）、`bun run`（実行）、`bun test`（Jest互換テストランナー）、`bun build`（バンドラー、単一実行ファイル生成）を1バイナリで提供
 - **TypeScript/JSXをネイティブ実行**: 設定なしで`.ts`/`.tsx`を透過的にトランスパイルして実行できる
 - **高速なインストール**: グローバルキャッシュを使い、npm比で大幅に高速。数百〜数千パッケージ規模のモノレポで差が特に顕著という報告がある
@@ -63,9 +64,20 @@ bun build ./index.ts --compile --outfile myapp
 
 普段npm/Node.jsでやっていたコマンドを`bun`に置き換えるだけで動く、という体験を意図して設計されている。
 
-## RustへのRewrite（2026年時点）
+## RustへのRewrite
 
-Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrite Bun in Rust`, PR `#30412`）が2026年5月にマージされた。`bun upgrade --canary`で試用できる状態になっているが、2026年8月時点ではLinux x64限定の実験的なもので、安定版(1.3.x系)は引き続きZig実装で提供されている。正式リリースの時期は公表されていない。
+Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrite Bun in Rust`, PR `#30412`）が2026年5月にマージされた。当初は`bun upgrade --canary`でのみ試用でき、Linux x64限定の実験的なものだった。
+
+2026年8月20日リリースの**Bun 1.4**でこのRustリライトがGA(標準)になった。約100万行がZigからRustへ書き換えられ、全ベンチマークで1.3系と同等かそれ以上の性能、バイナリサイズは約20%縮小したという。対応プラットフォームもLinux x64/arm64(glibc+musl)・Windows x64/arm64・macOS x64/arm64まで拡大している。
+
+### Bun 1.4の主な変更点
+
+- **パフォーマンス**: アイドル時CPU使用率が5分の1に、HTTPサーバーのメモリ使用量が48%減、Linuxでの起動時間が50%高速化、コード分割が大規模グラフで14倍高速化
+- **Node.js互換**: 互換ターゲットが24.3.0→26.3.0に。`process.versions.node`が"26.3.0"、`NODE_MODULE_VERSION`が147になり、Node 24向けにビルドされたネイティブアドオンは再ビルドが必要
+- **破壊的変更**: ロックファイルのデフォルトバージョンがv2になり(古いBunはv2ロックファイルを読めない)、新規モノレポでは`linker: "isolated"`がデフォルトに。`response.writeHeader()`の削除、`bun:ffi`がTinyCCではなくエンジンネイティブFFIを使うようになるなどの変更もある
+- **新API**: `Temporal`がデフォルト有効化、`Bun.WebView`(組み込みヘッドレスブラウザ自動化)、`Bun.Image`、`Bun.markdown`などが追加
+
+急ピッチなリライトに対して、コミュニティの一部からは安定性への懸念の声も上がっている。
 
 ## 出典
 
@@ -75,5 +87,9 @@ Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrit
 - [Bun Docs - Test runner](https://bun.com/docs/test)
 - [Rewrite Bun in Rust (PR `#30412`) · oven-sh/bun](https://github.com/oven-sh/bun/pull/30412)
 - [Bun (software) - Wikipedia](https://en.wikipedia.org/wiki/Bun_(software))
+- [Release Bun v1.4.0 · oven-sh/bun](https://github.com/oven-sh/bun/releases/tag/bun-v1.4.0)
+- [List of breaking changes for 1.4 · Issue #28792 · oven-sh/bun](https://github.com/oven-sh/bun/issues/28792)
+- [Bun 1.4 lands: Rust rewrite and zero external dependencies mark major milestone for devs - AlternativeTo](https://alternativeto.net/news/2026/8/bun-1-4-lands-rust-rewrite-and-zero-external-dependencies-mark-major-milestone-for-devs/)
+- [Bun 1.4 finally ships. The Rust rewrite drama isn't over. - daily.dev](https://daily.dev/posts/bun-1-4-finally-ships-the-rust-rewrite-drama-isn-t-over--fdy7op2yl)
 
 #bun #javascript #typescript #ランタイム #ツール

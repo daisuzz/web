@@ -1,5 +1,6 @@
 ---
 created: "2026-08-24"
+updated: "2026-08-24"
 ---
 # Gradle Daemon
 
@@ -14,6 +15,22 @@ Gradleは「互換性のあるアイドルデーモン」がなければ新規�
 - 使用するJavaランタイムのバージョン
 
 `gradle --status`で複数のデーモンが並んでいるのは大抵このいずれか。
+
+## `--no-daemon`とsingle-use daemon
+
+`--no-daemon`は「デーモンを一切使わない」ことを保証するオプションではない。正確には**「ビルドをまたいで永続するデーモンを使わない」**という意味で、条件次第では`--no-daemon`を付けても内部的に1回限りで使い捨てられるデーモン（**single-use daemon**）が立つ。
+
+`gradle`/`gradlew`コマンド自体は軽量なクライアントプロセスで、`--no-daemon`を指定するとまず「クライアント自身のJVMプロセスの中でそのままビルドを実行する（別プロセスをforkしない）」ことを試みる。ただしこれが成立するのは、クライアントが今動いているJVMの設定と、ビルドが要求するJVM設定が一致している場合だけ。次のようなケースで不一致が起きる。
+
+- `org.gradle.jvmargs`（`gradle.properties`）でヒープサイズなどが指定されている
+- `gradlew`スクリプトの`DEFAULT_JVM_OPTS`
+- `JAVA_OPTS`/`GRADLE_OPTS`環境変数がデーモンのデフォルトと食い違っている
+
+この不一致がある場合、クライアントプロセスの中ではその設定でビルドを実行できないため、Gradleは`To honour the JVM settings for this build a new JVM will be forked`（「このビルドのJVM設定を守るために新しいJVMをforkします」）というメッセージを出し、要求されたJVM設定を持つ新しいプロセスを1つforkする。これがsingle-use daemon——実体は下記の通常のGradle Daemonと同じ仕組み（RPCサーバーとして動く別JVMプロセス）だが、**このビルド1回限りで使い捨てられ、ビルド終了後すぐに終了する**点が違う。通常のデーモンのようにアイドル状態でデーモンレジストリに登録され、次のビルドから再利用されることはない。
+
+この挙動は分かりにくく、GitHub上でも「メッセージが不親切」「`--no-daemon`が効いていないように見える」といった報告が繰り返し上がっている（下記の出典を参照）。避けたい場合は、クライアントを起動するJVM自体の設定をビルドが要求する設定と一致させる必要がある。
+
+**CIでの位置づけ**: Gradle 3.0より前は「CIでは正確性優先でデーモンを無効化すべき」という推奨だったが、3.0以降はデフォルトでデーモンが有効になり、CIサーバーでのデーモン利用も推奨されるように変わった。例外はコンテナのようにビルドごとに環境ごと使い捨てられ、プロセスが次回に再利用されないエフェメラルなCI環境——この場合デーモンを維持するメリットがなく、わずかなオーバーヘッドが乗るだけなので無効化してよいとされている。
 
 ## 3種類のデーモン
 
@@ -68,5 +85,11 @@ process isolationを選んだWorkerは、実体として上図の「Worker Daemo
 - [Confusion about Gradle Daemon vs Workers and JVM settings | Gradle Forums](https://discuss.gradle.org/t/confusion-about-gradle-daemon-vs-workers-and-jvm-settings/30803)
 - [Daemon eagerly expires with full metaspace | gradle/gradle](https://github.com/gradle/gradle/issues/15988)
 - [Daemon should expire before a GC overhead limit exceeded error occurs | gradle/gradle](https://github.com/gradle/gradle/issues/3292)
+- [Running Gradle with --no-daemon still forks a daemon when org.gradle.jvmargs are specified | gradle/gradle](https://github.com/gradle/gradle/issues/1434)
+- [Improve single-use daemon messaging | gradle/gradle](https://github.com/gradle/gradle/issues/2660)
+- [Allow removing the "To honour the JVM settings..." message | gradle/gradle](https://github.com/gradle/gradle/issues/11517)
+- [Annoying "To honour the JVM settings for this build a new JVM will be forked" message | gradle/gradle](https://github.com/gradle/gradle/issues/29307)
+- [--no-daemon switch ineffective if JVM settings cause new fork | Gradle Forums](https://discuss.gradle.org/t/no-daemon-switch-ineffective-if-jvm-settings-cause-new-fork/14919)
+- [Gradle build and daemon issues | Harness Developer Hub](https://developer.harness.io/docs/continuous-integration/ci-articles-faqs/articles/gradle-daemon/)
 
 #gradle #jvm #ビルド #kotlin

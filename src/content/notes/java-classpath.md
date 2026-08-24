@@ -1,5 +1,6 @@
 ---
 created: "2026-08-24"
+updated: "2026-08-24"
 ---
 # クラスパス (Classpath)
 
@@ -22,6 +23,8 @@ JVM（実行時）やjavac（コンパイル時）が、ユーザー定義のク
 ## 関連
 
 [[gradle-daemon]]のWorker Daemonは、テスト実行時に別プロセスへ切り出すことでクラスパス汚染（テスト間・ビルド間でクラスパスの内容が混ざり合う）を防ぐ用途にも使われる。
+
+Gradleの`dependencies {}`ブロックにおける`implementation`/`api`/`compileOnly`/`runtimeOnly`は、依存先をコンパイル時・実行時のどちらのクラスパスに乗せるかを個別に制御するための宣言（[[gradle-basics]]参照）。
 
 ## 出典
 

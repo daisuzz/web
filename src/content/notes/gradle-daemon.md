@@ -43,7 +43,7 @@ flowchart TD
     D -->|並列実行時に起動<br/>最大workers.max個| WD["Worker Daemon<br/>(GradleWorkerMain)<br/>1回のビルドの中だけ生存"]
 ```
 
-- **Gradle Daemon本体**: ビルドスクリプトの実行、タスクグラフの構築・実行を統括。複数ビルドをまたいで常駐する
+- **Gradle Daemon本体**: ビルドスクリプトの実行、タスクグラフの構築・実行（[[gradle-basics]]参照）を統括。複数ビルドをまたいで常駐する
 - **Compiler Daemon**（Kotlin Daemonなど）: 言語コンパイラ専用の常駐プロセス。コンパイルタスクが走ると起動し、Gradle Daemon終了時か2時間アイドルで自己終了する。Java/Kotlin混在プロジェクトでは両方の専用デーモンが別々に立つこともある
 - **Worker Daemon**（`GradleWorkerMain`）: タスクの一部処理を子プロセスに切り出して並列・隔離実行するためのプロセス。テスト実行時のクラスパス汚染防止にも使われる。1回のビルドの中だけ生存し、ビルド終了かリソース逼迫時に停止する
 

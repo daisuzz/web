@@ -66,6 +66,7 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
             path={location.pathname}
             type="article"
             structuredData={structuredData}
+            noindex
         >
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
@@ -131,6 +132,10 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
                         }
                         return <CodeBlock key={i} lang={block.lang} code={block.code}/>
                     })}
+
+                    <p className={style.disclaimer}>
+                        この記事はAIを使った調査ノートです。内容が不正確な場合があります。
+                    </p>
 
                     {note.backlinks.length > 0 && (
                         <div className={style.backlinks}>

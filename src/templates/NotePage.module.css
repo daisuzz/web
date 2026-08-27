@@ -165,6 +165,13 @@
     cursor: help;
 }
 
+.disclaimer {
+    margin-top: 48px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--color-dim);
+}
+
 .backlinks {
     margin-top: 48px;
     padding-top: 24px;

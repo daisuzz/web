@@ -22,3 +22,10 @@ export interface SiteNote {
     links: string[]
     backlinks: NoteBacklink[]
 }
+
+export interface NoteSearchEntry {
+    slug: string
+    title: string
+    created: string
+    tags: string[]
+}

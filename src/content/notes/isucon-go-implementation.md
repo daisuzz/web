@@ -37,6 +37,7 @@ flowchart LR
 | 観点 | 症状 | 解消方法 |
 |---|---|---|
 | N+1クエリ | ループ内で1件ずつSELECTしている | JOINへの書き換え、`IN`句でのバルクフェッチ、インメモリキャッシュ化 |
+| 都度再計算される集計処理 | 決済処理などで「直近の取引件数」のような集計をリクエストのたびにループで数え直しており、データが増えるほど重くなる。ISUCON14で上位チームが踏んだボトルネックの1つ | 集計結果をキャッシュ・増分更新し、毎回全件を舐めないようにする |
 | キャッシュ更新時のThundering Herd | キャッシュミス時に大量リクエストが同時にDBへ殺到する | `golang.org/x/sync/singleflight`で同一キーへの同時実行を1本化。ISUCON12優勝チームはこれで20万〜27万点の間で不安定だったスコアを安定化させた |
 | CPU重い処理（bcryptなど） | パスワードハッシュ計算のようなCPUバウンドな処理が支配的になる。pprofのCPUプロファイルで発覚するのが定番パターン | コストパラメータの見直し、検証結果のキャッシュ |
 | 静的ファイル配信 | 画像・JS・CSS等をアプリケーションサーバー経由で返している | nginxに配信を委譲してAPサーバーの負荷を下げる |
@@ -72,5 +73,7 @@ flowchart LR
 - [ISUCON11予選惨敗してきました - Zenn (catatsuy)](https://zenn.dev/catatsuy/articles/6265ca623545ed)
 - [ISUCON13に参加した話 - くっきーの備忘録](https://blog.ck9.jp/post/240/)
 - [GoのキャッシュライブラリRapidashをISUCON問題で試す - Qiita](https://qiita.com/kanataxa/items/981e16e1db97e7187b64)
+- [ISUCON14 受賞チームおよび全チームスコア : ISUCON公式Blog](https://isucon.net/archives/58837992.html)
+- [takonomura/isucon14 - GitHub（ISUCON14優勝チームのリポジトリ）](https://github.com/takonomura/isucon14)
 
 #isucon #go #パフォーマンスチューニング #pprof

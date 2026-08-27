@@ -38,7 +38,33 @@ git remote add origin git@github.com:yourteam/isucon-webapp.git
 git push -u origin master
 ```
 
-プライベートリポジトリなので、各サーバーからclone ・fetchできるようにSSHのデプロイキーを登録しておく（リポジトリの Settings → Deploy keys → Add deploy key、書き込みもさせるなら Allow write access）。
+プライベートリポジトリなので、各サーバーがGitHubにSSHで認証できる状態を作る必要がある。これは「チームメンバーが競技サーバーにSSHでログインする」ための鍵（isucon.mdの「SSH接続を全員分整備する」）とは別物で、「競技サーバー自身がGitHubにアクセスする」ための鍵。やり方は2通り。
+
+**方法A: サーバーごとにデプロイキーを作る（確実）**
+
+```bash
+# 各サーバー上で鍵ペアを作成（パスフレーズなし）
+ssh-keygen -t ed25519 -C "isucon-server1" -f ~/.ssh/id_ed25519 -N ""
+cat ~/.ssh/id_ed25519.pub
+```
+
+表示された公開鍵を、GitHubリポジトリの Settings → Deploy keys → Add deploy key に登録する（push もさせるなら Allow write access にチェック）。サーバーごとに別の鍵になるので、3台構成なら3つ登録することになる。
+
+```bash
+# 疎通確認とcommitに使うユーザー情報の設定
+ssh -T git@github.com
+git config --global user.email "isucon@example.com"
+git config --global user.name "isucon"
+```
+
+**方法B: SSHエージェント転送で手元の鍵を使い回す（鍵を増やしたくない場合）**
+
+サーバーに新しく鍵を作らず、手元のマシンの鍵をそのままサーバー上のgit操作に使う。手元の鍵がGitHubに登録済みで、チームメンバーそれぞれが自分の権限でpushしたい場合に向く。
+
+```bash
+# 手元から -A 付きでSSHログインする（サーバー側の~/.ssh/configにForwardAgent yesでも可）
+ssh -A isucon@server1
+```
 
 サーバー側で最新化するときは、`git pull`だと現地でのちょっとした変更（ベンチマーカーが書き換えたファイルなど）とマージが必要になることがあるので、`fetch`してから強制的にリモートの状態に合わせる方が事故りにくい。
 

@@ -1,5 +1,6 @@
 ---
 created: "2026-08-18"
+updated: "2026-08-27"
 ---
 # Kotlin Coroutines
 
@@ -44,6 +45,16 @@ interface Continuation<in T> {
 
 - `launch`: 結果値を持たない`Job`を返す
 - `async`: 結果値を持つ`Deferred`を返す(`.await()`で取得)
+
+## システムコールレベルの実体
+
+`suspend`関数の中断・再開そのもの(状態機械の`invokeSuspend`呼び出し)はシステムコールを一切発行しない。ヒープ上のフィールド代入と関数呼び出しだけで完結する。実際にOSへ問い合わせが発生するのは以下の2箇所だけ。
+
+- **Dispatcherのワーカースレッド管理**: `Dispatchers.Default`のワーカースレッド生成は`java.lang.Thread`起動を経て`pthread_create`→(Linuxでは)`clone3`システムコールに帰着する。アイドル時の待機・再開は`LockSupport.parkNanos`→HotSpotの`Parker`→`pthread_cond_timedwait`→`futex`
+- **`delay()`のタイマー待ち**: `kotlinx.coroutines.DefaultExecutor`という専用の1本のデーモンスレッドがタイマーキューを持ち、同じく`futex`ベースのparkで次の期限まで眠る
+- **実際のネットワーク/ファイルI/O**: `kotlinx-coroutines-core`自体には含まれず、Ktor/OkHttpのような非同期I/Oライブラリが`java.nio.channels.Selector`(Linuxでは`epoll_create1`/`epoll_ctl`/`epoll_wait`)のようなOSのreadiness通知APIを土台に`suspend`関数を実装する
+
+`strace`で実際に観測した検証記録は[[kotlin-coroutines-experiment]]。
 
 ## 他の非同期モデルとの位置づけ
 

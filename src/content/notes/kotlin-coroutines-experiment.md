@@ -17,14 +17,17 @@ created: "2026-08-27"
 ## 素材
 
 - 環境: OpenJDK 21.0.10（Ubuntu、この検証環境に元から存在）
-- `kotlinc`: `apt-get install kotlin`で導入（1.3.31、Ubuntu 24.04リポジトリの候補バージョン）
-- `kotlinx-coroutines-core`: Maven Central (`repo1.maven.org`) から`1.3.0`のjarを直接ダウンロード（kotlinc 1.3.31と世代を合わせた組み合わせ）
+- `kotlinc`: 2.4.10（2026年7月リリース、2026年8月時点の最新安定版。2.4.0のバグ修正リリース）。JetBrains公式のGitHub Releasesから`kotlin-compiler-2.4.10.zip`を取得し、SHA256チェックサムを検証してから展開した
+- `kotlinx-coroutines-core`: 1.11.0（2026年8月時点の最新安定版）。Maven Central (`repo1.maven.org`) から`kotlinx-coroutines-core-jvm-1.11.0.jar`を直接ダウンロード
 - `strace`: 環境にプリインストール済み
+
+初回の検証(下記「バージョンについての補足」参照)ではUbuntuリポジトリの`apt install kotlin`で入る1.3.31を使っていたが、2026年時点で7年近く前のバージョンであり実態を反映しないため、公式配布の最新安定版に差し替えて再実施した。
 
 ## 躓いた点と対処
 
-- `kotlinc`が未インストールだった。`sdkman`もなく、Maven Central自体は`curl`で疎通可能だったが、`kotlinc`本体（コンパイラ）はJetBrainsのGitHub Releases経由のzip配布かapt経由になる。GitHub Releasesはリダイレクト先の疎通が不確実だったため、apt版（やや古い1.3.31）を採用した。
-- `ProcessHandle.current().pid()`を使ったところ `calls to static methods in Java interfaces are prohibited in JVM target 1.6` でコンパイルエラー。`kotlinc`のデフォルトJVMターゲットが1.6のままだったため、`-jvm-target 1.8`を明示して解決。
+- Ubuntuの`apt`で入る`kotlin`パッケージは1.3.31と非常に古い。`sdkman`も入っていない環境だったため、JetBrains公式のGitHub Releasesから`kotlin-compiler-<version>.zip`を直接`curl`で取得する方式に切り替えた（`repo1.maven.org`・`github.com`ともにこの環境から疎通可能だった）。
+- kotlinc 2.4.10でコンパイルした`demo.jar`を`java -jar demo.jar`で単体実行すると`NoClassDefFoundError: kotlinx/coroutines/BuildersKt`。`-include-runtime`はKotlin標準ライブラリだけをjarに同梱し、`kotlinx-coroutines-core`は同梱されないため。`java -cp demo.jar:kotlinx-coroutines-core.jar CoroDemoKt`のように明示的にクラスパスへ追加する必要がある。
+- 旧バージョン(1.3.31)では`ProcessHandle.current().pid()`使用時に`-jvm-target 1.8`の明示が必要だった(デフォルトJVMターゲットが1.6だったため)が、2.4.10ではこの指定なしでも問題なくコンパイルできた。デフォルトのJVMターゲットが底上げされている。
 - `strace -e trace=clone`を指定してもスレッド生成が1件もマッチしなかった。このカーネル/glibcの組み合わせでは`pthread_create`が`clone`ではなく`clone3`システムコールとして観測される（比較的新しいglibcの挙動）。`-e trace=clone3`に変えたら捕捉できた。
 
 ## 実行結果
@@ -44,32 +47,32 @@ fun main() = runBlocking {
 ```
 
 ```
-kotlinc -jvm-target 1.8 -cp kotlinx-coroutines-core.jar CoroDemo.kt -include-runtime -d demo.jar
+kotlinc -cp kotlinx-coroutines-core.jar CoroDemo.kt -include-runtime -d demo.jar
 strace -f -e trace=clone3,futex -o strace.log java -cp demo.jar:kotlinx-coroutines-core.jar CoroDemoKt
 ```
 
 出力:
 
 ```
-start pid=2782
-done 0 on DefaultDispatcher-worker-1
-done 1 on DefaultDispatcher-worker-1
-done 4 on DefaultDispatcher-worker-3
-done 6 on DefaultDispatcher-worker-3
-done 7 on DefaultDispatcher-worker-3
-done 2 on DefaultDispatcher-worker-4
-done 3 on DefaultDispatcher-worker-2
-done 5 on DefaultDispatcher-worker-1
+start pid=1932
+done 0 on DefaultDispatcher-worker-4
+done 3 on DefaultDispatcher-worker-3
+done 1 on DefaultDispatcher-worker-2
+done 2 on DefaultDispatcher-worker-1
+done 5 on DefaultDispatcher-worker-3
+done 4 on DefaultDispatcher-worker-4
+done 6 on DefaultDispatcher-worker-2
+done 7 on DefaultDispatcher-worker-1
 all done
 ```
 
 このマシンは`nproc`で4コア。8個`launch`しても実スレッドは`DefaultDispatcher-worker-1〜4`の4本のみ——CPUコア数を上限にワーカースレッドへ多重化されている。生成時の`clone3`呼び出し:
 
 ```
-2782  clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7f71f75ff990, parent_tid=0x7f71f75ff990, exit_signal=0, stack=0x7f71f7500000, stack_size=0xfef80, tls=0x7f71f75ff6c0} => {parent_tid=[2783]}, 88) = 2783
+1932  clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7f986bbff990, parent_tid=0x7f986bbff990, exit_signal=0, stack=0x7f986bb00000, stack_size=0xfef80, tls=0x7f986bbff6c0} => {parent_tid=[1933]}, 88) = 1933
 ```
 
-コルーチンなしのベースライン（`println`だけの最小プログラム）でも`clone3`は17回発行される（GC/JITコンパイラなどJVM自体が使う分）。コルーチン版では26回で、差分の9回がワーカースレッド4本＋`delay()`用の専用スレッド1本＋αに相当する。
+コルーチンなしのベースライン（`println`だけの最小プログラム）でも`clone3`は17回発行される（GC/JITコンパイラなどJVM自体が使う分）。コルーチン版では27回で、差分の10回がワーカースレッド4本＋`delay()`用の専用スレッド1本＋JITコンパイラスレッドの追加分などに相当する（1.3.31/1.3.0の組み合わせで同じ実験をしたときはそれぞれ17回/26回で、絶対数は実行のたびに多少ぶれるが「ベースライン比+9〜10」という傾向は変わらない）。
 
 `Thread.getAllStackTraces().keys`で全生存スレッド名を確認すると:
 
@@ -91,7 +94,7 @@ main
 
 ### 2. ワーカーのアイドル待機/`delay()` → `futex`
 
-同じstraceログで最多だったのが`futex`（3465回）。`CoroutineScheduler.park()`の実装:
+同じstraceログで最多だったのが`futex`（2983回）。`CoroutineScheduler.park()`の実装:
 
 ```kotlin
 private fun park() {
@@ -107,9 +110,11 @@ private fun park() {
 実際のログ（ワーカースレッド間のパーク/ウェイクの様子）:
 
 ```
-2784  futex(0x7f71f0077c28, FUTEX_WAIT_PRIVATE, 2, NULL) = -1 EAGAIN (Resource temporarily unavailable)
-2783  futex(0x7f71f0077c28, FUTEX_WAKE_PRIVATE, 1) = 0
-2783  futex(0x7f71f0077c7c, FUTEX_WAIT_BITSET_PRIVATE|FUTEX_CLOCK_REALTIME, 0, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+1933  futex(0x7f9864077c78, FUTEX_WAIT_BITSET_PRIVATE|FUTEX_CLOCK_REALTIME, 0, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+1934  futex(0x7f9864077c78, FUTEX_WAKE_PRIVATE, 2147483647) = 1
+1933  <... futex resumed>)              = 0
+1934  futex(0x7f9864077c7c, FUTEX_WAIT_BITSET_PRIVATE|FUTEX_CLOCK_REALTIME, 0, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+1933  futex(0x7f9864077c28, FUTEX_WAKE_PRIVATE, 1) = 0
 ```
 
 `LockSupport.parkNanos`はHotSpotの`Parker`クラス経由で`pthread_cond_timedwait`を呼び、Linuxではglibcがこれを`futex(FUTEX_WAIT_BITSET|FUTEX_CLOCK_REALTIME, ...)`に変換する。`delay(200)`自体もスレッドをブロックしないが、その裏で`kotlinx.coroutines.DefaultExecutor`スレッドが同じ`parkNanos`の仕組みで次のタイマー期限まで眠っている。
@@ -142,7 +147,7 @@ fun main() {
 ```
 
 ```
-strace -f -e trace=epoll_create1,epoll_ctl,epoll_wait,pipe2 -o nio_strace.log java -jar nio.jar
+strace -f -e trace=epoll_create1,epoll_ctl,epoll_wait -o nio_strace.log java -jar nio.jar
 ```
 
 出力:
@@ -155,10 +160,10 @@ selected: 1
 straceログ:
 
 ```
-3005  epoll_create1(EPOLL_CLOEXEC)      = 5
-3005  epoll_ctl(5, EPOLL_CTL_ADD, 6, {events=EPOLLIN, data={u32=6, ...}}) = 0
-3005  epoll_ctl(5, EPOLL_CTL_ADD, 7, {events=EPOLLIN, data={u32=7, ...}}) = 0
-3005  epoll_wait(5, [{events=EPOLLIN, data={u32=7, ...}}], 1024, 2000) = 1
+1991  epoll_create1(EPOLL_CLOEXEC)      = 5
+1991  epoll_ctl(5, EPOLL_CTL_ADD, 6, {events=EPOLLIN, data={u32=6, ...}}) = 0
+1991  epoll_ctl(5, EPOLL_CTL_ADD, 7, {events=EPOLLIN, data={u32=7, ...}}) = 0
+1991  epoll_wait(5, [{events=EPOLLIN, data={u32=7, ...}}], 1024, 2000) = 1
 ```
 
 `Selector.open()`で`epoll_create1`、`register()`で`epoll_ctl(EPOLL_CTL_ADD)`、`select(timeout)`で`epoll_wait`が発行され、別スレッドがpipeに書き込んだ150ms後にイベントが返っている（タイムアウトの2000msより早く返っていることから、ポーリングではなくイベント待ちであることも確認できる）。`suspendCancellableCoroutine`でこの`Selector`をラップし、`select()`が返ったタイミングで`continuation.resume()`を呼ぶ、というのが非同期I/Oライブラリの定石。
@@ -169,6 +174,10 @@ straceログ:
 - システムコールが発生するのは「スレッドプールの増減」（`clone3`）と「本当に待つ」処理（`futex`によるpark/unpark）の2箇所に限定される。`Dispatchers.Default`はCPUコア数を上限に実スレッドを抑え、余った分のコルーチンは同じスレッドをキューで使い回す。
 - `delay()`は独立した1本のタイマースレッド（`kotlinx.coroutines.DefaultExecutor`）に集約されており、コルーチンの数だけタイマースレッドが増えるわけではない。
 - 実ネットワークI/Oは`kotlinx-coroutines-core`の範囲外で、`java.nio.channels.Selector`（Linuxでは`epoll`）のようなOSのreadiness通知APIを土台にライブラリ側が`suspend`関数を実装する。
+
+## バージョンについての補足
+
+最初にこの実験をしたときは`apt install kotlin`で入る1.3.31 + kotlinx-coroutines-core 1.3.0という組み合わせだった。Kotlin 2.4.10 + kotlinx-coroutines-core 1.11.0（いずれも2026年8月時点の最新安定版）に差し替えて再実行した結果、`clone3`/`futex`/`epoll_*`という観測されるシステムコールの種類、スレッド構成（`DefaultDispatcher-worker-N`がCPUコア数分＋`kotlinx.coroutines.DefaultExecutor`が1本）は完全に同じだった。`CoroutineScheduler`のワークスティーリング設計は少なくとも1.3系から1.11系まで変わっていないと考えてよい。
 
 ## 出典
 

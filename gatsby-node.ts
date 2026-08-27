@@ -32,6 +32,8 @@ interface HatenaFeed {
     }
 }
 
+const NOTES_PER_PAGE = 20
+
 export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
     const {createPage} = actions
     const sitePosts = loadPosts()
@@ -52,10 +54,20 @@ export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
         })
     })
 
-    createPage({
-        path: `/notes/`,
-        component: path.resolve("./src/templates/NotesIndexPage.tsx"),
-        context: {notes},
+    const searchIndex = notes.map(({slug, title, created, tags}) => ({slug, title, created, tags}))
+    const numPages = Math.max(1, Math.ceil(notes.length / NOTES_PER_PAGE))
+    Array.from({length: numPages}).forEach((_, i) => {
+        const currentPage = i + 1
+        createPage({
+            path: currentPage === 1 ? `/notes/` : `/notes/${currentPage}/`,
+            component: path.resolve("./src/templates/NotesIndexPage.tsx"),
+            context: {
+                notes: notes.slice(i * NOTES_PER_PAGE, (i + 1) * NOTES_PER_PAGE),
+                currentPage,
+                numPages,
+                searchIndex,
+            },
+        })
     })
 
     createPage({

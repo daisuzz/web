@@ -225,4 +225,6 @@ function MyForm() {
 - [TanStack Form Simple Example](https://tanstack.com/form/v1/docs/framework/react/examples/simple)
 - [TanStack Query vs SWR vs RTK Query - Pi Stack](https://www.pistack.xyz/posts/2026-08-11-tanstack-query-vs-swr-vs-rtk-query-react-data-fetching-comparison/)
 - [react-router v7 vs TanStack Router 2026 - PkgPulse](https://www.pkgpulse.com/guides/react-router-v7-vs-tanstack-router-2026)
+
+#tanstack #react #frontend
 - npm registry: `@tanstack/react-query`, `@tanstack/react-router`, `@tanstack/react-table`, `@tanstack/react-form` の各`latest`

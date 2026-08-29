@@ -1,5 +1,6 @@
 ---
 created: "2026-08-16"
+updated: "2026-08-29"
 ---
 # Claude Codeの/loop
 
@@ -58,8 +59,13 @@ Anthropic公式ブログが挙げている例:
 
 `/loop`は一定間隔でのポーリング型の監視。これに対し、GitHub App連携済みのClaude Code環境（Claude Code on the webなど）では、CI失敗やレビューコメントといったWebhookイベントが来たときだけセッションを起こす**イベント駆動型**の監視の仕組みも用意されている場合がある（この点は一般公開ドキュメントで裏取りしたわけではなく、セッション内で観察した挙動に基づく記述）。変化がある時だけ動く分イベント駆動の方が無駄が少ないが、Webhook連携がない環境では`/loop`によるポーリングが素直な代替手段になる。
 
+## バージョンについて
+
+本ノートの内容はClaude Code v2.1.251（2026年8月28日時点）を前提にしている。Claude Codeはほぼ毎日ペースでパッチリリースされるため、細部の挙動は`claude --version`や公式changelogで確認するのが確実。
+
 ## 出典
 
+- [Claude Code Changelog](https://code.claude.com/docs/en/changelog)
 - [Claude Code: Run prompts on a schedule](https://code.claude.com/docs/en/scheduled-tasks.md)
 - [Loop engineering: Getting started with loops | Claude by Anthropic](https://claude.com/blog/getting-started-with-loops)
 

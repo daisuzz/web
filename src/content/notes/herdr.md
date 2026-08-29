@@ -1,6 +1,6 @@
 ---
 created: "2026-08-16"
-updated: "2026-08-16"
+updated: "2026-08-29"
 ---
 # Herdr
 
@@ -69,8 +69,13 @@ herdr agent prompt reviewer "現在のdiffをレビューして" --wait --timeou
 
 `agent prompt` はテキスト送信とEnterキー送信をアトミックに行う。`--wait` を付けると `idle`/`done`/`blocked` のいずれかに状態が落ち着くまで待機してくれる。
 
+## バージョンについて
+
+本ノートの内容はHerdr v0.8.2（2026年8月19日リリース）を前提にしている。まだ0.x系のプレリリース段階のプロダクト。
+
 ## 出典
 
+- [herdrdev/herdr - GitHub](https://github.com/herdrdev/herdr)
 - [Herdr: Terminal Multiplexer with Built-in AI Agent State Awareness](https://betterstack.com/community/guides/ai/herdr-ai-agent/)
 - [herdr - A tmux-like and agent-aware terminal multiplexer](https://terminaltrove.com/herdr/)
 

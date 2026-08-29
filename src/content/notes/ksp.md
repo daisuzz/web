@@ -1,5 +1,6 @@
 ---
 created: "2026-08-18"
+updated: "2026-08-29"
 ---
 # KSP (Kotlin Symbol Processing)
 
@@ -55,8 +56,13 @@ KSP1はKotlinコンパイラプラグインとして実装されていたが、K
 
 kaptのスタブ生成コストを解消する、Kotlinネイティブな後継。ただしJavaプロセッサ資産をそのまま使い回せない点はトレードオフ。
 
+## バージョンについて
+
+本ノートの内容はKSP 2.3系（2026年8月時点の最新は2.3.11、2026年8月3日リリース）を前提にしている。KSP2は2.0以降デフォルトのエンジンで、KSP1は非推奨。
+
 ## 出典
 
+- [google/ksp - Releases](https://github.com/google/ksp/releases)
 - [Kotlin Symbol Processing API | Kotlin Documentation](https://kotlinlang.org/docs/ksp-overview.html)
 - [KSP2 Preview: Kotlin K2 and Standalone Source Generator - Android Developers Blog](https://android-developers.googleblog.com/2023/12/ksp2-preview-kotlin-k2-standalone.html)
 - [ksp/docs/ksp2.md at main · google/ksp](https://github.com/google/ksp/blob/main/docs/ksp2.md)

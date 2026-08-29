@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-24"
+updated: "2026-08-29"
 ---
 # Gradle Daemon
 
@@ -75,8 +75,13 @@ Daemonは自身の健全性を監視しており（`LowMemoryDaemonExpirationStr
 
 process isolationを選んだWorkerは、実体として上図の「Worker Daemon」プロセスとして立ち上がる。classloader isolationの場合は新規プロセスを起こさず、Gradle Daemonプロセスの中で別クラスローダーに分離するだけなので、Gradle Daemon自身のヒープをそのまま使う。
 
+## バージョンについて
+
+本ノートの内容はGradle 9系（2026年8月時点の最新は9.7.1、2026年8月19日リリース）を前提にしている。
+
 ## 出典
 
+- [Gradle Releases](https://gradle.org/releases/)
 - [The Gradle Daemon | Gradle User Manual](https://docs.gradle.org/current/userguide/gradle_daemon.html)
 - [Build Environment Configuration | Gradle User Manual](https://docs.gradle.org/current/userguide/build_environment.html)
 - [Developing Parallel Tasks (Worker API) | Gradle User Manual](https://docs.gradle.org/current/userguide/worker_api.html)

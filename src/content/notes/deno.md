@@ -1,5 +1,6 @@
 ---
 created: "2026-08-17"
+updated: "2026-08-29"
 ---
 # Deno
 
@@ -91,8 +92,13 @@ BunのJSエンジンはV8ではなくSafari系のJavaScriptCoreである点に�
 
 Deno公式が提供するエッジ実行環境。[[cloudflare-workers]]と同じV8アイソレート型のアーキテクチャを採用しており、思想的には最も近い競合にあたる。
 
+## バージョンについて
+
+本ノートの内容はDeno 2系（2026年8月時点の最新は2.9.5、2026年8月6日リリース）を前提にしている。Deno 3はまだリリースされていない。
+
 ## 出典
 
+- [denoland/deno - Releases](https://github.com/denoland/deno/releases)
 - [denoland/deno - GitHub](https://github.com/denoland/deno)
 - [Security and permissions - Deno Docs](https://docs.deno.com/runtime/fundamentals/security/)
 - [Permissions - Deno Docs](https://docs.deno.com/runtime/reference/permissions/)

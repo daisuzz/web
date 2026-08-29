@@ -1,5 +1,6 @@
 ---
 created: "2026-08-27"
+updated: "2026-08-29"
 ---
 # EXPLAIN PLANの読み方（Oracle）
 
@@ -50,8 +51,13 @@ Predicate Information (identified by operation id):
 
 Oracle 11g以降、`V$SQL_MONITOR`/`V$SQL_PLAN_MONITOR`に実行中・実行済みSQLの詳細な実行統計がリアルタイムに記録される（長時間実行やパラレル実行のSQLが対象になりやすい）。`DBMS_SQLTUNE.REPORT_SQL_MONITOR`でレポートを取得できるほか、Oracle Enterprise Managerからも参照できる。`MONITOR`/`NO_MONITOR`ヒントで対象SQLごとに有効・無効を制御できる。DISPLAY_CURSORが「完了後の集計」を見るのに対し、SQL Monitoringは実行中の進捗を追える点が異なる。
 
+## バージョンについて
+
+本ノートの内容はOracle Database 19c〜23ai（2026年8月時点の最新リリースアップデートは23.26.2.0.0、通称Oracle AI Database 26ai）を前提にしている。EXPLAIN PLAN/DISPLAY_CURSORの基本的な使い方・列の意味はバージョンを跨いで大きく変わらない。
+
 ## 出典
 
+- [Oracle AI Database 26ai replaces Oracle Database 23ai](https://mikedietrichde.com/2025/10/14/oracle-ai-database-26ai-replaces-oracle-database-23ai/)
 - [6 Explaining and Displaying Execution Plans (Oracle SQL Tuning Guide, 19c)](https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/generating-and-displaying-execution-plans.html)
 - [EXPLAIN PLAN (Oracle SQL Language Reference, 19c)](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/EXPLAIN-PLAN.html)
 - [The Oracle Optimizer: Explain the Explain Plan (Oracle公式技術ブリーフ)](https://www.oracle.com/technetwork/database/bi-datawarehousing/oracle-explain-the-explain-0218-4403741.pdf)

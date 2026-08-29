@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-24"
+updated: "2026-08-29"
 ---
 # クラスパス (Classpath)
 
@@ -26,8 +26,13 @@ JVM（実行時）やjavac（コンパイル時）が、ユーザー定義のク
 
 Gradleの`dependencies {}`ブロックにおける`implementation`/`api`/`compileOnly`/`runtimeOnly`は、依存先をコンパイル時・実行時のどちらのクラスパスに乗せるかを個別に制御するための宣言（[[gradle-basics]]参照）。
 
+## バージョンについて
+
+クラスパスの基本的な探索順序・ワイルドカードの仕様はJava 9のmodule path導入以降も変わっていない。2026年8月時点の最新LTSはJDK 25（2025年9月GA）、最新の非LTSはJDK 26（2026年3月GA）。
+
 ## 出典
 
+- [JDK 25](https://openjdk.org/projects/jdk/25/)
 - [Setting the Class Path | Oracle](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html)
 - [PATH and CLASSPATH | The Java Tutorials, Oracle](https://docs.oracle.com/javase/tutorial/essential/environment/paths.html)
 - [Classpath vs. Modulepath in Java | Baeldung](https://www.baeldung.com/java-classpath-vs-modulepath)

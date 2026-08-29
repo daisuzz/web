@@ -1,5 +1,6 @@
 ---
 created: "2026-08-27"
+updated: "2026-08-29"
 ---
 # Oracle SQLチューニングの着眼点
 
@@ -38,8 +39,13 @@ created: "2026-08-27"
 - ヒントを使う前に、まず対象表の統計情報を最新化し、ヒント無しでのEXPLAIN PLANを確認して本当にオプティマイザの判断が誤っているかを切り分けるのが基本手順。
 - `NO_MONITOR`ヒントのように、意図せず実行時間の長いSQLの[[oracle-explain-plan-reading]]で触れたSQL Monitoringを無効化してしまうヒントもあり、調査を妨げる副作用にも注意が必要。
 
+## バージョンについて
+
+本ノートの内容はOracle Database 18c〜23ai（2026年8月時点の最新リリースアップデートは23.26.2.0.0、通称Oracle AI Database 26ai）を前提にしている。
+
 ## 出典
 
+- [Oracle AI Database 26ai replaces Oracle Database 23ai](https://mikedietrichde.com/2025/10/14/oracle-ai-database-26ai-replaces-oracle-database-23ai/)
 - [11 Histograms (Oracle SQL Tuning Guide, 18c)](https://docs.oracle.com/en/database/oracle/oracle-database/18/tgsql/histograms.html)
 - [Histogram Enhancements in Oracle Database 12c Release 1 (ORACLE-BASE)](https://oracle-base.com/articles/12c/histograms-enhancements-12cr1)
 - [Optimizer Adaptive Features in Oracle Database 12c Release 2 (Oracle Optimizer Blog)](https://blogs.oracle.com/optimizer/optimizer-adaptive-features-in-oracle-database-12c-release-2)

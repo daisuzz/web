@@ -1,5 +1,6 @@
 ---
 created: "2026-08-16"
+updated: "2026-08-29"
 ---
 # Lefthook
 
@@ -69,8 +70,13 @@ Go / npm / Ruby gem / Python(pipx) / Homebrew / apt / winget など多数の手�
 
 pre-commitは複数リポジトリ間でフック定義を共有する用途に強く、Lefthookはローカルでの実行速度とリポジトリ単位での構造化された実行に強い、という使い分けが語られている。
 
+## バージョンについて
+
+本ノートの内容はLefthook v2.1系（2026年8月時点の最新はv2.1.11、2026年8月21日リリース）を前提にしている。
+
 ## 出典
 
+- [evilmartians/lefthook - Releases](https://github.com/evilmartians/lefthook/releases)
 - [GitHub - evilmartians/lefthook](https://github.com/evilmartians/lefthook)
 - [lefthook/docs/configuration.md](https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md)
 - [lefthook/docs/install.md](https://github.com/evilmartians/lefthook/blob/master/docs/install.md)

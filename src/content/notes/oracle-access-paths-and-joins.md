@@ -1,5 +1,6 @@
 ---
 created: "2026-08-27"
+updated: "2026-08-29"
 ---
 # アクセスパスと結合方式（Oracle）
 
@@ -24,8 +25,13 @@ created: "2026-08-27"
 
 オプティマイザは、絞り込み後の行数（カーディナリティ）が小さい表から結合していく（結合順序）ことを基本方針とし、その上でどの結合方式が最もコストが低いかを見積もって選択する。実行計画上でネステッドループが選ばれているのに外側表の行数見積もりが実は大きい、といったズレが性能問題の典型パターン（[[oracle-sql-tuning-checkpoints]]のカーディナリティ見積もりの話も参照）。
 
+## バージョンについて
+
+本ノートの内容はOracle Database 19c〜23ai（2026年8月時点の最新リリースアップデートは23.26.2.0.0、通称Oracle AI Database 26ai）を前提にしている。アクセスパス・結合方式の基本的な種類・選ばれ方はバージョンを跨いで大きく変わらない。
+
 ## 出典
 
+- [Oracle AI Database 26ai replaces Oracle Database 23ai](https://mikedietrichde.com/2025/10/14/oracle-ai-database-26ai-replaces-oracle-database-23ai/)
 - [The Oracle Optimizer: Explain the Explain Plan (Oracle公式技術ブリーフ)](https://www.oracle.com/a/tech/docs/database/technical-brief-explain-the-explain-plan-052011.pdf)
 - [Explain the Explain Plan: Join Methods (Maria Colgan / sqlmaria.com)](https://sqlmaria.com/2021/02/02/explain-the-explain-plan-join-methods/)
 - [6 Explaining and Displaying Execution Plans (Oracle SQL Tuning Guide, 19c)](https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/generating-and-displaying-execution-plans.html)

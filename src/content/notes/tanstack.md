@@ -10,7 +10,7 @@ Tanner Linsleyが中心になって開発しているオープンソースライ
 
 | 名前 | 概要 | 成熟度（2026年8月時点） |
 |---|---|---|
-| Query | 非同期のサーバー状態管理。データフェッチ・キャッシュ・バックグラウンド再取得・重複排除を担う | stable |
+| Query | 非同期のサーバー状態管理（[[server-state-management]]）。データフェッチ・キャッシュ・バックグラウンド再取得・重複排除を担う | stable |
 | Router | 型安全性を軸に設計されたクライアントファーストのルーター。ファイルベース/コードベースのルーティングに対応。対象はReactとSolidのみ | stable |
 | Table | テーブル・データグリッド構築用のヘッドレスUI | stable |
 | Form | 状態管理とUIレンダリングを分離した、型安全なフォーム状態管理 | stable |
@@ -30,7 +30,7 @@ Query/Table/Form/Virtual/StoreはReact/Vue/Solid/Svelte/Angular向けの公式�
 
 ## 他フレームワークとの比較
 
-### Query（サーバー状態管理）
+### Query（[[server-state-management]]）
 
 - **SWR**（Vercel製）: 圧倒的に軽量（約4KB、Queryの約1/3）。stale-while-revalidate戦略でシンプル。機能はQueryより少ない。
 - **RTK Query**（Redux Toolkit付属）: Reduxストアと一体化。フェッチしたデータがReduxストアに乗る。Reduxに強く依存する。

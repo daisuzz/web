@@ -32,3 +32,5 @@ Reactコミュニティでこの整理を広めたのはReact Queryメンテナ�
 - [Does React Query replace Redux, MobX or other global state managers? (TanStack)](https://react-query.tanstack.com/guides/does-this-replace-client-state)
 - [Server State vs Client State in React for Beginners (DEV Community)](https://dev.to/jeetvora331/server-state-vs-client-state-in-react-for-beginners-3pl6)
 - [What is the pattern to keep client-state in sync with server-state (TanStack/query Discussion)](https://github.com/TanStack/query/discussions/3539)
+
+#state-management #react #frontend

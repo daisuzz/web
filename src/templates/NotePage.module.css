@@ -57,14 +57,32 @@
     overflow-wrap: anywhere;
 }
 
-.heading {
-    font-size: 17px;
+.heading2,
+.heading3,
+.heading4 {
     font-weight: 500;
     color: var(--color-heading);
-    margin: 36px 0 16px;
-    border-left: 2px solid var(--color-accent);
     padding-left: 12px;
     overflow-wrap: anywhere;
+}
+
+.heading2 {
+    font-size: 17px;
+    margin: 36px 0 16px;
+    border-left: 2px solid var(--color-accent);
+}
+
+.heading3 {
+    font-size: 15px;
+    margin: 28px 0 12px;
+    border-left: 2px solid var(--color-border-strong);
+}
+
+.heading4 {
+    font-size: 13.5px;
+    margin: 22px 0 10px;
+    border-left: 2px solid var(--color-border);
+    color: var(--color-muted);
 }
 
 .list {

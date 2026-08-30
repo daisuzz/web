@@ -88,7 +88,10 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
                             return <p key={i} className={style.paragraph} dangerouslySetInnerHTML={{__html: block.html}}/>
                         }
                         if (block.type === "heading") {
-                            return <h2 key={i} className={style.heading} dangerouslySetInnerHTML={{__html: block.html}}/>
+                            const level = Math.min(Math.max(block.depth, 2), 6)
+                            const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements
+                            const headingStyle = level <= 2 ? style.heading2 : level === 3 ? style.heading3 : style.heading4
+                            return <HeadingTag key={i} className={headingStyle} dangerouslySetInnerHTML={{__html: block.html}}/>
                         }
                         if (block.type === "blockquote") {
                             return <blockquote key={i} className={style.blockquote} dangerouslySetInnerHTML={{__html: block.html}}/>

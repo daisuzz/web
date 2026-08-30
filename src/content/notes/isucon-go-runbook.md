@@ -357,6 +357,26 @@ flowchart TD
 - OSを再起動してもベンチマークが通るか確認する
 - ディスク容量に余裕があるか確認する
 
+## よく使うコマンド集
+
+Makefileのターゲットにするほどでもないが、調査中にふと必要になるコマンド。
+
+| 目的 | コマンド |
+|---|---|
+| サイズの大きいディレクトリを探す | `du -d 1 -h` |
+| ディスクの空き容量を確認する | `df -h` |
+| サイズの大きい個別ファイルを探す | `find / -xdev -type f -size +100M -exec ls -lh {} \;` |
+| ロードアベレージ・CPU使用率を見る | `uptime` / `top` |
+| CPUを食っているプロセス上位を見る | `ps auxww --sort=-%cpu \| head` |
+| どのプロセスがどのポートを使っているか | `sudo ss -tlnp` |
+| ネットワーク帯域の内訳を見る | `sudo iftop` |
+| ディスクI/Oの内訳を見る | `sudo iotop` |
+| MySQLの実行中クエリを見る | `mysql -e 'SHOW PROCESSLIST'` |
+| MySQLの設定値を確認する | `mysql -e 'SHOW VARIABLES LIKE "%max_connections%"'` |
+| systemdサービスの状態を見る | `sudo systemctl status <service>` |
+| systemdサービスのログを追う | `sudo journalctl -u <service> -f` |
+| journaldがディスクを圧迫していないか確認する | `journalctl --disk-usage` |
+
 ## 出典
 
 - [alp README (tkuchiki/alp) - GitHub](https://github.com/tkuchiki/alp)
@@ -372,5 +392,6 @@ flowchart TD
 - [GitHubを活用する - ISUCON初心者向け講習会](https://isucon-workshop.trap.show/text/chapter-3/0-Github.html)
 - [GitHub - sue445/isucon12-itamae](https://github.com/sue445/isucon12-itamae)
 - [ISUCON14 受賞チームおよび全チームスコア : ISUCON公式Blog](https://isucon.net/archives/58837992.html)
+- [ISUCON Cheat Sheet · GitHub (south37)](https://gist.github.com/south37/d4a5a8158f49e067237c17d13ecab12a)
 
 #isucon #go #runbook #パフォーマンスチューニング

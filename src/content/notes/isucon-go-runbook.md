@@ -419,6 +419,7 @@ Makefileのターゲットにするほどでもないが、調査中にふと必
 
 | 目的 | コマンド |
 |---|---|
+| 稼働しているミドルウェア一覧を確認する（フェーズ0のサーバー構成確認で使う） | `systemctl list-units --type=service --state=running` |
 | サイズの大きいディレクトリを探す | `du -d 1 -h` |
 | ディスクの空き容量を確認する | `df -h` |
 | サイズの大きい個別ファイルを探す | `find / -xdev -type f -size +100M -exec ls -lh {} \;` |

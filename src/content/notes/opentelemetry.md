@@ -1,5 +1,6 @@
 ---
 created: "2026-08-20"
+updated: "2026-08-29"
 ---
 # OpenTelemetry
 
@@ -26,8 +27,14 @@ created: "2026-08-20"
 
 [[claude-code-observability]]はOTLPエクスポートに対応しており、実際のプロダクトがOpenTelemetryをどう活用しているかの一例になっている。
 
+## バージョンについて
+
+本ノートの内容は仕様（Specification）v1.60.0（2026年8月7日）、Java計装ライブラリ v2.31.1（2026年8月23日、対象OTel SDKは1.65.0）時点のものを前提にしている。仕様のコア部分は安定しているが、計装ライブラリ側は`-alpha`扱いのモジュールも多く残っている。
+
 ## 出典
 
+- [OpenTelemetry Specification - Releases](https://github.com/open-telemetry/opentelemetry-specification/releases)
+- [OpenTelemetry Java Instrumentation - Releases](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases)
 - [OpenTelemetry公式サイト: What is OpenTelemetry?](https://opentelemetry.io/docs/what-is-opentelemetry/)
 - [OpenTelemetry公式サイト: Collector](https://opentelemetry.io/docs/collector/)
 - [OpenTelemetry公式サイト: Protocol specification](https://opentelemetry.io/docs/specs/otlp/)

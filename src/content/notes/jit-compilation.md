@@ -1,5 +1,6 @@
 ---
 created: "2026-08-24"
+updated: "2026-08-29"
 ---
 # JITコンパイルとウォームアップ (HotSpot)
 
@@ -33,8 +34,13 @@ flowchart LR
 
 プロセスを使い回す仕組み（例: [[gradle-daemon]]）は、一度ホットになってネイティブコンパイル済みのコードをそのまま次回の実行に持ち越せるため、ウォームアップのやり直しを避けられる。
 
+## バージョンについて
+
+Tiered CompilationはJava 7以降デフォルトで、C1/C2の役割分担も含めて長らく安定している基本挙動。2026年8月時点の最新LTSはJDK 25（2025年9月GA）、最新の非LTSはJDK 26（2026年3月GA）。
+
 ## 出典
 
+- [JDK 25](https://openjdk.org/projects/jdk/25/)
 - [Tiered Compilation in JVM | Baeldung](https://www.baeldung.com/jvm-tiered-compilation)
 - [How Tiered Compilation works in OpenJDK | Microsoft for Java Developers](https://devblogs.microsoft.com/java/how-tiered-compilation-works-in-openjdk/)
 - [How we solved a HotSpot performance puzzle | Red Hat Developer](https://developers.redhat.com/articles/2023/09/29/how-we-solved-hotspot-performance-puzzle)

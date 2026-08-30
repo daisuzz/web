@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-24"
+updated: "2026-08-29"
 ---
 # Convention Plugins (Gradle)
 
@@ -22,8 +22,13 @@ updated: "2026-08-24"
 
 このキャッシュ無効化とスコープ漏れの2点が実務上効いてくるため、公式には「セットアップの手間はわずかに増えるが、composite buildを使う方を推奨する」とされている。`buildSrc`自体、実装上はGradleが自動的に管理する暗黙のincluded buildで、根底の仕組みは`includeBuild()`と同じ（詳細は[[composite-builds]]）。
 
+## バージョンについて
+
+本ノートの内容はGradle 9系（2026年8月時点の最新は9.7.1、2026年8月19日リリース）を前提にしている。
+
 ## 出典
 
+- [Gradle Releases](https://gradle.org/releases/)
 - [Convention Plugins | Gradle User Manual](https://docs.gradle.org/current/userguide/implementing_gradle_plugins_convention.html)
 - [Sharing Build Logic using buildSrc | Gradle User Manual](https://docs.gradle.org/current/userguide/sharing_build_logic_between_subprojects.html)
 - [Sharing build logic between subprojects Sample | Gradle](https://docs.gradle.org/current/samples/sample_convention_plugins.html)

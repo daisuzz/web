@@ -1,5 +1,6 @@
 ---
 created: "2026-08-20"
+updated: "2026-08-29"
 ---
 # Claude Codeのhooks
 
@@ -89,8 +90,13 @@ JSON出力の主なフィールド: `continue`（false で全処理停止）、`
 
 いずれも「Claude Codeの動作をコード側から確実に制御・観測する」ための仕組みという点で近い領域にあるが役割が異なる。hooksはライフサイクルの特定タイミングに割り込んで**制御**（ブロック・変更・自動実行）するもの、`/loop`は同じプロンプトを**繰り返し発火**させる仕組み、observabilityはセッション横断で**利用状況を可視化**する仕組み。
 
+## バージョンについて
+
+本ノートの内容はClaude Code v2.1.251（2026年8月28日時点）を前提にしている。Claude Codeはほぼ毎日ペースでパッチリリースされるため、細部の挙動は`claude --version`や公式changelogで確認するのが確実。
+
 ## 出典
 
+- [Claude Code Changelog](https://code.claude.com/docs/en/changelog)
 - [Claude Code: Hooks reference](https://code.claude.com/docs/en/hooks.md)
 - [Claude Code: Automate actions with hooks (Getting started guide)](https://code.claude.com/docs/en/hooks-guide.md)
 

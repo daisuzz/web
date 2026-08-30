@@ -1,6 +1,6 @@
 ---
 created: "2026-08-18"
-updated: "2026-08-27"
+updated: "2026-08-29"
 ---
 # Kotlin Coroutines
 
@@ -64,8 +64,13 @@ interface Continuation<in T> {
 - **Java Virtual Threads (Project Loom)**: JVMが管理する軽量スレッドで、フル継続(スタックそのもの)を保持する。既存の同期的・ブロッキングなコードをほぼ書き換えずに使える利点があるが、構造化並行性は標準では強制されず、`StructuredTaskScope`を使う側が意識的に採用する必要がある。I/Oバウンドな超高負荷(100万リクエスト規模)ではKotlin coroutinesがVirtual Threadsをやや上回るというベンチマーク報告もある。
 - **JS/C#のasync/await**: `async`/`await`が言語のキーワードで、非同期関数の呼び出しは明示的にPromise/Taskでラップされる。Kotlin coroutinesの設計者Roman Elizarovは、Kotlinの位置づけを「C#系のasync/await的な関数色分けと、Goの無色の世界の中間」と説明している。`suspend`という色は付くが`await`に相当する構文はなく、`suspend fun`内では通常の関数呼び出しと同じ見た目で中断可能関数を呼べ、結果もFuture/Promiseに包まれない生の値として返る。
 
+## バージョンについて
+
+本ノートの内容は`kotlinx.coroutines` 1.11.0（2026年5月8日リリース、Kotlin 2.2.20バンドル）を前提にしている。CPS変換・状態機械への変換という基本的な実現方式自体は安定している。
+
 ## 出典
 
+- [Kotlin/kotlinx.coroutines - Releases](https://github.com/Kotlin/kotlinx.coroutines/releases)
 - [Coroutines overview - Kotlin公式ドキュメント](https://kotlinlang.org/docs/coroutines-overview.html)
 - [Asynchronous programming with coroutines - Kotlin公式言語仕様](https://kotlinlang.org/spec/asynchronous-programming-with-coroutines.html)
 - [How do you color your functions? - Roman Elizarov](https://elizarov.medium.com/how-do-you-color-your-functions-a6bb423d936d)

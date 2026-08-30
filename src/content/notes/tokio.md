@@ -1,5 +1,6 @@
 ---
 created: "2026-08-17"
+updated: "2026-08-29"
 ---
 # Tokio
 
@@ -81,8 +82,13 @@ flowchart TB
 
 NodeやGoは「非同期であること」が言語・ランタイムの前提になっているのに対し、Rustは非同期を使うかどうか・どのランタイムを使うかを利用者が選択する設計になっている。
 
+## バージョンについて
+
+本ノートの内容はTokio 1.53系（2026年8月時点の最新は1.53.1、2026年7月20日公開）を前提にしている。1.x系内での破壊的なAPI変更はSemVerポリシー上想定されていない。
+
 ## 出典
 
+- [tokio - crates.io](https://crates.io/crates/tokio)
 - [tokio-rs/tokio - GitHub](https://github.com/tokio-rs/tokio)
 - [tokio::runtime - docs.rs](https://docs.rs/tokio/latest/tokio/runtime/index.html)
 - [Async in depth - Tokio公式チュートリアル](https://tokio.rs/tokio/tutorial/async)

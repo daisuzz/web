@@ -1,9 +1,10 @@
 ---
 created: "2026-08-24"
+updated: "2026-08-29"
 ---
 # Gradleの基礎（Project/Task/ビルドライフサイクル）
 
-Gradleのビルドは「複数の`Project`」と、各`Project`が持つ「複数の`Task`」というモデルで構成される。1つのビルドは1つ以上のプロジェクトからなり（マルチプロジェクトビルド）、各プロジェクトはビルドの一部として実行される作業単位（コンパイル、テスト実行、JAR生成など）を`Task`として持つ。[[gradle-daemon]]・[[composite-builds]]・[[convention-plugins]]は、いずれもこの基本モデルの上に成り立つ発展的な仕組み。
+Gradleのビルドは「複数の`Project`」と、各`Project`が持つ「複数の`Task`」というモデルで構成される。1つのビルドは1つ以上のプロジェクトからなり（マルチプロジェクトビルド）、各プロジェクトはビルドの一部として実行される作業単位（コンパイル、テスト実行、JAR生成など）を`Task`として持つ。[[gradle-daemon]]・[[composite-builds]]・[[convention-plugins]]・[[configuration-cache]]は、いずれもこの基本モデルの上に成り立つ発展的な仕組み。
 
 ## ビルドライフサイクルの3フェーズ
 
@@ -32,7 +33,7 @@ flowchart LR
 
 ### Incremental build（up-to-date判定）
 
-Gradleは前回ビルドの結果を再利用できる場合、タスクの実行自体をスキップする（`UP-TO-DATE`）。判定は inputs/outputs のチェックサムに基づいており、Makeのようなタイムスタンプ比較だけではない。さらに、入力の一部だけが変わった場合に全入力を再処理するのではなく変更のあった入力だけを処理する「タスクの内部でのインクリメンタル処理」も別途サポートされている。この前回ビルド結果の再利用の仕組みは、[[gradle-daemon]]がプロセスをまたいで保持するインメモリキャッシュ（[[jvm-class-loading]]や[[jit-compilation]]のコストの持ち越し）とは別レイヤーの話——こちらは「ファイルシステム上の入出力の変化を検知して再実行要否を判断する」仕組み。
+Gradleは前回ビルドの結果を再利用できる場合、タスクの実行自体をスキップする（`UP-TO-DATE`）。判定は inputs/outputs のチェックサムに基づいており、Makeのようなタイムスタンプ比較だけではない。さらに、入力の一部だけが変わった場合に全入力を再処理するのではなく変更のあった入力だけを処理する「タスクの内部でのインクリメンタル処理」も別途サポートされている。この前回ビルド結果の再利用の仕組みは、[[gradle-daemon]]がプロセスをまたいで保持するインメモリキャッシュ（[[jvm-class-loading]]や[[jit-compilation]]のコストの持ち越し）や、Configurationフェーズ自体をスキップする[[configuration-cache]]とは別レイヤーの話——こちらは「ファイルシステム上の入出力の変化を検知して再実行要否を判断する」仕組み。
 
 ## 依存関係の宣言（Configuration）
 
@@ -51,8 +52,13 @@ Gradleは前回ビルドの結果を再利用できる場合、タスクの実�
 
 `gradlew`/`gradlew.bat`は、Gradle本体をローカルにインストールしなくてもビルドを実行できるようにするラッパースクリプト。`gradle-wrapper.properties`に指定されたバージョン・種類（`-bin`は実行に必要な最小構成、`-all`はソース・ドキュメント込み）のGradle配布物がローカルに存在しなければダウンロードし、以降はそのバージョンの`gradle`コマンドに処理を委譲する。Wrapper自体のファイル一式（`gradlew`、`gradlew.bat`、`gradle/wrapper/gradle-wrapper.jar`、`gradle-wrapper.properties`）はリポジトリにコミットしておくのが推奨で、これによりチームメンバー全員が同一バージョンのGradleでビルドできる。Gradleのバージョンを上げたいだけなら`wrapper`タスクを再実行する必要はなく、`gradle-wrapper.properties`の`distributionUrl`を書き換えるだけでよい。
 
+## バージョンについて
+
+本ノートの内容はGradle 9系（2026年8月時点の最新は9.7.1、2026年8月19日リリース）を前提にしている。Project/Task/ビルドライフサイクルという基本モデル自体は長期間安定しているが、`gradle.properties`のデフォルト値のような細部はバージョンごとに変わりうる。
+
 ## 出典
 
+- [Gradle Releases](https://gradle.org/releases/)
 - [Build Lifecycle | Gradle User Manual](https://docs.gradle.org/current/userguide/build_lifecycle.html)
 - [Understanding Tasks | Gradle User Manual](https://docs.gradle.org/current/userguide/more_about_tasks.html)
 - [Incremental build | Gradle User Manual](https://docs.gradle.org/current/userguide/incremental_build.html)

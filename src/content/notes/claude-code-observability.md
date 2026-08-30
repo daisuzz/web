@@ -1,5 +1,6 @@
 ---
 created: "2026-08-20"
+updated: "2026-08-29"
 ---
 # Claude Codeのobservability
 
@@ -44,8 +45,13 @@ Claude Codeの利用状況を監視・可視化する仕組み。大きく分け
 
 [[claude-code-loop]]のようなポーリング/イベント駆動の監視の仕組みは個々のセッションの「動作」を制御するものだが、observabilityはセッション横断で「利用状況」を可視化する仕組みという違いがある。
 
+## バージョンについて
+
+本ノートの内容はClaude Code v2.1.251（2026年8月28日時点）を前提にしている。Claude Codeはほぼ毎日ペースでパッチリリースされるため、細部の挙動は`claude --version`や公式changelogで確認するのが確実。
+
 ## 出典
 
+- [Claude Code Changelog](https://code.claude.com/docs/en/changelog)
 - [Claude Code: Monitoring usage](https://code.claude.com/docs/en/monitoring-usage.md)
 - [Claude Code Analytics API](https://platform.claude.com/docs/en/manage-claude/claude-code-analytics-api.md)
 

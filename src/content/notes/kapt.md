@@ -1,5 +1,6 @@
 ---
 created: "2026-08-18"
+updated: "2026-08-29"
 ---
 # kapt (Kotlin Annotation Processing Tool)
 
@@ -44,14 +45,19 @@ Kotlin 2.0（2024年）でのK2コンパイラへの移行に伴い、kaptが依
 - Kotlin 2.1.20で、K2実装のkaptが全プロジェクトに対しデフォルトで有効化された
 - Kotlin 2.2.20で `kapt.use.k2` フラグ自体が非推奨になった（常にK2実装が使われる。`false` に設定するとGradleが警告を出す）
 
-つまりKotlin 2系でも現役で使われ続けており、内部実装もK2ベースに更新されている。ただしJetBrains自身は新規プロジェクトに対して、次項の[[ksp]]への移行を推奨している。
+つまりKotlin 2系でも現役で使われ続けており、内部実装もK2ベースに更新されている。ただしJetBrains自身は新規プロジェクトに対して、次項の[[ksp]]への移行を推奨している。kaptは正式にdeprecatedとアナウンスされているわけではないが、メンテナンスモードという位置づけ。
 
 ## [[kotlin-annotation-processing]]の中での位置づけ
 
 Java資産をそのまま使い回すためのアダプタ層。歴史的経緯から広く使われているが、スタブ生成のオーバーヘッドがあるぶんKSPより遅い。
 
+## バージョンについて
+
+本ノートの内容はKotlin 2.4系（2026年8月時点の最新は2.4.0、2026年8月11日リリース）を前提にしている。
+
 ## 出典
 
+- [What's new in Kotlin 2.4.0 | Kotlin Documentation](https://kotlinlang.org/docs/whatsnew24.html)
 - [kapt compiler plugin | Kotlin Documentation](https://kotlinlang.org/docs/kapt.html)
 - [Migrate from kapt to KSP | Android Developers](https://developer.android.com/build/migrate-to-ksp)
 - [What's new in Kotlin 2.0.0 | Kotlin Documentation](https://kotlinlang.org/docs/whatsnew20.html)

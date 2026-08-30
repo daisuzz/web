@@ -1,5 +1,6 @@
 ---
 created: "2026-08-17"
+updated: "2026-08-29"
 ---
 # JavaScriptCore
 
@@ -39,8 +40,13 @@ flowchart LR
 - **メモリ使用量**: JSCはモバイル(Safari)を主戦場にしているため比較的メモリ効率重視。V8は持続的スループット重視で、その分メモリ使用量は増えやすい傾向にあるという指摘がある
 - **設計思想**: JSCは起動の速さ・省電力・ピーク性能を重視、V8は高いスループットの持続を重視、という対比で語られることが多い
 
+## バージョンについて
+
+JavaScriptCore自体には独立したバージョン番号がなく、WebKit全体のバージョン（例: WebKitGTK/WPE WebKitは2026年5〜6月時点で2.52系・2.53系）に含まれる形でリリースされる。LLInt→Baseline→DFG→FTLという段階的コンパイルのアーキテクチャは近年大きく変わっていない。
+
 ## 出典
 
+- [JavaScriptCore – WebKit (trac)](https://trac.webkit.org/wiki/JavaScriptCore)
 - [JavaScriptCore - WebKit Documentation (GitHub)](https://github.com/webkit/Documentation/blob/main/docs/Deep%20Dive/JSC/JavaScriptCore.md)
 - [Introducing the WebKit FTL JIT | WebKit](https://webkit.org/blog/3362/introducing-the-webkit-ftl-jit/)
 - [Comparison of JavaScript execution modes of the WebKit browser engine - Arm Community](https://developer.arm.com/community/arm-community-blogs/b/tools-software-ides-blog/posts/comparison-of-javascript-execution-modes-of-the-webkit-browser-engine)

@@ -1,5 +1,6 @@
 ---
 created: "2026-08-24"
+updated: "2026-08-29"
 ---
 # JVMのクラスロード (Class Loading)
 
@@ -33,8 +34,13 @@ flowchart LR
 
 1つのJavaアプリが動き出すには、JDKのコアクラス・使っているフレームワークのクラス・アプリ自身のクラスまで、実行に必要な分だけ大量のクラスを次々にロード・検証しなければならない。ロードするクラス数が多いツールほど、起動のたびにこのコストを払い直すことになる。[[gradle-daemon]]のようにプロセスをビルド間で使い回す仕組みは、このロード済みの状態を次回まで持ち越すことでこのコストを省略している。
 
+## バージョンについて
+
+ロード→リンク→初期化の3段階、親委譲モデルはJVM仕様（JVMS）で定義された基本挙動でありバージョンを跨いで安定している。2026年8月時点の最新LTSはJDK 25（2025年9月GA）、最新の非LTSはJDK 26（2026年3月GA）。
+
 ## 出典
 
+- [JDK 25](https://openjdk.org/projects/jdk/25/)
 - [Class Loaders in Java | Baeldung](https://www.baeldung.com/java-classloaders)
 - [ClassLoader (Java Platform SE 8) | Oracle](https://docs.oracle.com/javase/8/docs/api/java/lang/ClassLoader.html)
 

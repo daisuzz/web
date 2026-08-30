@@ -415,19 +415,16 @@ flowchart TD
 
 ## よく使うコマンド集
 
-Makefileのターゲットにするほどでもないが、調査中にふと必要になるコマンド。
+Makefileのターゲットにするほどでもないが、調査中にふと必要になるコマンド。ロードアベレージ・CPU使用率・ディスクI/O・ネットワーク帯域は`netdata`のダッシュボードで一望できるので、`top`/`iotop`/`iftop`はここには含めていない（フェーズ2で導入済みなら、まずそちらを見ればよい）。ここに残したのは、alp/pt-query-digest/pprof/netdataのどれとも役割が被らないもの。
 
 | 目的 | コマンド |
 |---|---|
 | サイズの大きいディレクトリを探す | `du -d 1 -h` |
 | ディスクの空き容量を確認する | `df -h` |
 | サイズの大きい個別ファイルを探す | `find / -xdev -type f -size +100M -exec ls -lh {} \;` |
-| ロードアベレージ・CPU使用率を見る | `uptime` / `top` |
-| CPUを食っているプロセス上位を見る | `ps auxww --sort=-%cpu \| head` |
+| CPUを食っているプロセスを特定する（netdataで気付いた後、実際に触るPIDを探す） | `ps auxww --sort=-%cpu \| head` |
 | どのプロセスがどのポートを使っているか | `sudo ss -tlnp` |
-| ネットワーク帯域の内訳を見る | `sudo iftop` |
-| ディスクI/Oの内訳を見る | `sudo iotop` |
-| MySQLの実行中クエリを見る | `mysql -e 'SHOW PROCESSLIST'` |
+| MySQLの「いま」実行中のクエリを見る（pt-query-digestは過去ログの集計なのでリアルタイムには弱い） | `mysql -e 'SHOW PROCESSLIST'` |
 | MySQLの設定値を確認する | `mysql -e 'SHOW VARIABLES LIKE "%max_connections%"'` |
 | systemdサービスの状態を見る | `sudo systemctl status <service>` |
 | systemdサービスのログを追う | `sudo journalctl -u <service> -f` |

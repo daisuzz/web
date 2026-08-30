@@ -333,7 +333,63 @@ fi
 
 - **構成管理ツールでの環境構築**: [mitamae](https://github.com/itamae-kitchen/mitamae)（Itamaeのmruby実装、単一バイナリで依存なし）でOS・ミドルウェアのセットアップをRubyのレシピとして書いておくと、`sudo mitamae local recipe.rb`一発で環境を再現できる。ISUCON12以降、複数の参加チームがItamae/mitamaeを使っている。
 - **サーバーごとの設定差分を追跡する**: 3台構成だと各サーバーで微妙にnginx/my.cnfの内容が異なる（bind先IPなど）ので、変更したファイルをホスト名ごとのディレクトリにコピーしてコミットするスクリプトを用意しておくと、「どのサーバーで何を変えたか」が追いやすい。
-- **ループの結果を自動で共有する**: alp・スロークエリ解析・スコアの結果を毎回手動でチームに共有するのは手間なので、`make deploy && make report`のような形でSlack等に自動投稿するチームもある。
+
+### alpの結果をSlackに自動通知する
+
+alpの結果をコンソールに出すだけだと、その場にいる人しか見られない。HTMLで出力してブラウザから見られるようにし、そのURLを[notify_slack](https://github.com/catatsuy/notify_slack)（catatsuy作、標準入力の内容をそのままSlackに投げるツール）でチームに通知しておくと、手元で見返せるし他のメンバーも状況を追いやすくなる。
+
+**1. notify_slackを入れる**
+
+```bash
+go install github.com/catatsuy/notify_slack/cmd/notify_slack@latest
+```
+
+**2. SlackのIncoming Webhookを作り、設定ファイルを用意する**
+
+Slack側でApp（Incoming Webhook）を作ってURLを発行し、`~/.notify_slack.toml`に書いておく。
+
+```toml
+[slack]
+url = "https://hooks.slack.com/services/xxxx/xxxx/xxxx"
+username = "isucon-bot"
+icon_emoji = ":rocket:"
+```
+
+**3. alpの結果をHTMLで出力し、ブラウザから見えるようにする**
+
+```bash
+alp ltsv --file /var/log/nginx/access.log --format html --sort sum -r > /home/isucon/logs/alp.html
+```
+
+ISUCONの競技サーバーは基本的にチーム内だけが到達できるネットワークなので、そのディレクトリを簡易HTTPサーバーで公開してしまうのが手っ取り早い（一度立ち上げてバックグラウンドに置いておけばよい）。
+
+```bash
+cd /home/isucon/logs && nohup python3 -m http.server 8080 >/dev/null 2>&1 &
+```
+
+**4. URLをnotify_slackで通知する**
+
+```bash
+echo "http://<このサーバーのIP>:8080/alp.html" | notify_slack
+```
+
+**5. Makefileにまとめる**
+
+```makefile
+IP := $(shell hostname -I | awk '{print $$1}')
+
+alp-report:
+	alp ltsv --file /var/log/nginx/access.log --format html --sort sum -r > /home/isucon/logs/alp.html
+	echo "http://$(IP):8080/alp.html" | notify_slack
+```
+
+これで`make deploy`→ベンチマーク実行→`make alp-report`まで含めて、当日のループをコマンド数個で回せる。スロークエリの結果も同じ要領で`--format html`できるツール（pt-query-digestは`--output json`等はあるがhtmlは持たないので、テキストのまま`notify_slack -snippet`でスニペット共有する方が簡単）を使えば同様に通知できる。
+
+```bash
+sudo pt-query-digest /var/log/mysql/mysql-slow.log | notify_slack -snippet -filename slowlog.txt
+```
+
+`-snippet`（ファイルとして投稿する）を使うにはWebhookのURLだけでは足りず、`~/.notify_slack.toml`に`token`（Slack Botトークン）と`channel_id`も追記しておく必要がある。
 
 ## ベンチマーク1回ごとのルーチン
 
@@ -393,5 +449,7 @@ Makefileのターゲットにするほどでもないが、調査中にふと必
 - [GitHub - sue445/isucon12-itamae](https://github.com/sue445/isucon12-itamae)
 - [ISUCON14 受賞チームおよび全チームスコア : ISUCON公式Blog](https://isucon.net/archives/58837992.html)
 - [ISUCON Cheat Sheet · GitHub (south37)](https://gist.github.com/south37/d4a5a8158f49e067237c17d13ecab12a)
+- [notify_slack README - GitHub (catatsuy)](https://github.com/catatsuy/notify_slack)
+- [標準入力を適当にまとめてSlackに通知するnotify_slackを作りました - Medium (catatsuy)](https://catatsuy.medium.com/%E6%A8%99%E6%BA%96%E5%85%A5%E5%8A%9B%E3%82%92%E9%81%A9%E5%BD%93%E3%81%AB%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6slack%E3%81%AB%E9%80%9A%E7%9F%A5%E3%81%99%E3%82%8Bnotify-slack%E3%82%92%E4%BD%9C%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F-e2e725a91c64)
 
 #isucon #go #runbook #パフォーマンスチューニング

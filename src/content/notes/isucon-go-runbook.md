@@ -58,12 +58,16 @@ ssh isucon1
 
 ### Git化する
 
+**これは全サーバーで実行する。** 1号機だけやっていると、2号機のnginx設定や3号機のmy.cnfを壊したときに戻せない。GitHubに上げるかどうかとは無関係に、ローカルの巻き戻し用の安全網として数秒でできるので、そのミドルウェアが実際に動いているサーバー全部でやっておく。
+
 ```bash
+# 各サーバーで（webappが動いているサーバーなら）
 cd /home/isucon/webapp
 git init && git add -A && git commit -m "initial state"
 
-# nginx/MySQLの設定もバージョン管理下に置く
+# nginxが動いているサーバーなら
 sudo git -C /etc/nginx init && sudo git -C /etc/nginx add -A && sudo git -C /etc/nginx commit -m "initial nginx conf"
+# MySQLが動いているサーバーなら
 sudo git -C /etc/mysql init && sudo git -C /etc/mysql add -A && sudo git -C /etc/mysql commit -m "initial mysql conf"
 ```
 
@@ -75,11 +79,15 @@ sudo git -C /etc/mysql init && sudo git -C /etc/mysql add -A && sudo git -C /etc
 2. 複数台構成のサーバー間で設定ファイルを揃えるため
 3. 変更を巻き戻せるバックアップにするため
 
+**GitHub上の中心リポジトリ（origin）はwebappにつき1つでいい。** 1号機である必要はなく、手元PCで作って先にpushしてしまってもいい。他のサーバーは全部「そこからfetchしてくる側」で済む。
+
 ```bash
-# ローカル/各サーバーで作ったリポジトリにリモートを追加してpush
+# origin側（1号機でも手元PCでもどこか1箇所）でリモートを追加してpush
 git remote add origin git@github.com:yourteam/isucon-webapp.git
 git push -u origin master
 ```
+
+一方`/etc`配下の設定は、サーバーごとに中身が違う（nginxのbind先IPなど）ことが多いので、1つのリポジトリに雑にまとめて全台からpushし合うと上書き事故が起きやすい。素直にやるなら「サーバーごとに中身が違うのでリモートには上げず、各サーバーのローカルgitだけで管理する」で十分。チームで見える化したいなら、後述の「サーバーごとの設定差分を追跡する」のようにホスト名ディレクトリで分けて1つのリポジトリにまとめる。
 
 プライベートリポジトリなので、各サーバーがGitHubにSSHで認証できる状態を作る必要がある。これは「チームメンバーが競技サーバーにSSHでログインする」ための鍵（isucon.mdの「SSH接続を全員分整備する」）とは別物で、「競技サーバー自身がGitHubにアクセスする」ための鍵。やり方は2通り。
 

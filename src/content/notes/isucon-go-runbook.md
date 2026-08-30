@@ -13,7 +13,50 @@ updated: 2026-08-27
 - 何も変更せずに初回ベンチマークを実行し、基準スコアを記録する
 - サーバー構成（台数、どこに何が乗っているか）を確認する
 
-## フェーズ1: Git化する
+## フェーズ1: SSHアクセスとGit化
+
+### メンバー全員がサーバーに入れるようにする
+
+各メンバーがまだ鍵ペアを持っていなければ作る。
+
+```bash
+ssh-keygen -t ed25519 -C "member-name"
+cat ~/.ssh/id_ed25519.pub
+```
+
+最初にログインできる代表者が、集めた公開鍵を全インスタンスの`isucon`ユーザーの`authorized_keys`に追記する。
+
+```bash
+# pubkeys.txt に全員分の公開鍵を1行ずつ貼っておく
+for host in 203.0.113.1 203.0.113.2 203.0.113.3; do
+    ssh isucon@"$host" 'cat >> ~/.ssh/authorized_keys' < pubkeys.txt
+done
+```
+
+各自の手元の`~/.ssh/config`にaliasを用意しておくと、以降`ssh isucon1`のように打つだけで済み、IPやユーザー名を都度入力しなくて良くなる。
+
+```
+Host isucon1
+    HostName 203.0.113.1
+    User isucon
+    IdentityFile ~/.ssh/id_ed25519
+
+Host isucon2
+    HostName 203.0.113.2
+    User isucon
+    IdentityFile ~/.ssh/id_ed25519
+
+Host isucon3
+    HostName 203.0.113.3
+    User isucon
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+```bash
+ssh isucon1
+```
+
+### Git化する
 
 ```bash
 cd /home/isucon/webapp

@@ -232,11 +232,27 @@ ssh isucon@server1 'sudo systemctl restart isucon.golang'
 
 複数台構成の場合、各サーバーへの転送・再起動を直列で行うとデプロイ1回が遅くなるので並列化する。デプロイ後は`/initialize`を叩いて動作確認してからベンチマークを実行する。
 
-### `make deploy`にまとめる
+### Makefileに集約する（ツールのインストール・計測・デプロイ）
 
-手作業のコマンド列を毎回打つと事故る（再起動を忘れる、順番を間違える等）ので、早い段階で「変更を反映する」を1コマンドに集約しておくと後半が楽になる。ISUCON14優勝チームのリポジトリは、これを`Makefile`のターゲットとして持っていた。
+手作業のコマンド列を毎回打つと事故る（再起動を忘れる、順番を間違える、alpのオプションを毎回調べ直す等）ので、早い段階で「ツールを入れる」「計測する」「変更を反映する」をそれぞれ1コマンドに集約しておくと後半が楽になる。ISUCON14優勝チームのリポジトリは、デプロイ部分をこの形で`Makefile`のターゲットに持っていた。以下は、それに計測ツールのインストール・実行もまとめた、事前に用意しておけるテンプレート。
 
 ```makefile
+# ==== 最初に1回: 計測ツールのインストール ====
+install-tools: install-alp install-percona-toolkit install-netdata
+
+install-alp:
+	wget -q https://github.com/tkuchiki/alp/releases/download/v1.0.21/alp_linux_amd64.zip
+	unzip -o alp_linux_amd64.zip
+	sudo install alp /usr/local/bin/alp
+	rm -f alp alp_linux_amd64.zip
+
+install-percona-toolkit:
+	sudo apt-get install -y percona-toolkit
+
+install-netdata:
+	bash <(curl -Ss https://my-netdata.io/kickstart.sh) --non-interactive
+
+# ==== ビルド・デプロイ ====
 deploy: build restart-app restart-nginx restart-mysql rotate-logs
 
 build:
@@ -253,6 +269,16 @@ restart-mysql:
 
 rotate-logs:
 	./scripts/rotate-logs.sh
+
+# ==== 計測の実行 ====
+alp:
+	sudo alp ltsv --file /var/log/nginx/access.log --sort sum -r | less
+
+slowlog:
+	sudo pt-query-digest /var/log/mysql/mysql-slow.log | less
+
+pprof-cpu:
+	go tool pprof -http=0.0.0.0:8081 "http://localhost:6060/debug/pprof/profile?seconds=60"
 ```
 
 `restart.sh`は「動いているサービスだけ再起動する」だけの薄いラッパー。3台構成だとDB専用サーバーにはアプリのサービスが存在しないので、こう防御的に書いておくと1本のスクリプトを全サーバーで共通に使い回せる。
@@ -274,6 +300,27 @@ fi
 
 `rotate-logs`は、デプロイ前に前回分のnginx/MySQLログをタイムスタンプ付きでどかしてgzip圧縮しておく処理（ベンチマーク結果の解析が前回分と混ざらないようにするため）。
 
+```bash
+#!/bin/bash
+set -e
+
+ts=$(date +%Y%m%d-%H%M%S)
+
+if [ -f /var/log/nginx/access.log ]; then
+	sudo mv /var/log/nginx/access.log "/var/log/nginx/access.log.${ts}"
+	sudo systemctl reload nginx
+	sudo gzip "/var/log/nginx/access.log.${ts}"
+fi
+
+if [ -f /var/log/mysql/mysql-slow.log ]; then
+	sudo mv /var/log/mysql/mysql-slow.log "/var/log/mysql/mysql-slow.log.${ts}"
+	sudo mysqladmin flush-logs
+	sudo gzip "/var/log/mysql/mysql-slow.log.${ts}"
+fi
+```
+
+これで当日の1サイクルは`make deploy`（反映）→ベンチマーク実行→`make alp` / `make slowlog` / `make pprof-cpu`（解析）の3〜4コマンドに収まる。`install-tools`は初回セットアップ時に1度叩けばよい。
+
 ### さらに発展的なプラクティス（余裕があれば）
 
 - **構成管理ツールでの環境構築**: [mitamae](https://github.com/itamae-kitchen/mitamae)（Itamaeのmruby実装、単一バイナリで依存なし）でOS・ミドルウェアのセットアップをRubyのレシピとして書いておくと、`sudo mitamae local recipe.rb`一発で環境を再現できる。ISUCON12以降、複数の参加チームがItamae/mitamaeを使っている。
@@ -292,13 +339,7 @@ flowchart TD
     F --> A
 ```
 
-ベンチマーク前にログを退避しないと前回分と混ざって解析結果が汚れる。
-
-```bash
-sudo mv /var/log/nginx/access.log /var/log/nginx/access.log.$(date +%s)
-sudo systemctl reload nginx
-sudo mysqladmin -uisucon -pisucon flush-logs
-```
+ベンチマーク前にログを退避しないと前回分と混ざって解析結果が汚れるので、`make deploy`（内部で`rotate-logs`を実行する）で反映してからベンチマークを回す。
 
 このループの考え方自体は[[isucon]]の「基本サイクル」を、実際にどこを直すかの定石・過去事例は[[isucon-go-implementation]]を参照。
 

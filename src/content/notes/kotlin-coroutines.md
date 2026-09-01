@@ -1,6 +1,6 @@
 ---
 created: "2026-08-18"
-updated: "2026-08-29"
+updated: "2026-09-01"
 ---
 # Kotlin Coroutines
 
@@ -27,7 +27,7 @@ interface Continuation<in T> {
 }
 ```
 
-`Continuation`は「中断点より後に残っている処理」を表すコールバックオブジェクト。
+`Continuation`は「中断点より後に残っている処理」を表すコールバックオブジェクト。`in T`が付いているのは`resumeWith`で`T`を受け取るだけで返すことはないため（[[kotlin-variance]]参照）。
 
 ### 2. 状態機械への変換
 

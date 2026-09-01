@@ -1,5 +1,6 @@
 ---
 created: 2026-08-29
+updated: 2026-09-01
 ---
 
 # CodeBuild-hosted GitHub Actions runner
@@ -62,6 +63,39 @@ CodeBuildが発行するGitHub Actionsランナートークンは発行から1�
 
 GitHub側のOIDC（Actions→AWS）と、CodeBuildサービスロール（AWS→GitHub Webhook受信〜ランナー起動）の両方の権限設計を管理する必要があり、GitHub-hostedランナー＋OIDCだけの構成より権限まわりの設計・監査対象が増える。
 
+## Compute Type（インスタンスタイプ）の特定方法
+
+CodeBuildの「インスタンスタイプ」は正式には**compute type**と呼ばれる。確認したい対象によって方法が異なる。
+
+### 設定を確認する
+
+- AWSコンソール: プロジェクトの「Edit」→「Environment」欄。
+- AWS CLI: `aws codebuild batch-get-projects --names <project-name> --query 'projects[].environment.{computeType:computeType,fleet:fleet}'`。compute fleet（予約キャパシティ）を使っている場合は返ってくる`fleet.fleetArn`を`aws codebuild batch-get-fleets`に渡すと、fleet側の`computeConfiguration.instanceType`（実際のEC2インスタンスタイプ相当）まで分かる。
+
+### 実行済みビルドで実際に使われた値を確認する
+
+`ATTRIBUTE_BASED_COMPUTE`（vCPU/メモリ等の属性だけ指定してAWSが最安インスタンスを自動選択する方式）を使っている場合、実際に選ばれた compute type を知る確実な方法はビルド結果を見ること。
+
+```bash
+aws codebuild batch-get-builds --ids <build-id> --query 'builds[].environment.computeType'
+```
+
+### ジョブ内部（buildspec実行中）から推測する
+
+実行中のcompute typeを返す環境変数は公式には用意されていない。`nproc`/`free -h`でvCPU数・メモリ量を見て、下記の早見表と突き合わせて逆算するのが実務上のやり方。
+
+| compute type | vCPU | メモリ |
+|---|---|---|
+| BUILD_GENERAL1_SMALL | 2 | 4 GiB |
+| BUILD_GENERAL1_MEDIUM | 4 | 8 GiB |
+| BUILD_GENERAL1_LARGE | 8 | 16 GiB |
+| BUILD_GENERAL1_XLARGE | 36 | 72 GiB |
+| BUILD_GENERAL1_2XLARGE | 72 | 144 GiB（+824GB SSD） |
+
+### CodeBuild-hosted GitHub Actions runner特有の確認先
+
+このrunnerの場合はワークフローYAMLの`runs-on:`に`instance-size:medium`のようなラベルオーバーライドが書かれていないか確認するのが一番早い。書かれていなければCodeBuildプロジェクト側のデフォルトcompute typeがそのまま使われるので、上記「設定を確認する」の方法で辿る。
+
 ## 出典
 
 - [Tutorial: Configure a CodeBuild-hosted GitHub Actions runner - AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/action-runner.html)
@@ -74,3 +108,7 @@ GitHub側のOIDC（Actions→AWS）と、CodeBuildサービスロール（AWS→
 - [AWS CodeBuild vs GitHub Actions - Pricing Comparison](https://scavasoft.com/aws-codebuild-vs-github-actions-price/)
 - [GitHub Actions Hosted vs Self-Hosted After January and March 2026 Pricing Changes](https://pocketlantern.dev/briefs/github-actions-hosted-vs-self-hosted-runner-pricing-2026)
 - [How Kaltura Accelerates CI/CD Using AWS CodeBuild-hosted Runners (AWS DevOps Blog)](https://aws.amazon.com/blogs/devops/how-kaltura-accelerates-ci-cd-using-aws-codebuild-hosted-runners)
+- [Build environment compute modes and types - AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+- [batch-get-builds — AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/codebuild/batch-get-builds.html)
+- [batch-get-projects — AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/codebuild/batch-get-projects.html)
+- [batch-get-fleets — AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/codebuild/batch-get-fleets.html)

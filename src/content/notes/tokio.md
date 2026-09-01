@@ -1,6 +1,6 @@
 ---
 created: "2026-08-17"
-updated: "2026-08-29"
+updated: "2026-09-01"
 ---
 # Tokio
 
@@ -78,7 +78,7 @@ flowchart TB
 
 - **Tokio(Rust)**: 言語の外の1ライブラリ(crate)。ランタイムは複数存在しうる。並行の単位はFuture(`async fn`)。デフォルトはCPUコア数分のOSスレッドでwork-stealing
 - **libuv(Node.js/旧Deno基盤)**: ランタイムに内蔵。並行の単位はコールバック/Promise。JS実行は単一スレッドのイベントループで、ブロッキング処理だけ別スレッドプールに逃がす
-- **GMPスケジューラ(Go)**: 言語ランタイムに内蔵、常時有効。並行の単位はgoroutine。`GOMAXPROCS`個の論理プロセッサ(P)にOSスレッド(M)を割り当ててwork-stealing
+- **GMPスケジューラ(Go)**: 言語ランタイムに内蔵、常時有効。並行の単位はgoroutine。`GOMAXPROCS`個の論理プロセッサ(P)にOSスレッド(M)を割り当ててwork-stealing（詳細は[[go-goroutine-scheduler]]）
 
 NodeやGoは「非同期であること」が言語・ランタイムの前提になっているのに対し、Rustは非同期を使うかどうか・どのランタイムを使うかを利用者が選択する設計になっている。
 

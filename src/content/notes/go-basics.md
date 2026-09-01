@@ -1,5 +1,6 @@
 ---
 created: "2026-09-01"
+updated: "2026-09-01"
 ---
 
 # Go言語の基礎
@@ -162,7 +163,7 @@ u.Describe() // Baseのメソッドがそのまま呼べる
 
 ## 並行処理: goroutineとchannel
 
-- `go f()`と書くだけで軽量な並行実行単位（goroutine）が起動する。OSスレッドではなく、Goランタイムが少数のOSスレッド上に多数のgoroutineをM:Nでスケジューリングする（GMPモデル）。スタックも数KBから可変長で伸縮するため、数万〜数十万オーダーで起動しても現実的なコストで収まる。
+- `go f()`と書くだけで軽量な並行実行単位（goroutine）が起動する。OSスレッドではなく、Goランタイムが少数のOSスレッド上に多数のgoroutineをM:Nでスケジューリングする（GMPモデル、詳細は[[go-goroutine-scheduler]]）。スタックも数KBから可変長で伸縮するため、数万〜数十万オーダーで起動しても現実的なコストで収まる。
 - 他言語の`async`/`await`のような協調的な非同期モデル（[[async-runtime]]参照）とは異なり、goroutineの呼び出し側コードは同期的な見た目のまま書ける。関数呼び出しに`go`を前置するだけで並行実行に切り替わる。
 - goroutine間の通信は`channel`（`ch := make(chan int)`、送信は`ch <- v`、受信は`v := <-ch`）。バッファなしchannelは送受信が揃うまでブロックする同期点になり、バッファ付き(`make(chan int, 10)`)は容量まで貯め込める。
 - 複数channelを待つには`select`。
@@ -196,7 +197,7 @@ wg.Wait()
 - `net/http`: `http.ServeMux`でルーティング、`http.HandlerFunc`でハンドラを書ける。ただしISUCONの初期実装ではecho等のフレームワークが使われることが多い（[[isucon-go-implementation]]参照）。
 - `encoding/json`: 構造体タグ（`` `json:"name"` ``）でフィールド名をマッピングし、`json.Marshal`/`json.Unmarshal`で相互変換する。
 - `database/sql`: `sql.DB`はコネクションプールそのもの（コネクション1本を表すわけではない）。素で使わず`sqlx`で薄くラップするのが定番（詳細は[[isucon-go-implementation]]）。
-- `context.Context`: キャンセル・タイムアウト・締め切りを関数呼び出しの連鎖に伝播させるための型。I/Oを行う関数の第一引数として受け取るのが慣習（`req.Context()`、`db.QueryContext(ctx, ...)`など）。
+- `context.Context`: キャンセル・タイムアウト・締め切りを関数呼び出しの連鎖に伝播させるための型。I/Oを行う関数の第一引数として受け取るのが慣習（`req.Context()`、`db.QueryContext(ctx, ...)`など）。詳細は[[go-context]]。
 
 ## テスト
 

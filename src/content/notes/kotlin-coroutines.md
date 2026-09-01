@@ -60,7 +60,7 @@ interface Continuation<in T> {
 
 - **[[async-runtime]]としての立ち位置**: OSスレッドをブロックせずに協調的スケジューリングで並行実行する点は他の非同期ランタイムと同じ枠組みに入るが、コルーチン自体はスタックレスの状態機械であり、Dispatcher経由でOSスレッドに載せる2段構成になっている。
 - **[[tokio]] / Rust**: RustのFutureも同じくコンパイラ生成の状態機械。ただしRustは言語自体がランタイムを持たず、Tokioという外部ライブラリが実行(poll)する。Kotlinは`kotlinx.coroutines`が同じ役割を担う点で構造が近い。
-- **Goのgoroutine**: Goランタイムが管理する軽量スレッドで、スタックを実際に持つ(伸縮可能)。プリエンプションも一部導入されている。`async`/`await`に相当する構文自体が存在せず、`go`一つで非同期化できる代わりに、構造化された取り消し伝播は標準では持たない(`context.Context`を手動で伝播させる規約)。
+- **Goのgoroutine**: Goランタイムが管理する軽量スレッドで、スタックを実際に持つ(伸縮可能)。プリエンプションも一部導入されている(詳細は[[go-goroutine-scheduler]])。`async`/`await`に相当する構文自体が存在せず、`go`一つで非同期化できる代わりに、構造化された取り消し伝播は標準では持たない(`context.Context`を手動で伝播させる規約。[[go-context]]参照)。
 - **Java Virtual Threads (Project Loom)**: JVMが管理する軽量スレッドで、フル継続(スタックそのもの)を保持する。既存の同期的・ブロッキングなコードをほぼ書き換えずに使える利点があるが、構造化並行性は標準では強制されず、`StructuredTaskScope`を使う側が意識的に採用する必要がある。I/Oバウンドな超高負荷(100万リクエスト規模)ではKotlin coroutinesがVirtual Threadsをやや上回るというベンチマーク報告もある。
 - **JS/C#のasync/await**: `async`/`await`が言語のキーワードで、非同期関数の呼び出しは明示的にPromise/Taskでラップされる。Kotlin coroutinesの設計者Roman Elizarovは、Kotlinの位置づけを「C#系のasync/await的な関数色分けと、Goの無色の世界の中間」と説明している。`suspend`という色は付くが`await`に相当する構文はなく、`suspend fun`内では通常の関数呼び出しと同じ見た目で中断可能関数を呼べ、結果もFuture/Promiseに包まれない生の値として返る。
 

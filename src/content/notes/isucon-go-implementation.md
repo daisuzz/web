@@ -1,6 +1,6 @@
 ---
 created: 2026-08-22
-updated: 2026-08-27
+updated: 2026-09-01
 ---
 
 # ISUCONにおけるGo実装
@@ -55,7 +55,7 @@ flowchart LR
 
 ## Go・ISUCON未経験者の準備
 
-- Goの基本文法は [A Tour of Go](https://go.dev/tour/) でひととおり触っておく。
+- Goの基本文法（他言語との違いに絞った要点）は[[go-basics]]にまとめてある。[A Tour of Go](https://go.dev/tour/)と合わせてひととおり触っておく。
 - `sqlx`の使い方（`Select`/`Get`/`NamedExec`など）を事前に触っておく。
 - 過去問の練習環境として配布されている `private-isu` を実際に手を動かして一通り改善してみる。
 - チーム内でGoのバージョンと`goimports`のルールを事前に統一しておく（当日のコード衝突・フォーマット崩れを防ぐ）。

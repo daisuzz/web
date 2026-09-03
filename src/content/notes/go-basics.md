@@ -1,6 +1,6 @@
 ---
 created: "2026-09-01"
-updated: "2026-09-01"
+updated: "2026-09-03"
 ---
 
 # Go言語の基礎
@@ -194,7 +194,7 @@ wg.Wait()
 
 ## 標準ライブラリ最短ルート（Web開発向け）
 
-- `net/http`: `http.ServeMux`でルーティング、`http.HandlerFunc`でハンドラを書ける。ただしISUCONの初期実装ではecho等のフレームワークが使われることが多い（[[isucon-go-implementation]]参照）。
+- `net/http`: `http.ServeMux`でルーティング、`http.HandlerFunc`でハンドラを書ける。ただしISUCONの初期実装では[[echo-go-framework]]等のフレームワークが使われることが多い（[[isucon-go-implementation]]参照）。
 - `encoding/json`: 構造体タグ（`` `json:"name"` ``）でフィールド名をマッピングし、`json.Marshal`/`json.Unmarshal`で相互変換する。
 - `database/sql`: `sql.DB`はコネクションプールそのもの（コネクション1本を表すわけではない）。素で使わず`sqlx`で薄くラップするのが定番（詳細は[[isucon-go-implementation]]）。
 - `context.Context`: キャンセル・タイムアウト・締め切りを関数呼び出しの連鎖に伝播させるための型。I/Oを行う関数の第一引数として受け取るのが慣習（`req.Context()`、`db.QueryContext(ctx, ...)`など）。詳細は[[go-context]]。

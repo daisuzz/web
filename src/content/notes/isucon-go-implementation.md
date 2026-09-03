@@ -20,7 +20,7 @@ flowchart LR
 ```
 
 - **Webフレームワーク**: 近年の初期実装では[[echo-go-framework]]が使われることが多い。最小限のコードで動き、シンプルなルーティングとミドルウェア機構を持つ。
-- **DBアクセス**: `database/sql` を素で使わず、`jmoiron/sqlx` で薄くラップして使うのが定番。構造体への自動マッピングなどが書きやすくなる。
+- **DBアクセス**: `database/sql` を素で使わず、`jmoiron/sqlx` で薄くラップして使うのが定番。構造体への自動マッピングなどが書きやすくなる。使い方の詳細は[[sqlx]]を参照。
 - **DBドライバ**: MySQLなら `go-sql-driver/mysql`。
 
 ## 初見のコードを読み解く視点
@@ -60,6 +60,94 @@ Echo自体のルーティング・Context・ミドルウェアの基本的な使
 | DNS解決 | DNSレコードのTTL・cache-ttl設定が0でキャッシュが効かず、毎回名前解決が走る | TTL/cache-ttl設定を見直してキャッシュを有効化する |
 | CPU以外のリソース | 全ホストでCPU使用率に余裕があるのにスコアが伸びない | ネットワーク帯域やファイルディスクリプタ数など、CPU以外のリソースも多面的に監視する |
 
+## チューニング例（before/after）
+
+上の表のうち、実際のコードでどう書き換えるかが分かりにくいものをbefore/afterで示す。
+
+### N+1クエリの解消（[[sqlx]]のInでバルクフェッチ）
+
+```go
+// before: ループの中で1件ずつSELECTしている（N+1）
+var items []Item
+db.Select(&items, "SELECT * FROM items")
+for i := range items {
+    var user User
+    db.Get(&user, "SELECT * FROM users WHERE id = ?", items[i].UserID)
+    items[i].User = user
+}
+
+// after: IN句でまとめて取得し、Go側のmapでルックアップする
+var items []Item
+db.Select(&items, "SELECT * FROM items")
+
+userIDs := make([]int, len(items))
+for i, item := range items {
+    userIDs[i] = item.UserID
+}
+query, args, _ := sqlx.In("SELECT * FROM users WHERE id IN (?)", userIDs)
+query = db.Rebind(query)
+var users []User
+db.Select(&users, query, args...)
+
+userByID := make(map[int]User, len(users))
+for _, u := range users {
+    userByID[u.ID] = u
+}
+for i := range items {
+    items[i].User = userByID[items[i].UserID]
+}
+```
+
+クエリ発行数がitemsの件数分から2回（items取得＋users一括取得）に減る。
+
+### コネクションプールの明示設定
+
+```go
+// before: 上限を設定していない（Goのデフォルトは実質無制限）
+db, err := sqlx.Open("mysql", dsn)
+
+// after: 上限を明示する
+db, err := sqlx.Open("mysql", dsn)
+db.SetMaxOpenConns(10)
+db.SetMaxIdleConns(10)                 // SetMaxOpenConns以上の値にする
+db.SetConnMaxLifetime(10 * time.Second) // 「最大接続数×1秒」程度が目安
+```
+
+無制限のままだとリクエスト急増時にMySQL側の`max_connections`を食い潰して接続エラーが多発する。数値はMySQL側の設定・APサーバーの台数に応じて調整する。
+
+### interpolateParamsでラウンドトリップ削減
+
+```go
+// before: プレースホルダがサーバーサイドprepared statementとして送られる（Prepare→Execute→Closeの3往復）
+dsn := "user:password@tcp(localhost:3306)/dbname?charset=utf8mb4&parseTime=true&loc=Local"
+
+// after: クライアント側で単一のクエリ文字列に埋め込んでから送る（1往復）
+dsn := "user:password@tcp(localhost:3306)/dbname?charset=utf8mb4&parseTime=true&loc=Local&interpolateParams=true"
+```
+
+DSNオプション1つの変更で全クエリに効く分コストパフォーマンスが良い改善策。詳細（マルチバイト文字コードと併用できない制約など）は[[isucon-go-runbook]]の「MySQLドライバのDSNオプション」を参照。
+
+### Bulk Insert
+
+```go
+// before: INSERTをループで1件ずつ実行
+for _, item := range items {
+    db.NamedExec(`INSERT INTO items (name, price) VALUES (:name, :price)`, item)
+}
+
+// after: VALUES句を組み立てて1クエリにまとめる
+placeholders := make([]string, 0, len(items))
+args := make([]interface{}, 0, len(items)*2)
+for _, item := range items {
+    placeholders = append(placeholders, "(?, ?)")
+    args = append(args, item.Name, item.Price)
+}
+query := "INSERT INTO items (name, price) VALUES " + strings.Join(placeholders, ",")
+_, err := db.Exec(query, args...)
+```
+
+`NamedExec`は1レコード単位でのバインドしかできないため、複数レコードをまとめる場合はプレースホルダを手動で組み立てて`Exec`を使う。
+
 ## ハマりどころ・注意点
 
 - Goの`slice`や`map`はthread safeではないため、インメモリキャッシュを実装する際は`sync.Mutex`/`sync.RWMutex`（あるいは`sync.Map`）での保護が必須。
@@ -69,7 +157,7 @@ Echo自体のルーティング・Context・ミドルウェアの基本的な使
 ## Go・ISUCON未経験者の準備
 
 - Goの基本文法（他言語との違いに絞った要点）は[[go-basics]]にまとめてある。[A Tour of Go](https://go.dev/tour/)と合わせてひととおり触っておく。
-- `sqlx`の使い方（`Select`/`Get`/`NamedExec`など）を事前に触っておく。
+- [[sqlx]]の使い方（`Select`/`Get`/`NamedExec`など）を事前に触っておく。
 - 過去問の練習環境として配布されている `private-isu` を実際に手を動かして一通り改善してみる。
 - チーム内でGoのバージョンと`goimports`のルールを事前に統一しておく（当日のコード衝突・フォーマット崩れを防ぐ）。
 - デプロイ手順を決めておく（手元でLinux向けバイナリをビルドして`scp`で転送する方式が定番）。

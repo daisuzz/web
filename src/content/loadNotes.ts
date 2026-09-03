@@ -88,7 +88,7 @@ function buildSlugIndex(files: string[]): Map<string, string> {
 
 interface ParsedNote {
     note: SiteNote
-    createdAtMs: number
+    updatedAtMs: number
 }
 
 function parseNoteFile(filePath: string, slugIndex: Map<string, string>): ParsedNote {
@@ -122,7 +122,7 @@ function parseNoteFile(filePath: string, slugIndex: Map<string, string>): Parsed
 
     // 日付のみ("2026-08-17")の場合はUTC 0時、日時が指定されていればそのオフセットを
     // 踏まえた絶対時刻としてパースする。Dateとして不正な値はNaNとなり、常に末尾に回る。
-    const createdAtMs = createdRaw ? Date.parse(createdRaw) : NaN
+    const updatedAtMs = updatedRaw ? Date.parse(updatedRaw) : NaN
 
     return {
         note: {
@@ -135,7 +135,7 @@ function parseNoteFile(filePath: string, slugIndex: Map<string, string>): Parsed
             links: [...links],
             backlinks: [],
         },
-        createdAtMs,
+        updatedAtMs,
     }
 }
 
@@ -144,7 +144,7 @@ export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote
     const slugIndex = buildSlugIndex(files)
     const parsed = files.map((filePath) => parseNoteFile(filePath, slugIndex))
     const notes = parsed.map((p) => p.note)
-    const createdAtMsBySlug = new Map(parsed.map((p) => [p.note.slug, p.createdAtMs]))
+    const updatedAtMsBySlug = new Map(parsed.map((p) => [p.note.slug, p.updatedAtMs]))
 
     const notesBySlug = new Map(notes.map((note) => [note.slug, note]))
     notes.forEach((note) => {
@@ -156,12 +156,13 @@ export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote
         })
     })
 
-    // 表示上のcreatedは日付に切り詰めているが、並び順は切り詰め前の日時(createdAtMsBySlug)で
-    // 判定する。同日中に複数ノートを作成した場合でもfrontmatterに時刻まで書けば厳密な作成順になる。
-    // created未設定(NaN)のノートは常に末尾に回す。
+    // 表示上のupdatedは日付に切り詰めているが、並び順は切り詰め前の日時(updatedAtMsBySlug)で
+    // 判定する。updatedが未設定の場合はcreatedにフォールバックした値で並ぶ。同日中に複数ノートを
+    // 更新した場合でもfrontmatterに時刻まで書けば厳密な更新順になる。
+    // created/updatedともに未設定(NaN)のノートは常に末尾に回す。
     notes.sort((a, b) => {
-        const aAt = createdAtMsBySlug.get(a.slug) ?? NaN
-        const bAt = createdAtMsBySlug.get(b.slug) ?? NaN
+        const aAt = updatedAtMsBySlug.get(a.slug) ?? NaN
+        const bAt = updatedAtMsBySlug.get(b.slug) ?? NaN
         if (Number.isNaN(aAt) && Number.isNaN(bAt)) return 0
         if (Number.isNaN(aAt)) return 1
         if (Number.isNaN(bAt)) return -1

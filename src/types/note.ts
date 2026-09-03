@@ -26,6 +26,6 @@ export interface SiteNote {
 export interface NoteSearchEntry {
     slug: string
     title: string
-    created: string
+    updated: string
     tags: string[]
 }

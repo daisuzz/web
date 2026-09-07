@@ -32,7 +32,7 @@ const NoteTagPage: React.FC<PageProps<object, NoteTagPageContext>> = ({pageConte
                             <Link to={`/notes/${note.slug}`} className={style.itemTitle}>
                                 {note.title}
                             </Link>
-                            <time className={style.itemDate}>{note.created}</time>
+                            <time className={style.itemDate}>{note.updated}</time>
                         </li>
                     ))}
                 </ul>

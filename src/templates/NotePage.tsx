@@ -74,7 +74,8 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
                 </div>
                 <article className={style.article}>
                     <div className={style.meta}>
-                        <time>{note.created}</time>
+                        <span>作成: <time dateTime={note.created}>{note.created}</time></span>
+                        <span>更新: <time dateTime={note.updated}>{note.updated}</time></span>
                         {note.tags.map((tag) => (
                             <Link key={tag} to={`/notes/tags/${tag}`} className={style.tag}>
                                 #{tag}

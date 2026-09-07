@@ -25,17 +25,17 @@ function matches(entry: NoteSearchEntry, query: string): boolean {
 interface NoteListItemProps {
     slug: string
     title: string
-    created: string
+    updated: string
     tags: string[]
 }
 
-const NoteListItem: React.FC<NoteListItemProps> = ({slug, title, created, tags}) => (
+const NoteListItem: React.FC<NoteListItemProps> = ({slug, title, updated, tags}) => (
     <li className={style.item}>
         <Link to={`/notes/${slug}`} className={style.itemTitle}>
             {title}
         </Link>
         <div className={style.itemMeta}>
-            <time>{created}</time>
+            <time>{updated}</time>
             {tags.map((tag) => (
                 <Link key={tag} to={`/notes/tags/${tag}`} className={style.tag}>
                     #{tag}

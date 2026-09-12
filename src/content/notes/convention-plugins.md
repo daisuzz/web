@@ -1,8 +1,8 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# Convention Plugins (Gradle)
+# Convention Plugins
 
 複数プロジェクトに共通するプラグイン適用・設定・デフォルト値をひとまとめにした、再利用可能なビルドロジック。大きい・マルチプロジェクトのビルドで、各サブプロジェクトの`build.gradle.kts`（Configurationフェーズで評価される。詳細は[[gradle-basics]]）に同じ`plugins {}`ブロックや設定を毎回コピペする代わりに、1つの独自プラグインとして書いて`apply`する。
 

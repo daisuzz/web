@@ -1,8 +1,8 @@
 ---
 created: "2026-08-29"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# Configuration Cache (Gradle)
+# Configuration Cache
 
 Configurationフェーズ（[[gradle-basics]]参照）の結果そのものをキャッシュし、変更がなければ次回以降のビルドでConfigurationフェーズを丸ごとスキップしてExecutionフェーズに進む機能。
 

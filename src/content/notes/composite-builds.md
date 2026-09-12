@@ -1,8 +1,8 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# Composite Builds (Gradle)
+# Composite Builds
 
 複数の独立したGradleビルドをまとめて1つとして扱う仕組み。`settings.gradle.kts`で`includeBuild()`を呼ぶことで、他のビルドをその場に含める（`settings.gradle.kts`とInitializationフェーズの役割は[[gradle-basics]]を参照）。[[gradle-daemon]]が管理するタスクグラフの中に、別ビルドをそのまま組み込めるイメージ。
 

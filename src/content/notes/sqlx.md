@@ -4,7 +4,7 @@ created: "2026-09-03"
 
 # sqlx (Go)
 
-Goの`database/sql`を薄くラップするライブラリ(`jmoiron/sqlx`)。`sql.DB`/`sql.Tx`/`sql.Stmt`など標準のインターフェースをそのまま包含したスーパーセットになっているため、既存の`database/sql`ベースのコードに後から段階的に導入できる。[[isucon-go-implementation]]で触れているとおり、ISUCONのGo実装では`database/sql`を素で使わずsqlxで薄くラップするのが定番。
+Goの`database/sql`を薄くラップするライブラリ(`jmoiron/sqlx`)。`sql.DB`/`sql.Tx`/`sql.Stmt`など標準のインターフェースをそのまま包含したスーパーセットになっているため、既存の`database/sql`ベースのコードに後から段階的に導入できる。
 
 ## ハンドル型
 
@@ -48,7 +48,7 @@ query = db.Rebind(query) // プレースホルダをドライバの記法に変�
 db.Select(&users, query, args...)
 ```
 
-スライスを渡すと要素数ぶんプレースホルダを自動展開する。N+1クエリをバルクフェッチに書き換える際の定番の道具。具体的な書き換え例は[[isucon-go-implementation]]を参照。
+スライスを渡すと要素数ぶんプレースホルダを自動展開する。N+1クエリをバルクフェッチに書き換える際の定番の道具。
 
 ## Preparex / Beginx
 

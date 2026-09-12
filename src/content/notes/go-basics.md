@@ -5,7 +5,7 @@ updated: "2026-09-03"
 
 # Go言語の基礎
 
-他言語（Java/Kotlin/Python/TypeScriptなど）の経験はあるがGoは未経験、という前提で、最短で「読み書きできる」レベルまで到達するための要点をまとめる。「他言語と何が違うか」にフォーカスし、一般的なプログラミングの説明は省く。ISUCON文脈での実践的な使い方（フレームワーク選定、DBアクセス、計測ツール）は[[isucon-go-implementation]]・[[isucon-go-runbook]]を参照。
+他言語（Java/Kotlin/Python/TypeScriptなど）の経験はあるがGoは未経験、という前提で、最短で「読み書きできる」レベルまで到達するための要点をまとめる。「他言語と何が違うか」にフォーカスし、一般的なプログラミングの説明は省く。
 
 ## 実行モデル
 
@@ -144,7 +144,7 @@ u.Describe() // Baseのメソッドがそのまま呼べる
 - 配列(`[5]int`)は固定長で値型。実務でよく使うのはスライス(`[]int`)で、内部的にはポインタ・長さ(len)・容量(cap)を持つ「配列への窓」。
 - `append`は容量を超えると新しい配列を確保してコピーする（再割り当て）。複数のスライスが同じ配列を共有している状態でappendすると、片方の変更がもう片方に見えたり見えなかったりする挙動があるため注意。
 - マップは`make(map[K]V)`または`map[K]V{}`で初期化。`nil`マップは読み取りはできるが書き込むとpanicする。存在確認は`v, ok := m[k]`のカンマokイディオム。
-- **スライス・マップはthread-safeではない**。複数goroutineから同時にアクセスする場合は`sync.Mutex`/`sync.RWMutex`か`sync.Map`で保護する必要がある（[[isucon-go-implementation]]でも触れているインメモリキャッシュ実装時の注意点）。
+- **スライス・マップはthread-safeではない**。複数goroutineから同時にアクセスする場合は`sync.Mutex`/`sync.RWMutex`か`sync.Map`で保護する必要がある。
 
 ## ジェネリクス
 
@@ -167,7 +167,7 @@ u.Describe() // Baseのメソッドがそのまま呼べる
 - 他言語の`async`/`await`のような協調的な非同期モデル（[[async-runtime]]参照）とは異なり、goroutineの呼び出し側コードは同期的な見た目のまま書ける。関数呼び出しに`go`を前置するだけで並行実行に切り替わる。
 - goroutine間の通信は`channel`（`ch := make(chan int)`、送信は`ch <- v`、受信は`v := <-ch`）。バッファなしchannelは送受信が揃うまでブロックする同期点になり、バッファ付き(`make(chan int, 10)`)は容量まで貯め込める。
 - 複数channelを待つには`select`。
-- 単に「完了を待つ」「共有state を保護する」だけならchannelより`sync`パッケージの方が素直なことも多い（ISUCON実装では後者が頻出）。
+- 単に「完了を待つ」「共有state を保護する」だけならchannelより`sync`パッケージの方が素直なことも多い。
 
 ```go
 var wg sync.WaitGroup
@@ -190,13 +190,13 @@ wg.Wait()
 ## パッケージ管理
 
 - `go.mod`が依存関係の定義ファイル（npmの`package.json`、Mavenの`pom.xml`相当）。`go.sum`はロックファイル。
-- `go mod init <module-path>`で初期化、`go mod tidy`でimport文から依存を再計算して`go.mod`/`go.sum`を整合させる。オフライン環境向けに依存を同梱する`go mod vendor`は[[isucon-go-runbook]]でも使っている。
+- `go mod init <module-path>`で初期化、`go mod tidy`でimport文から依存を再計算して`go.mod`/`go.sum`を整合させる。オフライン環境向けに依存を同梱する`go mod vendor`というサブコマンドもある。
 
 ## 標準ライブラリ最短ルート（Web開発向け）
 
-- `net/http`: `http.ServeMux`でルーティング、`http.HandlerFunc`でハンドラを書ける。ただしISUCONの初期実装では[[echo-go-framework]]等のフレームワークが使われることが多い（[[isucon-go-implementation]]参照）。
+- `net/http`: `http.ServeMux`でルーティング、`http.HandlerFunc`でハンドラを書ける。実務では[[echo-go-framework]]等のフレームワークが使われることも多い。
 - `encoding/json`: 構造体タグ（`` `json:"name"` ``）でフィールド名をマッピングし、`json.Marshal`/`json.Unmarshal`で相互変換する。
-- `database/sql`: `sql.DB`はコネクションプールそのもの（コネクション1本を表すわけではない）。素で使わず[[sqlx]]で薄くラップするのが定番（ISUCON文脈での実践は[[isucon-go-implementation]]）。
+- `database/sql`: `sql.DB`はコネクションプールそのもの（コネクション1本を表すわけではない）。素で使わず[[sqlx]]で薄くラップするのが定番。
 - `context.Context`: キャンセル・タイムアウト・締め切りを関数呼び出しの連鎖に伝播させるための型。I/Oを行う関数の第一引数として受け取るのが慣習（`req.Context()`、`db.QueryContext(ctx, ...)`など）。詳細は[[go-context]]。
 
 ## テスト
@@ -215,7 +215,6 @@ wg.Wait()
 
 - [A Tour of Go](https://go.dev/tour/)を通しで触る（半日程度）。このノートの内容と重なるが、実際に手を動かして構文エラーに慣れておくのが目的。
 - 本ノートのdefer/error/interface/goroutine周りは、コードを読んでいて引っかかりやすい箇所なので重点的に。
-- 過去問の練習環境`private-isu`を実際に手を動かして一通り改善してみる（[[isucon-go-implementation]]の「Go・ISUCON未経験者の準備」参照）。ここまでで実戦投入レベルの土台になる。
 
 ## バージョンについて
 

@@ -1,7 +1,8 @@
 ---
 created: "2026-08-18"
+updated: "2026-09-12"
 ---
-# Kotlinのアノテーション処理 (kapt / KSP)
+# Kotlinのアノテーション処理
 
 Kotlinでコンパイル時のコード生成を行うための2つの手段、[[kapt]]と[[ksp]]を束ねるハブノート。どちらも土台にあるのはJava由来の[[annotation-processor]]という仕組みで、DIコンテナ（Dagger/Hilt）やORM（Room）のボイラープレート生成に使われている。
 

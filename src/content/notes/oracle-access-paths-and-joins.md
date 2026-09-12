@@ -1,8 +1,8 @@
 ---
 created: "2026-08-27"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# アクセスパスと結合方式（Oracle）
+# アクセスパスと結合方式
 
 ## [[oracle-execution-plan]]の中での位置づけ
 

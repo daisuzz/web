@@ -1,7 +1,8 @@
 ---
 created: "2026-08-18"
+updated: "2026-09-12"
 ---
-# アノテーションプロセッサ (Annotation Processing)
+# Annotation Processing
 
 javac のコンパイル時プラグイン機構。ソースコード中のアノテーションを読み取り、新しいソースファイルやリソースを**生成**するために使う。`javax.annotation.processing` / `javax.lang.model` パッケージで定義されるAPI（JSR 269, Pluggable Annotation Processing API）。[[kapt]]・[[ksp]]はいずれもこの仕組みをKotlinで使えるようにするためのレイヤー。
 

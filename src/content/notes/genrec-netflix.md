@@ -1,8 +1,8 @@
 ---
 created: 2026-08-18
-updated: 2026-08-20
+updated: "2026-09-12"
 ---
-# GenRec (Netflix)
+# GenRec
 
 Netflixが開発したLLMベースの推薦ランキングシステム。2026年7月のNetflix TechBlog記事 "GenRec: Towards LLM-Native Recommendation at Netflix" と、arXiv論文 "GenRec: An LLM-Backed Recommendation Ranker at Netflix" (arXiv:2608.10257) で発表されている。
 

@@ -1,8 +1,8 @@
 ---
 created: "2026-08-18"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# KSP (Kotlin Symbol Processing)
+# KSP
 
 Googleが開発した、Kotlinネイティブなコンパイル時コード生成・解析API。[[kapt]]の後継として設計されており、Javaの[[annotation-processor]]を経由せずKotlinコンパイラのシンボルモデルを直接処理する。
 

@@ -1,8 +1,9 @@
 ---
 created: "2026-09-03"
+updated: "2026-09-12"
 ---
 
-# sqlx (Go)
+# sqlx
 
 Goの`database/sql`を薄くラップするライブラリ(`jmoiron/sqlx`)。`sql.DB`/`sql.Tx`/`sql.Stmt`など標準のインターフェースをそのまま包含したスーパーセットになっているため、既存の`database/sql`ベースのコードに後から段階的に導入できる。
 

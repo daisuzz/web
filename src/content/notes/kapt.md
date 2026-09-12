@@ -1,8 +1,8 @@
 ---
 created: "2026-08-18"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# kapt (Kotlin Annotation Processing Tool)
+# kapt
 
 Kotlinのソースコードに対して、Java向けに書かれた既存の[[annotation-processor]]をそのまま使うためのKotlinコンパイラプラグイン。JetBrainsが2015年に導入した。
 

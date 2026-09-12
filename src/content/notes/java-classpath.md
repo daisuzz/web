@@ -1,8 +1,8 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-29"
+updated: "2026-09-12"
 ---
-# クラスパス (Classpath)
+# Classpath
 
 JVM（実行時）やjavac（コンパイル時）が、ユーザー定義のクラスを探すために参照する**場所（jarファイル・ディレクトリ・zipファイル）のリスト**。`java -cp <path>`/`-classpath <path>`オプション、`CLASSPATH`環境変数、jarの場合は`MANIFEST.MF`内の`Class-Path`エントリで指定する。
 

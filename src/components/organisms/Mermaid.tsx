@@ -19,7 +19,7 @@ const Mermaid: React.FC<MermaidProps> = ({code}) => {
 
         import("mermaid")
             .then(({default: mermaid}) => {
-                mermaid.initialize({startOnLoad: false, theme: "dark"})
+                mermaid.initialize({startOnLoad: false, theme: "default"})
                 return mermaid.render(id, code)
             })
             .then((result) => {

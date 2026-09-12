@@ -1,7 +1,8 @@
 ---
 created: "2026-08-16"
+updated: "2026-09-12"
 ---
-# デュアルトラックアジャイル (Dual-Track Agile)
+# Dual-Track Agile
 
 プロダクト開発を「発見(Discovery)」と「実装(Delivery)」という2つの並行トラックで進める考え方。
 

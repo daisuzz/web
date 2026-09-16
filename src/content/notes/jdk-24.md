@@ -14,11 +14,11 @@ created: "2026-09-16T18:00:00+09:00"
 - **JEP 492: Flexible Constructor Bodies**（3rd preview）
 - **JEP 494: Module Import Declarations**（2nd preview）
 - **JEP 495: Simple Source Files and Instance Main Methods**（4th preview）
-- **JEP 499: Structured Concurrency**（4th preview）
+- **JEP 499: [[structured-concurrency]]**（4th preview）
 
 ## 起動・実行性能
 
-- **JEP 483: Ahead-of-Time Class Loading & Linking** — クラスの読み込み・パース・ロード・リンクの結果をAOTキャッシュに保存し、JVMのウォームアップ時のCPU時間とメモリオーバーヘッドを削減する。事前テストでは起動時間が約40%改善したと報告されている。Project LeydenがmainlineのOpenJDKに入った最初の成果。
+- **JEP 483: Ahead-of-Time Class Loading & Linking** — クラスの読み込み・パース・ロード・リンクの結果をAOTキャッシュに保存し、JVMのウォームアップ時のCPU時間とメモリオーバーヘッドを削減する。事前テストでは起動時間が約40%改善したと報告されている。[[project-leyden]]がmainlineのOpenJDKに入った最初の成果。
 - **JEP 491: Synchronize Virtual Threads without Pinning** — `synchronized`内でブロックしても仮想スレッドがキャリアスレッドに固定（pinning）されなくなった。JVMの`synchronized`実装が変更され、仮想スレッドがキャリアと独立してモニタを取得・保持・解放できる。`synchronized`を使い続けたままスケーラビリティの悪影響を避けられるようになり、Loomの積年の制約が解消した。
 - **JEP 475: Late Barrier Expansion for G1** — G1のGCバリア展開をC2コンパイルの後段に遅らせる性能改善。
 - **JEP 490: ZGC: Remove the Non-Generational Mode** — 非世代別ZGCを削除し、世代別ZGCに一本化。

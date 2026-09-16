@@ -1,6 +1,6 @@
 ---
 created: "2026-09-16"
-updated: "2026-09-16T18:15:00+09:00"
+updated: "2026-09-16T19:13:00+09:00"
 ---
 # JDK 27
 
@@ -17,7 +17,7 @@ updated: "2026-09-16T18:15:00+09:00"
 
 過半数が再提出されたプレビュー/インキュベータ機能で、内訳は変更ありが3件、変更なし（そのまま再プレビュー）が2件。
 
-- **JEP 533: Structured Concurrency**（7th preview）
+- **JEP 533: [[structured-concurrency]]**（7th preview） — `Joiner`に例外型の型パラメータ`R_X`が追加された。
 - **JEP 532: Primitive Type Patterns**（5th preview）
 - **JEP 538: PEM Encodings**（3rd preview）
 - **JEP 531: Lazy Constants**（3rd preview、旧称Stable Values）

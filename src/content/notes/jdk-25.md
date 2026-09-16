@@ -17,7 +17,7 @@ created: "2026-09-16T18:05:00+09:00"
 - **JEP 519: Compact Object Headers** — [[jdk-24]]で実験的機能だったものが製品機能に昇格。
 - **JEP 521: Generational Shenandoah** — 同じく実験的機能から昇格。
 - **JEP 510: Key Derivation Function API** — [[jdk-24]]のJEP 478（プレビュー）がFinal化。
-- **JEP 514: Ahead-of-Time Command-Line Ergonomics** — AOTキャッシュ作成に必要なコマンドを簡略化。
+- **JEP 514: Ahead-of-Time Command-Line Ergonomics** — AOTキャッシュ作成に必要なコマンドを簡略化（[[project-leyden]]）。
 - **JEP 515: Ahead-of-Time Method Profiling** — 過去の実行時プロファイルを再利用してウォームアップを短縮する。
 - **JEP 518: JFR Cooperative Sampling**
 - **JEP 520: JFR Method Timing & Tracing**
@@ -27,7 +27,7 @@ created: "2026-09-16T18:05:00+09:00"
 
 - **JEP 470: PEM Encodings of Cryptographic Objects**（プレビュー）
 - **JEP 502: Stable Values**（プレビュー） — [[jdk-26]]以降はLazy Constantsに改称される。
-- **JEP 505: Structured Concurrency**（5th preview）
+- **JEP 505: [[structured-concurrency]]**（5th preview） — コンストラクタが静的ファクトリ`open()`に置き換わるなど、APIが大きく変わった回。
 - **JEP 507: Primitive Types in Patterns, instanceof, and switch**（3rd preview）
 - **JEP 508: Vector API**（10th incubator）
 - **JEP 509: JFR CPU-Time Profiling**（実験的）

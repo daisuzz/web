@@ -16,14 +16,14 @@ created: "2026-09-16T18:10:00+09:00"
 ## プレビュー・インキュベータ機能
 
 - **JEP 524: PEM Encodings of Cryptographic Objects**（2nd preview）
-- **JEP 525: Structured Concurrency**（6th preview）
+- **JEP 525: [[structured-concurrency]]**（6th preview） — `onTimeout()`の追加、`allSuccessfulOrThrow()`の戻り値調整。
 - **JEP 526: Lazy Constants**（2nd preview） — [[jdk-25]]でStable Valuesとしてプレビューされていたものの改称。
 - **JEP 529: Vector API**（11th incubator）
 - **JEP 530: Primitive Types in Patterns, instanceof, and switch**（4th preview）
 
 ## [[jdk-releases]]の中での位置づけ
 
-LTSである[[jdk-25]]と[[jdk-27]]の間に挟まる非LTSリリース。サポートは6ヶ月で、[[jdk-27]]のGA（2026年9月15日）をもって更新提供が終了する。G1への改善は[[jdk-27]]のJEP 523（G1を全環境のデフォルトGCに）へ、AOT関連は[[jdk-25]]からの一連の流れ（Project Leyden）につながっている。
+LTSである[[jdk-25]]と[[jdk-27]]の間に挟まる非LTSリリース。サポートは6ヶ月で、[[jdk-27]]のGA（2026年9月15日）をもって更新提供が終了する。G1への改善は[[jdk-27]]のJEP 523（G1を全環境のデフォルトGCに）へ、AOT関連は[[jdk-25]]からの一連の流れ（[[project-leyden]]）につながっている。
 
 ## 出典
 

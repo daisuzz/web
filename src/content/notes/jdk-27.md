@@ -1,9 +1,10 @@
 ---
 created: "2026-09-16"
+updated: "2026-09-16T18:15:00+09:00"
 ---
 # JDK 27
 
-2026年9月15日にGAされたJavaの短期リリース（非LTS、Oracleによるサポートは6ヶ月間）。9本のJEPを含み、Core Java Library・HotSpot・Security Library・Java Language Specificationの4カテゴリに分かれる。最新のLTSはJDK 25（2025年9月GA）のまま。
+2026年9月15日にGAされたJavaの短期リリース（非LTS、Oracleによるサポートは6ヶ月間）。9本のJEPを含み、Core Java Library・HotSpot・Security Library・Java Language Specificationの4カテゴリに分かれる。最新のLTSは[[jdk-25]]（2025年9月GA）のまま。
 
 ## Final機能（4件）
 
@@ -21,6 +22,10 @@ created: "2026-09-16"
 - **JEP 538: PEM Encodings**（3rd preview）
 - **JEP 531: Lazy Constants**（3rd preview、旧称Stable Values）
 - **JEP 537: Vector API**（12th incubator）
+
+## [[jdk-releases]]の中での位置づけ
+
+[[jdk-26]]に続く非LTSリリース。Compact Object Headersは[[jdk-24]]で実験的機能、[[jdk-25]]で製品機能となり、ここでようやくデフォルト有効になった。G1も[[jdk-26]]のスループット改善（JEP 522）を経て、全環境のデフォルトGCになっている。耐量子暗号は[[jdk-24]]のML-KEM/ML-DSAがTLS 1.3のハイブリッド鍵交換として使われるところまで来た。
 
 ## 出典
 

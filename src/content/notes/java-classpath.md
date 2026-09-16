@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-09-12"
+updated: "2026-09-16T18:25:00+09:00"
 ---
 # Classpath
 
@@ -28,7 +28,7 @@ Gradleの`dependencies {}`ブロックにおける`implementation`/`api`/`compil
 
 ## バージョンについて
 
-クラスパスの基本的な探索順序・ワイルドカードの仕様はJava 9のmodule path導入以降も変わっていない。2026年8月時点の最新LTSはJDK 25（2025年9月GA）、最新の非LTSはJDK 26（2026年3月GA）。
+クラスパスの基本的な探索順序・ワイルドカードの仕様はJava 9のmodule path導入以降も変わっていない。2026年9月時点の最新LTSは[[jdk-25]]（2025年9月GA）、最新の非LTSは[[jdk-27]]（2026年9月GA）。リリースサイクル全体は[[jdk-releases]]を参照。
 
 ## 出典
 

@@ -1,5 +1,6 @@
 ---
 created: 2026-09-21
+updated: 2026-09-21
 ---
 
 # MLX
@@ -21,7 +22,7 @@ Appleの機械学習研究チームが開発した、Apple Silicon向けの配�
 
 ## エコシステム
 
-`mlx-lm`というPythonパッケージがLLM(LLaMA、Mistral、Mixtralなど)推論・ファインチューニング(LoRA/QLoRA)向けに提供されている。Hugging Face上の"MLX Community"組織でMLX形式に変換済みのモデルチェックポイントが公開されている。LM Studioなど、Mac上でローカルLLMを動かすアプリからも利用されている。
+[[mlx-lm]]というPythonパッケージがLLM(LLaMA、Mistral、Mixtralなど)推論・ファインチューニング(LoRA/QLoRA)向けに提供されている。Hugging Face上の"MLX Community"組織でMLX形式に変換済みのモデルチェックポイントが公開されている。LM Studioなど、Mac上でローカルLLMを動かすアプリからも利用されている。
 
 ## 背景
 

@@ -1,5 +1,6 @@
 ---
 created: 2026-09-21
+updated: 2026-09-21
 ---
 
 # mlx-lm
@@ -44,3 +45,5 @@ mlx-lmは[[mlx]]という配列フレームワークの上に構築された、L
 
 - [GitHub - ml-explore/mlx-lm](https://github.com/ml-explore/mlx-lm)
 - [PyPI - mlx-lm](https://pypi.org/project/mlx-lm/)
+
+#mlx #apple #機械学習 #llm #python

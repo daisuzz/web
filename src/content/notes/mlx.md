@@ -38,3 +38,5 @@ TensorFlow/PyTorchなどの主要な深層学習フレームワークはNVIDIA�
 - [GitHub - ml-explore/mlx-examples](https://github.com/ml-explore/mlx-examples)
 - [PyPI - mlx](https://pypi.org/project/mlx/)
 - [9to5Mac - Apple drops new MLX machine learning framework for Apple silicon Macs](https://9to5mac.com/2023/12/06/mlx-machine-learning-apple-silicon-mac/)
+
+#mlx #apple #機械学習 #llm #python

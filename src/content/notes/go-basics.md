@@ -1,6 +1,6 @@
 ---
 created: "2026-09-01"
-updated: "2026-09-03"
+updated: "2026-09-22"
 ---
 
 # Go言語の基礎
@@ -189,7 +189,7 @@ wg.Wait()
 
 ## パッケージ管理
 
-- `go.mod`が依存関係の定義ファイル（npmの`package.json`、Mavenの`pom.xml`相当）。`go.sum`はロックファイル。
+- `go.mod`が依存関係の定義ファイル（npmの`package.json`、[[maven]]の`pom.xml`相当）。`go.sum`はロックファイル。
 - `go mod init <module-path>`で初期化、`go mod tidy`でimport文から依存を再計算して`go.mod`/`go.sum`を整合させる。オフライン環境向けに依存を同梱する`go mod vendor`というサブコマンドもある。
 
 ## 標準ライブラリ最短ルート（Web開発向け）

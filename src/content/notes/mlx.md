@@ -10,7 +10,7 @@ Appleの機械学習研究チームが開発した、Apple Silicon向けの配�
 ## 特徴
 
 - **NumPy風のPython API**: NumPyに近い配列操作APIを提供する。`nn`/`optimizers`パッケージはPyTorchに倣った設計になっている。
-- **統一メモリ(unified memory)**: MLXの配列は共有メモリ上に存在し、CPU/GPU間でデータをコピーせずにそのまま操作できる。Apple SiliconのUnified Memory Architectureを前提にした設計。
+- **統一メモリ(unified memory)**: MLXの配列は共有メモリ上に存在し、CPU/GPU間でデータをコピーせずにそのまま操作できる。[[apple-silicon]]のUnified Memory Architectureを前提にした設計。
 - **遅延評価(lazy evaluation)**: 計算は必要になるまで実体化(materialize)されない。
 - **動的グラフ構築**: コンパイル待ちなしに計算グラフを柔軟に組める。
 - **関数変換**: 自動微分やベクトル化などの関数変換に対応する。
@@ -26,7 +26,7 @@ Appleの機械学習研究チームが開発した、Apple Silicon向けの配�
 
 ## 背景
 
-TensorFlow/PyTorchなどの主要な深層学習フレームワークはNVIDIAのCUDAエコシステムへの最適化が中心で、Apple製ハードウェアを使う研究者が同じように参加しづらいという課題があった。MLXはこの隙間を埋める位置づけで、Apple Siliconの統一メモリアーキテクチャを最大限活かすことを狙っている。
+TensorFlow/PyTorchなどの主要な深層学習フレームワークはNVIDIAのCUDAエコシステムへの最適化が中心で、Apple製ハードウェアを使う研究者が同じように参加しづらいという課題があった。MLXはこの隙間を埋める位置づけで、[[apple-silicon]]の統一メモリアーキテクチャを最大限活かすことを狙っている。
 
 ## バージョンについて
 

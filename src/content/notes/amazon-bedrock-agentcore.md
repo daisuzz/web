@@ -1,5 +1,6 @@
 ---
 created: "2026-08-20"
+updated: "2026-09-24"
 ---
 # Amazon Bedrock AgentCore
 
@@ -28,7 +29,7 @@ AgentCoreは以下のような複数の独立したサービス（Composable Ser
 LLMが会話間で記憶を持たないという制約に対応するマネージドの記憶ストア。セッション内の直近の会話文脈を保持する短期記憶（Short-Term Memory）と、複数セッションをまたいで永続化される長期記憶（Long-Term Memory）の2階層構造を持つ。長期記憶側は「Memory Strategy」という抽出ルールで生の会話ログから何を抽出しどう構造化するかを決める。組み込みのStrategyとしてSemantic（会話中の事実・知識の抽出）、Summary（会話の要約）、User Preference（ユーザーの好み）、Episodic（過去のやり取りの出来事単位の記憶）の4種類がある。
 
 ### Observability
-OpenTelemetry（[[opentelemetry]]参照）ベースでエージェントのトレース・メトリクス・ログを収集し、Amazon CloudWatchなどで可視化・監視できるようにする機能。エージェント特有の「どのツールが何回呼ばれたか」「LLM呼び出しのレイテンシ・トークン数」といった情報も追跡できる。
+OpenTelemetry（[[opentelemetry]]参照）ベースでエージェントのトレース・メトリクス・ログを収集し、Amazon CloudWatchなどで可視化・監視できるようにする機能。エージェント特有の「どのツールが何回呼ばれたか」「LLM呼び出しのレイテンシ・トークン数」といった情報も追跡できる。CloudWatch側のAIエージェント向けの可視化・評価の仕組みとしては[[amazon-cloudwatch-omni]]がある。
 
 ### Browser Tool / Code Interpreter
 どちらもエージェントに実世界の操作能力を与えるための隔離されたサンドボックス実行環境。Browser Toolはヘッドレスブラウザ操作（Webサイトの閲覧・フォーム入力など）を、Code InterpreterはPython/JavaScript/TypeScriptコードの実行（データ分析やグラフ生成など）をそれぞれ隔離環境で行わせる。どちらもネットワークアクセスの範囲を「Sandbox（限定的な外部アクセスのみ）」「Public（インターネットへのアウトバウンドを許可）」「VPC（プライベートリソースへの接続を許可しつつ外部インターネットからは隔離）」の3段階から選べる。

@@ -1,6 +1,6 @@
 ---
 created: "2026-08-20"
-updated: "2026-08-29"
+updated: "2026-09-24"
 ---
 # OpenTelemetry
 
@@ -25,7 +25,7 @@ updated: "2026-08-29"
 
 3つのシグナルは共通の`Resource`（サービス名、ホスト名などの発生源情報）と結びつけられ、trace_idを介してログとtraceを紐付けるといった横断的な分析ができるように設計されている。
 
-[[claude-code-observability]]はOTLPエクスポートに対応しており、実際のプロダクトがOpenTelemetryをどう活用しているかの一例になっている。
+[[claude-code-observability]]はOTLPエクスポートに対応しており、実際のプロダクトがOpenTelemetryをどう活用しているかの一例になっている。[[amazon-cloudwatch-omni]]もOpenTelemetryを基盤にしていて、OTLPエンドポイントでテレメトリを受け付ける。
 
 ## バージョンについて
 

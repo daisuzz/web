@@ -1,5 +1,6 @@
 ---
 created: "2026-08-17"
+updated: "2026-09-29"
 ---
 # Cloudflare Workers
 
@@ -35,7 +36,7 @@ flowchart TB
 Cloudflareは2022年、Workersのランタイム本体を**workerd**としてOSS公開した（[cloudflare/workerd](https://github.com/cloudflare/workerd)）。
 
 - **Nanoservices**: マイクロサービスのように分離・独立デプロイ可能でありながら、ローカル関数呼び出しと同等のパフォーマンスで動く単位として設計されている
-- **Capability bindings**: 設定（config）の時点でnanoservices同士や外部リソース（KV、R2、Durable Objectsなど）への接続を明示的に結線する
+- **Capability bindings**: 設定（config）の時点でnanoservices同士や外部リソース（KV、R2、[[cloudflare-durable-objects]]など）への接続を明示的に結線する
 - fetch・crypto等の組み込みAPIはworkerd側のネイティブコードとして実装され、全アイソレートが同じコピーを共有する（Node.jsのようにアイソレートごとにAPI一式をロードし直さない）ため、メモリ効率が高い
 - 同一のworkerdバイナリをローカル開発（`wrangler dev`）にも本番エッジにも使っており、ローカルと本番の実行環境の差異が小さい
 

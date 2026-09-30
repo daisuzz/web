@@ -1,5 +1,6 @@
 ---
 created: "2026-09-29"
+updated: "2026-09-30"
 ---
 # Cloudflare Durable Objects
 
@@ -114,6 +115,10 @@ Queuesは「後で処理する」ための非同期メッセージングで、�
 - キー + 値: 合計2MBまで
 - CPU時間: 1リクエスト（WebSocketメッセージ・Alarmを含む）あたりデフォルト30秒。`limits.cpu_ms` で最大5分まで延ばせる
 - 受信WebSocketメッセージ: 32MiBまで
+
+## [[cloudflare-developer-platform]]の中での位置づけ
+
+状態を持つコンピュートを担う。[[cloudflare-d1]]やQueuesの土台にもなっている低レベルな部品で、強整合や協調が必要な部分を引き受ける。
 
 ## 出典
 

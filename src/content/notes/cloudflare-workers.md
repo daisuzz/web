@@ -1,6 +1,6 @@
 ---
 created: "2026-08-17"
-updated: "2026-09-29"
+updated: "2026-09-30"
 ---
 # Cloudflare Workers
 
@@ -89,6 +89,10 @@ flowchart LR
 ```
 
 Deno Deploy（[[deno]]公式が提供するエッジ実行環境）もWorkersと同じV8アイソレート型で、思想的には最も近い競合にあたる。
+
+## [[cloudflare-developer-platform]]の中での位置づけ
+
+Developer Platform全体の土台。ステートレスな実行はWorkers自身が担い、状態は[[cloudflare-durable-objects]]・[[cloudflare-workers-kv]]・[[cloudflare-d1]]などbinding経由の各製品に任せる。
 
 ## 出典
 

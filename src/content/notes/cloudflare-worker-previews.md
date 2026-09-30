@@ -1,6 +1,6 @@
 ---
 created: "2026-09-24"
-updated: "2026-09-29"
+updated: "2026-09-30"
 ---
 # Cloudflare Worker Previews
 
@@ -26,6 +26,10 @@ Cloudflare Workersには2025年7月に導入された「Preview URLs」という
 
 - **Preview URLs**（2025年7月〜）: GitHub/GitLabと連携したWorkerに対して、PR・ブランチごとに`wrangler versions upload`でバージョンをアップロードすると、共有可能な安定したプレビューURLが自動で払い出される仕組み。トラフィック管理・バージョン管理の延長にある機能で、Durable ObjectsやContainersの隔離は行わない。
 - **Worker Previews**（2026年9月〜）: `wrangler preview`によって、コードだけでなくDurable ObjectsやContainersを含む実行環境そのものをブランチ単位で新規作成する。状態を持つテストが必要な場合や、エージェントによる自動変更を隔離したい場合に、より強い分離を提供する。
+
+## [[cloudflare-developer-platform]]の中での位置づけ
+
+コンピュート・ストレージではなく開発フロー側の機能。[[cloudflare-durable-objects]]のような状態を持つリソースまでブランチ単位で隔離できる点が、単なるプレビューURLとの違い。
 
 ## 出典
 

@@ -1,5 +1,6 @@
 ---
 created: "2026-09-29T12:00:00+09:00"
+updated: "2026-09-30"
 ---
 # Workers KV
 
@@ -56,6 +57,10 @@ flowchart LR
 | ストレージ | 1GB | 無制限 |
 
 Workersのバインディング（`env.KV.get/put/list/delete`）のほか、REST APIで外部からも読み書きできる。
+
+## [[cloudflare-developer-platform]]の中での位置づけ
+
+ストレージのうち、読み込み中心で結果整合でよいデータの担当。強整合や同時更新が必要なら[[cloudflare-durable-objects]]、リレーショナルなら[[cloudflare-d1]]。
 
 ## 出典
 

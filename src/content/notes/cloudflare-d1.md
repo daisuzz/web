@@ -1,5 +1,6 @@
 ---
 created: "2026-09-29T12:10:00+09:00"
+updated: "2026-09-30"
 ---
 # Cloudflare D1
 
@@ -46,6 +47,10 @@ Cloudflareのマネージドなサーバーレスデータベース。SQLiteのS
 - 1行・文字列・BLOBの最大サイズは2MB、SQL文は100KBまで、バインドパラメータは100個まで
 - 1クエリの最大実行時間は30秒
 - 10GBを超えるデータは、複数の小さなD1 DBに分割することが推奨されている
+
+## [[cloudflare-developer-platform]]の中での位置づけ
+
+ストレージのうち、共有リレーショナルDBの担当。ユーザー・テナント単位の小さなDBを大量に持つなら[[cloudflare-durable-objects]]のSQLite、キャッシュ的な読み込み中心のデータなら[[cloudflare-workers-kv]]。
 
 ## 出典
 

@@ -1,16 +1,17 @@
 ---
 created: "2026-10-11"
+updated: "2026-10-11T12:00:00+09:00"
 ---
 
 # InsightFace
 
-2D・3Dの顔解析をまとめたオープンソースのツールキット。主にPyTorchとMXNetで書かれている。リポジトリは `deepinsight/insightface` で、主な開発者はJia Guo氏とJiankang Deng氏。顔認識の損失関数として広く使われているArcFaceは、このプロジェクトから出てきた。 #face-recognition #computer-vision #python
+2D・3Dの顔解析をまとめたオープンソースのツールキット。主にPyTorchとMXNetで書かれている。リポジトリは `deepinsight/insightface` で、主な開発者はJia Guo氏とJiankang Deng氏。顔認識の損失関数として広く使われている[[arcface]]は、このプロジェクトから出てきた。 #face-recognition #computer-vision #python
 
 ## 主な機能とモデル
 
 | 分野 | 代表的なもの |
 |---|---|
-| 顔認識 | ArcFace（CVPR 2019）、SubCenter ArcFace（ECCV 2020）、Partial FC（CVPR 2022）、VPL（CVPR 2021）。バックボーンはIResNetやMobileFaceNet |
+| 顔認識 | [[arcface]]（CVPR 2019）、SubCenter ArcFace（ECCV 2020）、Partial FC（CVPR 2022）、VPL（CVPR 2021）。バックボーンはIResNetやMobileFaceNet |
 | 顔検出 | RetinaFace（CVPR 2020）、SCRFD（処理効率重視で、NASにも対応） |
 | ランドマーク検出・位置合わせ | SDUNets（BMVC 2018）、座標を回帰する軽量モデル |
 | その他 | 年齢推定、3D顔の再構成、視線推定、顔の入れ替え（inswapper） |

@@ -1,5 +1,6 @@
 ---
 created: "2026-09-01"
+updated: "2026-10-12"
 ---
 
 # Goのcontext.Context
@@ -61,6 +62,10 @@ id, ok := ctx.Value(requestIDKey).(string)
 
 - `net/http`: `r.Context()`でリクエストに紐づくContextを取得できる。クライアントが接続を切ると、このContextがキャンセルされる。
 - `database/sql`: `db.QueryContext(ctx, ...)`のように渡すと、リクエストがキャンセルされた時点でクエリも中断できる。
+
+## [[go]]の中での位置づけ
+
+[[go-basics]]の標準ライブラリ節から切り出した、キャンセル・デッドライン伝搬の詳細。
 
 ## バージョンについて
 

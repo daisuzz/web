@@ -1,6 +1,6 @@
 ---
 created: 2026-09-03
-updated: "2026-09-12"
+updated: "2026-10-12"
 ---
 
 # Echo
@@ -70,6 +70,10 @@ type CreateUserRequest struct {
 ```
 
 単一のソースから明示的・型安全にバインドしたい場合は、`echo.QueryParamsBinder(c)`・`echo.PathValuesBinder(c)`・`echo.FormFieldBinder(c)`のようなfluentなビルダーAPIも用意されている（`Int64`/`MustInt64`/`Int64s`のような型ごとのメソッドを持つ）。
+
+## [[go]]の中での位置づけ
+
+Webフレームワーク担当。DBアクセス側は[[sqlx]]。
 
 ## バージョンについて
 

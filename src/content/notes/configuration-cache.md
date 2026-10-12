@@ -1,6 +1,6 @@
 ---
 created: "2026-08-29"
-updated: "2026-09-12"
+updated: "2026-10-12"
 ---
 # Configuration Cache
 
@@ -66,6 +66,10 @@ Configuration Cacheの実体はプロジェクト直下の`.gradle/configuration
 さらにConfiguration Cacheは参照した環境変数の値もキャッシュキーに含めるため、ビルド番号やコミットSHAのようにビルドごとに変わる値をConfiguration時に読んでいると、ディレクトリを永続化してもキーが毎回変わり実質ヒットしない。
 
 Gradleにはタスクの入出力そのものをキャッシュするBuild Cache（Configuration Cacheとは別の仕組み）もあり、こちらはHTTPサーバー経由のリモート共有を前提に設計されていて「CIがクリーンビルドで生成・登録し、開発者はそこから読むだけ」という使い方が公式に推奨されている。Configuration Cacheにはリモート共有の仕組みがなく、ホストが使い捨てられるCI環境では上記の永続化をしてもBuild Cacheほど安定して効くものではない。
+
+## [[gradle]]の中での位置づけ
+
+高速化のうちConfigurationフェーズのスキップ担当。
 
 ## 出典
 

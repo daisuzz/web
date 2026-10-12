@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-29"
+updated: "2026-10-12"
 ---
 # Gradleの基礎（Project/Task/ビルドライフサイクル）
 
@@ -51,6 +51,10 @@ Gradleは前回ビルドの結果を再利用できる場合、タスクの実�
 ## Gradle Wrapper（`gradlew`）
 
 `gradlew`/`gradlew.bat`は、Gradle本体をローカルにインストールしなくてもビルドを実行できるようにするラッパースクリプト。`gradle-wrapper.properties`に指定されたバージョン・種類（`-bin`は実行に必要な最小構成、`-all`はソース・ドキュメント込み）のGradle配布物がローカルに存在しなければダウンロードし、以降はそのバージョンの`gradle`コマンドに処理を委譲する。Wrapper自体のファイル一式（`gradlew`、`gradlew.bat`、`gradle/wrapper/gradle-wrapper.jar`、`gradle-wrapper.properties`）はリポジトリにコミットしておくのが推奨で、これによりチームメンバー全員が同一バージョンのGradleでビルドできる。Gradleのバージョンを上げたいだけなら`wrapper`タスクを再実行する必要はなく、`gradle-wrapper.properties`の`distributionUrl`を書き換えるだけでよい。
+
+## [[gradle]]の中での位置づけ
+
+Gradle関連ノートの土台。他のノートはこの3フェーズとProject/Taskのモデルを前提にしている。
 
 ## バージョンについて
 

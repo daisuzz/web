@@ -1,6 +1,6 @@
 ---
 created: "2026-09-01"
-updated: "2026-09-22"
+updated: "2026-10-12"
 ---
 
 # Go言語の基礎
@@ -215,6 +215,10 @@ wg.Wait()
 
 - [A Tour of Go](https://go.dev/tour/)を通しで触る（半日程度）。このノートの内容と重なるが、実際に手を動かして構文エラーに慣れておくのが目的。
 - 本ノートのdefer/error/interface/goroutine周りは、コードを読んでいて引っかかりやすい箇所なので重点的に。
+
+## [[go]]の中での位置づけ
+
+Go関連ノートの入口。[[go-context]]・[[go-goroutine-scheduler]]はここから詳細を切り出したもの。
 
 ## バージョンについて
 

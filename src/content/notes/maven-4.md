@@ -1,5 +1,6 @@
 ---
 created: "2026-09-22"
+updated: "2026-10-12"
 ---
 # Maven 4
 
@@ -92,6 +93,10 @@ Java 9のJava Platform Module Systemの「module」との用語衝突を避け�
 3. **Migrate**: Maven 3依存を外し、`<subprojects>`・親推論（`<parent/>`）・完全対応の`${revision}`などMaven 4固有の新機能を使い始める
 
 トラブルシューティングとして、同じプラグインを重複宣言するとエラーになる点、`executionRootDirectory`/`multiModuleProjectDirectory`のような非公式プロパティが`${project.rootDirectory}`等に置き換わった点が挙げられている。
+
+## [[java]]の中での位置づけ
+
+[[maven]]の次期メジャー。
 
 ## バージョンについて
 

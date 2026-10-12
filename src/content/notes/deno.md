@@ -1,6 +1,6 @@
 ---
 created: "2026-08-17"
-updated: "2026-08-29"
+updated: "2026-10-12"
 ---
 # Deno
 
@@ -91,6 +91,10 @@ BunのJSエンジンはV8ではなくSafari系のJavaScriptCoreである点に�
 ## Deno Deploy
 
 Deno公式が提供するエッジ実行環境。[[cloudflare-workers]]と同じV8アイソレート型のアーキテクチャを採用しており、思想的には最も近い競合にあたる。
+
+## [[javascript-runtimes]]の中での位置づけ
+
+V8を使いつつシステム層をRustで書き直し、セキュリティモデルを作り直した側。
 
 ## バージョンについて
 

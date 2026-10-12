@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-09-12"
+updated: "2026-10-12"
 ---
 # Composite Builds
 
@@ -23,6 +23,10 @@ updated: "2026-09-12"
 ## buildSrcとの関係
 
 `buildSrc`自体、実装上は**Gradleが自動的に管理する暗黙のincluded build**であり、明示的に`includeBuild("build-logic")`する場合と根底の仕組みは同じ。composite buildという1つの機構の上に、「自動で含まれる特別扱いの`buildSrc`」と「自分で`includeBuild()`する任意の名前のビルド」という2つの使い方がある。詳細は[[convention-plugins]]を参照。
+
+## [[gradle]]の中での位置づけ
+
+複数ビルドの構成の話。[[convention-plugins]]の置き場所としても使われる。
 
 ## バージョンについて
 

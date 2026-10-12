@@ -1,6 +1,6 @@
 ---
 created: "2026-08-18"
-updated: "2026-09-12"
+updated: "2026-10-12"
 ---
 # Annotation Processing
 
@@ -56,6 +56,10 @@ Gradleのインクリメンタルアノテーション処理では、プロセ�
 ## [[kotlin-annotation-processing]]の中での位置づけ
 
 kapt・KSPがどちらも土台にしている、Java由来のコンパイル時コード生成の仕組み。
+
+## [[java]]の中での位置づけ
+
+javacのコンパイル時処理。Kotlinからの使われ方は[[kotlin-annotation-processing]]。
 
 ## 出典
 

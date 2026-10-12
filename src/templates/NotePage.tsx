@@ -1,14 +1,16 @@
 import * as React from "react"
 import {Link, PageProps} from "gatsby"
 import Layout from "../components/Layout"
+import NotesLayout from "../components/NotesLayout"
 import CodeBlock from "../components/organisms/CodeBlock"
 import Mermaid from "../components/organisms/Mermaid"
-import {SiteNote} from "../types/note"
+import {NoteNav, SiteNote} from "../types/note"
 // @ts-ignore
 import * as style from "./NotePage.module.css"
 
 interface NotePageContext {
     note: SiteNote
+    nav: NoteNav
 }
 
 const SITE_URL = "https://daisuzz.dev"
@@ -26,7 +28,7 @@ function buildDescription(note: SiteNote): string {
 }
 
 const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, location}) => {
-    const {note} = pageContext
+    const {note, nav} = pageContext
     const description = buildDescription(note)
     const url = `${SITE_URL}${location.pathname}`
     const structuredData = [
@@ -68,6 +70,7 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
             structuredData={structuredData}
             noindex
         >
+            <NotesLayout nav={nav} currentSlug={note.slug}>
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
                     <Link to="/notes/">~/notes</Link> / {note.slug}
@@ -159,6 +162,7 @@ const NotePage: React.FC<PageProps<object, NotePageContext>> = ({pageContext, lo
                     </div>
                 </article>
             </div>
+            </NotesLayout>
         </Layout>
     )
 }

@@ -45,16 +45,15 @@ export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
         })
     })
 
-    const {notes, tagIndex} = loadNotes()
+    const {notes, tagIndex, nav} = loadNotes()
     notes.forEach((note) => {
         createPage({
             path: `/notes/${note.slug}`,
             component: path.resolve("./src/templates/NotePage.tsx"),
-            context: {note},
+            context: {note, nav},
         })
     })
 
-    const searchIndex = notes.map(({slug, title, updated, tags}) => ({slug, title, updated, tags}))
     const numPages = Math.max(1, Math.ceil(notes.length / NOTES_PER_PAGE))
     Array.from({length: numPages}).forEach((_, i) => {
         const currentPage = i + 1
@@ -65,7 +64,7 @@ export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
                 notes: notes.slice(i * NOTES_PER_PAGE, (i + 1) * NOTES_PER_PAGE),
                 currentPage,
                 numPages,
-                searchIndex,
+                nav,
             },
         })
     })
@@ -75,6 +74,7 @@ export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
         component: path.resolve("./src/templates/NoteTagsIndexPage.tsx"),
         context: {
             tags: [...tagIndex.entries()].map(([tag, taggedNotes]) => ({tag, count: taggedNotes.length})),
+            nav,
         },
     })
 
@@ -82,7 +82,7 @@ export const createPages: GatsbyNode["createPages"] = async ({actions}) => {
         createPage({
             path: `/notes/tags/${tag}`,
             component: path.resolve("./src/templates/NoteTagPage.tsx"),
-            context: {tag, notes: taggedNotes},
+            context: {tag, notes: taggedNotes, nav},
         })
     })
 }

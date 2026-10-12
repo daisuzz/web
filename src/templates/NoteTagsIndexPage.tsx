@@ -1,6 +1,8 @@
 import * as React from "react"
 import {Link, PageProps} from "gatsby"
 import Layout from "../components/Layout"
+import NotesLayout from "../components/NotesLayout"
+import {NoteNav} from "../types/note"
 // @ts-ignore
 import * as style from "./NoteTagsIndexPage.module.css"
 
@@ -11,6 +13,7 @@ interface TagCount {
 
 interface NoteTagsIndexPageContext {
     tags: TagCount[]
+    nav: NoteNav
 }
 
 const MIN_FONT_SIZE = 12
@@ -23,7 +26,7 @@ function fontSizeFor(count: number, max: number): number {
 }
 
 const NoteTagsIndexPage: React.FC<PageProps<object, NoteTagsIndexPageContext>> = ({pageContext, location}) => {
-    const {tags} = pageContext
+    const {tags, nav} = pageContext
     const max = tags.reduce((m, t) => Math.max(m, t.count), 1)
     const sorted = [...tags].sort((a, b) => a.tag.localeCompare(b.tag))
 
@@ -34,6 +37,7 @@ const NoteTagsIndexPage: React.FC<PageProps<object, NoteTagsIndexPageContext>> =
             path={location.pathname}
             noindex
         >
+            <NotesLayout nav={nav}>
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
                     <Link to="/notes/">~/notes</Link> / tags
@@ -58,6 +62,7 @@ const NoteTagsIndexPage: React.FC<PageProps<object, NoteTagsIndexPageContext>> =
                     </div>
                 )}
             </div>
+            </NotesLayout>
         </Layout>
     )
 }

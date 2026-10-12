@@ -29,3 +29,14 @@ export interface NoteSearchEntry {
     updated: string
     tags: string[]
 }
+
+// サイドバーのツリー表示用。childrenを持つノードはハブノート(#moc)で、フォルダとして描画される。
+export interface NoteTreeNode {
+    slug: string
+    children?: NoteTreeNode[]
+}
+
+export interface NoteNav {
+    tree: NoteTreeNode[]
+    entries: NoteSearchEntry[]
+}

@@ -1,7 +1,8 @@
 import * as React from "react"
 import {Link, PageProps} from "gatsby"
 import Layout from "../components/Layout"
-import {NoteSearchEntry, SiteNote} from "../types/note"
+import NotesLayout from "../components/NotesLayout"
+import {NoteNav, SiteNote} from "../types/note"
 // @ts-ignore
 import * as style from "./NotesIndexPage.module.css"
 
@@ -9,17 +10,11 @@ interface NotesIndexPageContext {
     notes: SiteNote[]
     currentPage: number
     numPages: number
-    searchIndex: NoteSearchEntry[]
+    nav: NoteNav
 }
 
 function pagePath(page: number): string {
     return page === 1 ? "/notes/" : `/notes/${page}/`
-}
-
-function matches(entry: NoteSearchEntry, query: string): boolean {
-    const q = query.toLowerCase()
-    if (entry.title.toLowerCase().includes(q)) return true
-    return entry.tags.some((tag) => tag.toLowerCase().includes(q))
 }
 
 interface NoteListItemProps {
@@ -46,11 +41,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({slug, title, updated, tags})
 )
 
 const NotesIndexPage: React.FC<PageProps<object, NotesIndexPageContext>> = ({pageContext, location}) => {
-    const {notes, currentPage, numPages, searchIndex} = pageContext
-    const [query, setQuery] = React.useState("")
-
-    const trimmedQuery = query.trim()
-    const searchResults = trimmedQuery === "" ? null : searchIndex.filter((entry) => matches(entry, trimmedQuery))
+    const {notes, currentPage, numPages, nav} = pageContext
 
     return (
         <Layout
@@ -59,6 +50,7 @@ const NotesIndexPage: React.FC<PageProps<object, NotesIndexPageContext>> = ({pag
             path={location.pathname}
             noindex
         >
+            <NotesLayout nav={nav}>
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
                     <Link to="/">~/</Link> / notes
@@ -68,25 +60,7 @@ const NotesIndexPage: React.FC<PageProps<object, NotesIndexPageContext>> = ({pag
                     <Link to="/notes/tags/">タグ一覧を見る &rarr;</Link>
                 </div>
 
-                <input
-                    type="search"
-                    className={style.search}
-                    placeholder="タイトル・タグで検索"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                />
-
-                {searchResults !== null ? (
-                    searchResults.length === 0 ? (
-                        <p className={style.empty}>「{trimmedQuery}」に一致するノートはありません。</p>
-                    ) : (
-                        <ul className={style.list}>
-                            {searchResults.map((note) => (
-                                <NoteListItem key={note.slug} {...note} />
-                            ))}
-                        </ul>
-                    )
-                ) : notes.length === 0 ? (
+                {notes.length === 0 ? (
                     <p className={style.empty}>まだノートがありません。</p>
                 ) : (
                     <>
@@ -118,6 +92,7 @@ const NotesIndexPage: React.FC<PageProps<object, NotesIndexPageContext>> = ({pag
                     </>
                 )}
             </div>
+            </NotesLayout>
         </Layout>
     )
 }

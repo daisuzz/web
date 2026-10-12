@@ -4,7 +4,7 @@ created: "2026-10-11"
 
 # ArcFace
 
-顔認識モデルを学習するときに使う損失関数。正式名は "Additive Angular Margin Loss"。著者はJiankang Deng、Jia Guo、Niannan Xue、Stefanos Zafeiriou。arXivでの初出は2018年1月（1801.07698）、採録はCVPR 2019。[[insightface]] プロジェクトから出てきた手法で、公式実装もInsightFaceのリポジトリ（`recognition/arcface_torch`）にある。 #face-recognition #deep-learning #metric-learning
+顔認識モデルを学習するときに使う損失関数。正式名は "Additive Angular Margin Loss"。著者はJiankang Deng、Jia Guo、Niannan Xue、Stefanos Zafeiriou。arXivでの初出は2018年1月（1801.07698）、採録はCVPR 2019。[[insightface]] プロジェクトから出てきた手法で、公式実装もInsightFaceのリポジトリ（`recognition/arcface_torch`）にある。
 
 ## 何を解決するか
 
@@ -77,3 +77,5 @@ cos(m1·θ + m2) - m3
 - [insightface/recognition/arcface_torch/losses.py](https://github.com/deepinsight/insightface/blob/master/recognition/arcface_torch/losses.py)
 - [insightface/recognition/arcface_torch/configs/ms1mv3_r100.py](https://github.com/deepinsight/insightface/blob/master/recognition/arcface_torch/configs/ms1mv3_r100.py)
 - [insightface/recognition/arcface_torch/README.md](https://github.com/deepinsight/insightface/blob/master/recognition/arcface_torch/README.md)
+
+#face-recognition #deep-learning #metric-learning

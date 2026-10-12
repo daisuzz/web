@@ -5,7 +5,7 @@ updated: "2026-10-11T12:00:00+09:00"
 
 # InsightFace
 
-2D・3Dの顔解析をまとめたオープンソースのツールキット。主にPyTorchとMXNetで書かれている。リポジトリは `deepinsight/insightface` で、主な開発者はJia Guo氏とJiankang Deng氏。顔認識の損失関数として広く使われている[[arcface]]は、このプロジェクトから出てきた。 #face-recognition #computer-vision #python
+2D・3Dの顔解析をまとめたオープンソースのツールキット。主にPyTorchとMXNetで書かれている。リポジトリは `deepinsight/insightface` で、主な開発者はJia Guo氏とJiankang Deng氏。顔認識の損失関数として広く使われている[[arcface]]は、このプロジェクトから出てきた。
 
 ## 主な機能とモデル
 
@@ -65,3 +65,5 @@ PyPIの版でいうと、0.7.3（2023-04）から約3年空いて、2026年に�
 - [GitHub - deepinsight/insightface](https://github.com/deepinsight/insightface)
 - [insightface · PyPI](https://pypi.org/project/insightface/)
 - [InsightFace About](https://www.insightface.ai/about-us)
+
+#face-recognition #computer-vision #python

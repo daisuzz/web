@@ -2,7 +2,7 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import {marked, Token, Tokens} from "marked"
-import {NoteBlock, SiteNote} from "../types/note"
+import {NoteBlock, NoteNav, NoteTreeNode, SiteNote} from "../types/note"
 import {preprocessNoteMarkdown} from "./noteMarkdown"
 
 const NOTES_DIR = path.join(__dirname, "notes")
@@ -139,7 +139,48 @@ function parseNoteFile(filePath: string, slugIndex: Map<string, string>): Parsed
     }
 }
 
-export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote[]> } {
+const HUB_TAG = "moc"
+
+// ハブノート(#moc)をフォルダ、ハブからリンクされているノートをその中身とみなしてサイドバー用のツリーを作る。
+// フォルダ内はハブ本文でのリンク出現順(=ハブ側で意図した並び)を保つ。複数のハブからリンクされたノートは
+// それぞれのフォルダに重複して現れる。ハブがハブをリンクしていればサブフォルダになる(循環は葉として打ち切る)。
+// どのハブからもリンクされていないノートはトップレベルに置く。
+function buildNoteTree(notes: SiteNote[]): NoteTreeNode[] {
+    const notesBySlug = new Map(notes.map((note) => [note.slug, note]))
+    const isHub = (note: SiteNote) => note.tags.includes(HUB_TAG)
+    const hubs = notes.filter(isHub)
+    const linkedFromHub = new Set(hubs.flatMap((hub) => hub.links.filter((slug) => slug !== hub.slug)))
+    const visited = new Set<string>()
+
+    const toNode = (note: SiteNote, ancestors: Set<string>): NoteTreeNode => {
+        visited.add(note.slug)
+        if (!isHub(note) || ancestors.has(note.slug)) return {slug: note.slug}
+        const nextAncestors = new Set(ancestors).add(note.slug)
+        const children = note.links
+            .filter((slug) => slug !== note.slug)
+            .map((slug) => notesBySlug.get(slug))
+            .filter((child): child is SiteNote => child !== undefined)
+            .map((child) => toNode(child, nextAncestors))
+        return {slug: note.slug, children}
+    }
+
+    const byTitle = (a: SiteNote, b: SiteNote) => a.title.localeCompare(b.title, "ja")
+    const roots = notes.filter((note) => !linkedFromHub.has(note.slug))
+    const rootNodes = roots.map((note) => toNode(note, new Set()))
+    // ハブ同士が互いにリンクし合っているとどちらもrootにならないため、取りこぼしたノートを拾う
+    const orphans: NoteTreeNode[] = []
+    notes.forEach((note) => {
+        if (!visited.has(note.slug)) orphans.push(toNode(note, new Set()))
+    })
+
+    const top = [...rootNodes, ...orphans]
+    const titleOf = (node: NoteTreeNode) => notesBySlug.get(node.slug)!
+    const folders = top.filter((node) => node.children).sort((a, b) => byTitle(titleOf(a), titleOf(b)))
+    const leaves = top.filter((node) => !node.children).sort((a, b) => byTitle(titleOf(a), titleOf(b)))
+    return [...folders, ...leaves]
+}
+
+export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote[]>; nav: NoteNav } {
     const files = readAllFiles()
     const slugIndex = buildSlugIndex(files)
     const parsed = files.map((filePath) => parseNoteFile(filePath, slugIndex))
@@ -178,5 +219,10 @@ export function loadNotes(): { notes: SiteNote[]; tagIndex: Map<string, SiteNote
         })
     })
 
-    return {notes, tagIndex}
+    const nav: NoteNav = {
+        tree: buildNoteTree(notes),
+        entries: notes.map(({slug, title, updated, tags}) => ({slug, title, updated, tags})),
+    }
+
+    return {notes, tagIndex, nav}
 }

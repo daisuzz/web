@@ -1,17 +1,19 @@
 import * as React from "react"
 import {Link, PageProps} from "gatsby"
 import Layout from "../components/Layout"
-import {SiteNote} from "../types/note"
+import NotesLayout from "../components/NotesLayout"
+import {NoteNav, SiteNote} from "../types/note"
 // @ts-ignore
 import * as style from "./NoteTagPage.module.css"
 
 interface NoteTagPageContext {
     tag: string
     notes: SiteNote[]
+    nav: NoteNav
 }
 
 const NoteTagPage: React.FC<PageProps<object, NoteTagPageContext>> = ({pageContext, location}) => {
-    const {tag, notes} = pageContext
+    const {tag, notes, nav} = pageContext
 
     return (
         <Layout
@@ -20,6 +22,7 @@ const NoteTagPage: React.FC<PageProps<object, NoteTagPageContext>> = ({pageConte
             path={location.pathname}
             noindex
         >
+            <NotesLayout nav={nav}>
             <div className={style.wrap}>
                 <div className={style.breadcrumb}>
                     <Link to="/notes/">~/notes</Link> / <Link to="/notes/tags/">tags</Link> / {tag}
@@ -41,6 +44,7 @@ const NoteTagPage: React.FC<PageProps<object, NoteTagPageContext>> = ({pageConte
                     <Link to="/notes/tags/">&larr; back to tags</Link>
                 </div>
             </div>
+            </NotesLayout>
         </Layout>
     )
 }

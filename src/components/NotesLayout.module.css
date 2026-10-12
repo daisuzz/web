@@ -1,0 +1,16 @@
+.shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 40px;
+}
+
+.content {
+    min-width: 0;
+}
+
+@media (max-width: 860px) {
+    .shell {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+}

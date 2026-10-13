@@ -8,7 +8,9 @@
     border-right: 1px solid var(--color-border);
 }
 
-.mobileToggle {
+.mobileBar,
+.backdrop,
+.close {
     display: none;
 }
 
@@ -33,6 +35,7 @@
 }
 
 .headSub {
+    margin-left: auto;
     font-size: 12px;
     color: var(--color-muted);
 }
@@ -148,47 +151,123 @@
 }
 
 @media (max-width: 860px) {
+    /* モバイルではサイドバー自体はヘッダー直下に貼り付く細いバーになり、ツリーは左からのドロワーで開く */
     .sidebar {
-        position: static;
+        position: sticky;
+        top: 56px;
+        /* stickyでスタッキングコンテキストができるため、中のドロワーがヘッダー(z-index: 20)より
+           前面に出るよう、バー自体をヘッダーより上に置く(位置は重ならない) */
+        z-index: 30;
         height: auto;
-        padding: 16px 0 0;
+        margin: 0 -40px;
+        padding: 0;
         border-right: none;
     }
 
+    .mobileBar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 40px;
+        background: var(--color-header-bg);
+        border-bottom: 1px solid var(--color-border);
+        backdrop-filter: blur(10px);
+    }
+
     .mobileToggle {
-        display: block;
-        width: 100%;
-        padding: 9px 12px;
-        text-align: left;
+        flex: none;
+        padding: 5px 10px;
         font-family: inherit;
-        font-size: 13px;
+        font-size: 12.5px;
         color: var(--color-heading);
         background: transparent;
-        border: 1px solid var(--color-border);
+        border: 1px solid var(--color-border-strong);
         border-radius: 4px;
         cursor: pointer;
     }
 
+    .mobileLocation {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+        color: var(--color-muted);
+    }
+
+    .backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: var(--color-backdrop);
+    }
+
     .panel {
-        display: none;
-        height: auto;
-        padding: 16px 0 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 41;
+        width: min(85vw, 320px);
+        height: 100%;
+        box-sizing: border-box;
+        padding: 20px 12px 16px 20px;
+        background: var(--color-bg);
+        border-right: 1px solid var(--color-border);
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.2s ease, visibility 0s linear 0.2s;
     }
 
     .panelOpen {
-        display: flex;
+        transform: translateX(0);
+        visibility: visible;
+        transition: transform 0.2s ease;
     }
 
-    .head,
-    .scroll {
+    .head {
         padding-right: 0;
+    }
+
+    .close {
+        display: block;
+        margin-left: 4px;
+        padding: 2px 8px;
+        font-family: inherit;
+        font-size: 13px;
+        color: var(--color-muted);
+        background: transparent;
+        border: none;
+        cursor: pointer;
     }
 
     .search {
         width: 100%;
     }
 
-    .scroll {
-        max-height: 60vh;
+    .row {
+        font-size: 13.5px;
+    }
+
+    .link {
+        padding: 8px 4px;
+    }
+
+    .toggle {
+        width: 28px;
+        align-self: stretch;
+        font-size: 13px;
+    }
+}
+
+/* 640px以下ではLayoutの左右余白が20pxになるので、バーを画面端まで広げる量もそれに合わせる */
+@media (max-width: 640px) {
+    .sidebar {
+        margin: 0 -20px;
+    }
+
+    .mobileBar {
+        padding: 8px 20px;
     }
 }

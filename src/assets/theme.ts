@@ -47,6 +47,7 @@ export const theme = createTheme({
                     "--color-code-header-bg": "oklch(0.93 0.006 250)",
                     "--color-code-bg": "oklch(0.95 0.006 250)",
                     "--color-selection": "oklch(0.52 0.15 55 / 0.18)",
+                    "--color-backdrop": "oklch(0.22 0.01 250 / 0.35)",
                 },
                 body: {
                     backgroundColor: "var(--color-bg)",

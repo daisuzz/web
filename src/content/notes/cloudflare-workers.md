@@ -1,10 +1,10 @@
 ---
 created: "2026-08-17"
-updated: "2026-09-30"
+updated: "2026-10-13"
 ---
 # Cloudflare Workers
 
-Cloudflareのグローバルエッジネットワーク上でJavaScript/WebAssemblyを実行するサーバーレスコンピューティングプラットフォーム。AWS LambdaやVercel Functionsと同じ「サーバーレス関数」の範疇に入るが、コンテナやVMではなく**V8アイソレート**という単位で分離・実行される点が最大の特徴。
+Cloudflareのグローバルエッジネットワーク上でJavaScript/WebAssemblyを実行するサーバーレスコンピューティングプラットフォーム。AWS Lambda（[[aws-lambda-event-functions]] / [[aws-lambda-web-functions]]）やVercel Functionsと同じ「サーバーレス関数」の範疇に入るが、コンテナやVMではなく**V8アイソレート**という単位で分離・実行される点が最大の特徴。
 
 ## V8アイソレートによる分離
 

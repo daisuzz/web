@@ -1,6 +1,6 @@
 ---
 created: "2026-08-17"
-updated: "2026-08-23"
+updated: "2026-10-12"
 ---
 # Bun
 
@@ -78,6 +78,10 @@ Bunの内部実装をZigからRustに書き換えるプロジェクト（`Rewrit
 - **新API**: `Temporal`がデフォルト有効化、`Bun.WebView`(組み込みヘッドレスブラウザ自動化)、`Bun.Image`、`Bun.markdown`などが追加
 
 急ピッチなリライトに対して、コミュニティの一部からは安定性への懸念の声も上がっている。
+
+## [[javascript-runtimes]]の中での位置づけ
+
+JSエンジンごと[[javascript-core]]に替え、ツールチェーン全体を統合した側。
 
 ## 出典
 

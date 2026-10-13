@@ -1,5 +1,6 @@
 ---
 created: "2026-08-27"
+updated: "2026-10-12"
 ---
 # Kotlin Coroutinesのシステムコール実験
 
@@ -174,6 +175,10 @@ straceログ:
 - システムコールが発生するのは「スレッドプールの増減」（`clone3`）と「本当に待つ」処理（`futex`によるpark/unpark）の2箇所に限定される。`Dispatchers.Default`はCPUコア数を上限に実スレッドを抑え、余った分のコルーチンは同じスレッドをキューで使い回す。
 - `delay()`は独立した1本のタイマースレッド（`kotlinx.coroutines.DefaultExecutor`）に集約されており、コルーチンの数だけタイマースレッドが増えるわけではない。
 - 実ネットワークI/Oは`kotlinx-coroutines-core`の範囲外で、`java.nio.channels.Selector`（Linuxでは`epoll`）のようなOSのreadiness通知APIを土台にライブラリ側が`suspend`関数を実装する。
+
+## [[kotlin]]の中での位置づけ
+
+[[kotlin-coroutines]]の理解を手を動かして裏付けた実験ノート。
 
 ## バージョンについての補足
 

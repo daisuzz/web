@@ -1,6 +1,6 @@
 ---
 created: "2026-08-24"
-updated: "2026-08-29"
+updated: "2026-10-12"
 ---
 # Gradle Daemon
 
@@ -74,6 +74,10 @@ Daemonは自身の健全性を監視しており（`LowMemoryDaemonExpirationStr
 | 終了条件 | アイドルタイムアウト／非互換な要求 | ビルド終了、またはリソース逼迫時 |
 
 process isolationを選んだWorkerは、実体として上図の「Worker Daemon」プロセスとして立ち上がる。classloader isolationの場合は新規プロセスを起こさず、Gradle Daemonプロセスの中で別クラスローダーに分離するだけなので、Gradle Daemon自身のヒープをそのまま使う。
+
+## [[gradle]]の中での位置づけ
+
+高速化のうちプロセス再利用の担当。
 
 ## バージョンについて
 

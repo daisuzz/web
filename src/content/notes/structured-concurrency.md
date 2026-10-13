@@ -1,5 +1,6 @@
 ---
 created: "2026-09-16T19:05:00+09:00"
+updated: "2026-10-12"
 ---
 # Structured Concurrency
 
@@ -52,6 +53,10 @@ try (var scope = StructuredTaskScope.open()) {
 ## 他言語との比較
 
 [[kotlin-coroutines]]では`CoroutineScope`と親子関係による構造化並行性が言語・ライブラリの標準的な使い方として組み込まれているのに対し、Javaの仮想スレッドは構造化並行性を強制しない。`StructuredTaskScope`を使う側が意識的に採用する必要がある。Goも同様に標準では構造化された取り消し伝播を持たず、`context.Context`を手で伝播させる規約になっている（[[go-context]]参照）。
+
+## [[java]]の中での位置づけ
+
+JDKに入りつつあるAPIの1つ。各バージョンでのプレビューの変遷は[[jdk-releases]]から辿れる。
 
 ## 出典
 

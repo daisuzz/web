@@ -1,6 +1,6 @@
 ---
 created: "2026-09-03"
-updated: "2026-09-12"
+updated: "2026-10-12"
 ---
 
 # sqlx
@@ -61,6 +61,10 @@ tx, err := db.BeginTxx(ctx, nil) // contextを伝播させる版
 ```
 
 `Tx`内でも`Get`/`Select`/`NamedExec`など上記のメソッドがすべて同様に使える。`ctx`を伝播させる`Context`サフィックス付きメソッド（`GetContext`/`SelectContext`/`NamedExecContext`など）も一通り用意されており、[[go-context]]で触れているリクエストスコープのキャンセルをDBアクセスまで伝える場合はそちらを使う。
+
+## [[go]]の中での位置づけ
+
+DBアクセス担当。`database/sql`の上に段階的に足せるラッパー。Webフレームワーク側は[[echo-go-framework]]。
 
 ## バージョンについて
 

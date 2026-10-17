@@ -1,5 +1,6 @@
 ---
 created: 2026-10-17
+updated: 2026-10-17
 ---
 
 # 緊急地震速報
@@ -95,6 +96,104 @@ flowchart LR
 
 APNs や FCM のような普通のプッシュ通知は「サーバーから各端末へ」送るので、数千万台に一斉に送るとどうしても詰まる。ETWS は無線レイヤーのブロードキャストを使うので、この問題が起きない。
 
+## アーキテクチャ（レイヤー構成）
+
+```mermaid
+flowchart TB
+  subgraph L1[観測層]
+    S1[陸上の地震計] & S2[海底地震計 S-net/DONET]
+  end
+  subgraph L2[解析層 気象庁]
+    P1[IPF法] & P2[PLUM法] --> M["max() で合成<br/>2点以上の観測で警報"]
+  end
+  subgraph L3[電文層]
+    X[XML電文 VXSE43/44/45] & CD[コード電文]
+  end
+  subgraph L4[配信層]
+    B[テレビ・ラジオ] & J[配信事業者<br/>鉄道・工場] & CBC[キャリアの CBC]
+  end
+  subgraph L5[無線層 LTE]
+    MME --> ENB[eNodeB] --> UE[端末]
+  end
+  L1 --> L2 --> L3 --> L4
+  CBC --> MME
+```
+
+- 観測層：観測点でP波の検出や振幅の計測をしてから送る
+- 解析層：2つの手法の結果を合わせて、発表するかどうかを決める
+- 電文層：同じ内容を、機械向けの決まった形式（XML とコード電文）にする
+- 配信層：行政機関に届ける経路は、通信事業者の回線に加えて中央防災無線網を第二ルートにして二重化している（2008年の内閣府資料の時点）
+- 無線層：セルブロードキャストで一斉に配る（後述）
+
+## 電文のデータ構造（気象庁防災情報XML）
+
+電文の種類は次のとおり。
+
+| 電文 | 内容 |
+|---|---|
+| VXSE43 | 緊急地震速報（警報） |
+| VXSE44 | 緊急地震速報（予報） |
+| VXSE45 | 緊急地震速報（地震動予報）。長周期地震動を扱う新しい形式 |
+| VXSE47 | リアルタイム震度 |
+
+JMAXML の電文は、管理部（Control）・ヘッダ部（Head）・内容部（Body）の3つに分かれる。緊急地震速報でおさえておきたい要素は以下（細かい定義は気象庁の解説資料を参照）。
+
+```
+Report
+├─ Control       … 電文の種類、発表日時、発表した官署など
+├─ Head
+│   ├─ EventID   … 地震識別番号。同じ地震の電文はこの値でまとまる
+│   ├─ Serial    … 報の番号。新しい地震の最初の電文は 1
+│   ├─ InfoType  … 発表 / 取消 など
+│   └─ Headline/Information … 警報と地震動予報だけに出る（強い揺れが予想される地域）
+└─ Body
+    ├─ Earthquake … 発生時刻、震源（Hypocenter）、マグニチュード
+    ├─ Intensity  … 予測最大震度、地域ごとの予測震度や主要動の到達予想時刻
+    ├─ Text
+    └─ NextAdvisory … 最終報のとき「この情報をもって、緊急地震速報：最終報とします。」が入る
+```
+
+ソフトウェアの言葉で言い換えると次のようになる。
+
+- `EventID` が集約のキー、`Serial` がバージョン番号。受け取る側は `EventID` ごとに最新の状態を持ち、`Serial` が古い電文は捨てる（upsert）
+- `InfoType=取消` は削除の印（tombstone）。このとき Body 直下の Earthquake や Intensity などは Text を除いて出てこないので、パースするときは注意がいる
+- `NextAdvisory` はストリームの終わりの印
+- 震源の推定がまだできていないときは「仮定震源要素」（深さ 10km・M1.0 で固定）が入り、`Condition` タグで補足される。値をそのまま本物の震源として使ってはいけない
+- 落とし穴：`EventID` は発表した官署やシステムの状況によって一貫しないことがあり、値そのものに発生時刻などの物理的な意味はないとされている
+
+昔からある**コード電文**（固定長のテキスト形式）もあり、先頭の電文種別番号で中身を見分ける。たとえば 35 は最大予測震度だけ、37 はマグニチュード・最大予測震度・主要動到達予測時刻を含むもの、39 は取消。
+
+## 無線層のデータ構造（ETWS）
+
+CBC から MME へは Write-Replace-Warning-Request というメッセージで警報を渡す。主な項目は次のとおり。
+
+| 項目 | 役割 |
+|---|---|
+| Message Identifier | 警報の種類。ETWS の地震は 4352（0x1100）、津波 4353、地震と津波 4354、テスト 4355 |
+| Serial Number | 同じ警報の版を区別する番号 |
+| List of TAIs | MME だけが使う。どの基地局に送るかを選ぶ |
+| Warning Area List | 基地局だけが使う。自分のセルが対象かを判定する |
+| Warning Type | 第1報（Primary Notification）の中身 |
+| Repetition Period / No-of-Broadcasts-Requested | 繰り返し送る間隔と回数。第1報では無視される |
+
+- 1つの基地局が複数の MME から同じ警報を受け取ることがある。基地局は `Message Identifier` と `Serial Number` の組で重複を見つけて、最初の1つだけを流す。冪等キーで重複を除くのと同じ発想
+- Warning Type は 7ビットの値（0=地震、1=津波、2=地震と津波、3=テスト、4=その他）に、端末で警報音を鳴らすかやポップアップを出すかを決めるフラグが付いた小さな構造
+
+端末側の受信の流れ：
+
+```mermaid
+sequenceDiagram
+  participant ENB as 基地局
+  participant UE as 端末
+  ENB->>UE: Paging（ETWS が来ていることを示す1ビット）
+  UE->>ENB: SIB1 を読む（SIB10/11 がいつ流れるかを知る）
+  ENB->>UE: SIB10 = 第1報（Warning Type）
+  Note over UE: ここで警報音とポップアップ
+  ENB->>UE: SIB11 = 第2報（本文。複数回に分けて送れる）
+```
+
+Paging で「来ているよ」とだけ知らせ、端末が自分から読みにいく。サーバーが中身を一斉に押しつけるのではなく、小さな通知と読みにいく動き（pull）の組み合わせになっている。
+
 ## 設計上のトレードオフ
 
 | 論点 | 緊急地震速報の選択 |
@@ -104,6 +203,8 @@ APNs や FCM のような普通のプッシュ通知は「サーバーから各�
 | モデルの前提が崩れたとき | 前提の違う2手法を並べて走らせ、大きいほうを採る |
 | 複数の地震が同時に起きたとき | 粒子フィルタで複数の仮説を持ち続ける |
 | 一斉配信のスケール | ユニキャストをやめてセルブロードキャストにする |
+| 更新と取消の扱い | EventID + Serial で版を管理し、取消は削除の印で表す |
+| 重複して届く | Message Identifier + Serial Number で重複を除く |
 | どうしても無理な部分 | ブラインドゾーン（物理的に間に合わない） |
 
 ## 出典
@@ -114,5 +215,15 @@ APNs や FCM のような普通のプッシュ通知は「サーバーから各�
 - [気象庁｜緊急地震速報の発表基準の変更について](https://www.jma.go.jp/jma/kishou/know/jishin/eew/lpgm_start/lpgm_start.html)
 - [ケータイ Watch「ETWS とは」](https://k-tai.watch.impress.co.jp/docs/column/keyword/498122.html)
 - [NTTドコモ テクニカル・ジャーナル Vol.17 No.3](https://www.docomo.ne.jp/binary/pdf/corporate/technology/rd/technical_journal/bn/vol17_3/vol17_3_021jp.pdf)
+- [地震火山関連XML 電文解説資料（令和7年12月、気象庁地震火山部）](https://dmdata.jp/docs/jma/manual/0101-0185.pdf)
+- [気象庁防災情報XML フォーマット Ver.1.2](https://xml.kishou.go.jp/jmaxml_20160331_format_v1_2.pdf)
+- [新しい予想手法の導入に伴う緊急地震速報XML電文の変更点（平成29年7月、気象庁）](https://www.data.jma.go.jp/eew/data/nc/shiryo/setsumeikai170712/170712_3b.pdf)
+- [緊急地震速報 コード電文の資料（気象庁）](https://www.data.jma.go.jp/eew/data/nc/shiryo/setsumeikai170712/170712_3e.pdf)
+- [気象庁防災情報 XML（地震分野）を処理する際のメモ - Qiita](https://qiita.com/oruponu/items/883e4db5f023d7f76ffc)
+- [内閣府 中央防災無線網による緊急地震速報の伝達（2008年）](https://www.bousai.go.jp/jishin/eew/dai6kai/20080311siryo7chubomusen.pdf)
+- [3GPP TS 23.041 9.2.16 WRITE-REPLACE-WARNING-REQUEST（iTecSpec）](https://itecspec.com/3gpp/23.041/s/9.2.16)
+- [3GPP TS 23.041 9.3.24 Warning-Type（iTecSpec）](https://itecspec.com/3gpp/23.041/s/9.3.24)
+- [3GPP C1-224590 CBS Message Ids](https://3gpp.org/ftp/tsg_CT/WG1_mm-cc-sm_ex-CN1/TSGC1_137e/Inbox/Drafts/C1-224590_rev1%20CBS%20Message%20Ids%20for%20additional%20KPAS%20services.docx)
+- [US9985734（ETWS の Paging と SIB10/SIB11 の流れ）](https://patents.google.com/patent/US9985734)
 
 #earthquake #disaster-prevention #distributed-systems #streaming #network

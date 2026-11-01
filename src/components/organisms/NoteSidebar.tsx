@@ -31,6 +31,19 @@ function ancestorsOf(tree: NoteTreeNode[], slug: string | undefined): Set<string
     return result
 }
 
+// 現在のノートに至るフォルダの道筋(最初に見つかったもの)。モバイルの上部バーに現在地として表示する。
+function pathTo(tree: NoteTreeNode[], slug: string | undefined): string[] {
+    if (!slug) return []
+    for (const node of tree) {
+        if (node.slug === slug) return [node.slug]
+        if (node.children) {
+            const rest = pathTo(node.children, slug)
+            if (rest.length > 0) return [node.slug, ...rest]
+        }
+    }
+    return []
+}
+
 function matches(entry: NoteSearchEntry, query: string): boolean {
     const q = query.toLowerCase()
     if (entry.title.toLowerCase().includes(q)) return true
@@ -52,6 +65,21 @@ const NoteSidebar: React.FC<Props> = ({nav, currentSlug}) => {
     React.useEffect(() => {
         expandedMemory = expanded
     }, [expanded])
+
+    // モバイルのドロワーを開いている間は背面の本文をスクロールさせず、Escで閉じられるようにする
+    React.useEffect(() => {
+        if (!mobileOpen) return
+        const prevOverflow = document.body.style.overflow
+        document.body.style.overflow = "hidden"
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setMobileOpen(false)
+        }
+        window.addEventListener("keydown", onKeyDown)
+        return () => {
+            document.body.style.overflow = prevOverflow
+            window.removeEventListener("keydown", onKeyDown)
+        }
+    }, [mobileOpen])
 
     React.useLayoutEffect(() => {
         const el = scrollRef.current
@@ -120,21 +148,44 @@ const NoteSidebar: React.FC<Props> = ({nav, currentSlug}) => {
 
     const trimmedQuery = query.trim()
     const results = trimmedQuery === "" ? null : nav.entries.filter((entry) => matches(entry, trimmedQuery))
+    const location = pathTo(nav.tree, currentSlug).map((slug) => entriesBySlug.get(slug)?.title ?? slug)
 
     return (
         <aside className={style.sidebar}>
-            <button
-                type="button"
-                className={style.mobileToggle}
-                aria-expanded={mobileOpen}
-                onClick={() => setMobileOpen((open) => !open)}
+            <div className={style.mobileBar}>
+                <button
+                    type="button"
+                    className={style.mobileToggle}
+                    aria-expanded={mobileOpen}
+                    aria-controls="note-sidebar-panel"
+                    onClick={() => setMobileOpen(true)}
+                >
+                    ☰ ノート
+                </button>
+                <span className={style.mobileLocation}>
+                    {location.length > 0 ? location.join(" / ") : `${nav.entries.length} notes`}
+                </span>
+            </div>
+            {mobileOpen && <div className={style.backdrop} onClick={() => setMobileOpen(false)}/>}
+            <div
+                id="note-sidebar-panel"
+                className={`${style.panel} ${mobileOpen ? style.panelOpen : ""}`}
+                onClick={(e) => {
+                    // ドロワー内のリンクをタップしたら閉じる(同じページへのリンクで遷移が起きない場合も含む)
+                    if ((e.target as HTMLElement).closest("a")) setMobileOpen(false)
+                }}
             >
-                {mobileOpen ? "▾" : "▸"} ノート一覧（{nav.entries.length}）
-            </button>
-            <div className={`${style.panel} ${mobileOpen ? style.panelOpen : ""}`}>
                 <div className={style.head}>
                     <Link to="/notes/" className={style.headLink}>~/notes</Link>
                     <Link to="/notes/tags/" className={style.headSub}>#tags</Link>
+                    <button
+                        type="button"
+                        className={style.close}
+                        aria-label="ノート一覧を閉じる"
+                        onClick={() => setMobileOpen(false)}
+                    >
+                        ✕
+                    </button>
                 </div>
                 <input
                     type="search"

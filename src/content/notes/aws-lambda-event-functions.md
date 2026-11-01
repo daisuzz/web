@@ -1,5 +1,6 @@
 ---
 created: "2026-10-13T12:01:00+09:00"
+updated: "2026-11-01"
 ---
 # AWS Lambda Event Functions
 
@@ -28,6 +29,10 @@ created: "2026-10-13T12:01:00+09:00"
 ## Web Functionsとの使い分け
 
 公式の整理では、キューのメッセージ処理やファイルアップロードのようなイベント駆動処理はEvent Functions、HTTPトラフィックを直接受けて返すワークロードはWeb Functions。詳しい比較は [[aws-lambda-web-functions]] を参照。
+
+## [[aws-lambda]]の中での位置づけ
+
+Lambdaの3形態（Event Functions / [[aws-lambda-web-functions]] / [[aws-lambda-microvms]]）のうち、元からある形態。イベントを1件ずつ受けて処理し、1つの実行環境は同時に1リクエストだけ扱う。
 
 ## 出典
 

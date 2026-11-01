@@ -1,5 +1,6 @@
 ---
 created: "2026-10-13T12:00:00+09:00"
+updated: "2026-11-01"
 ---
 # AWS Lambda Web Functions
 
@@ -64,13 +65,9 @@ flowchart LR
 
 US East（バージニア北部）、US East（オハイオ）、US West（オレゴン）、アジアパシフィック（東京）、欧州（アイルランド）。
 
-## Lambdaの3つのフォームファクタ
+## [[aws-lambda]]の中での位置づけ
 
-発表時点でLambdaは Event Functions / Web Functions / MicroVMs の3形態を持つと説明されている。いずれもFirecracker上で動き、VMレベルの分離を持つ。
-
-- **Event Functions**: イベント駆動、1環境1リクエスト、wall-clock課金
-- **Web Functions**: HTTPサーバー、1環境で多数の同時リクエスト、アクティブCPU課金
-- **MicroVMs**: 信頼できないコード・AI生成コード向けのステートフルなサンドボックス。Dockerfileベースで、1セッション1環境、最大8時間
+Lambdaの3形態（[[aws-lambda-event-functions]] / Web Functions / [[aws-lambda-microvms]]）のうち、HTTPサーバーをそのまま載せ、1つの実行環境を複数リクエストで共有する形態。
 
 ## 出典
 
@@ -81,6 +78,5 @@ US East（バージニア北部）、US East（オハイオ）、US West（オ�
 - [Serverless compute for HTTP workloads - AWS Lambda Web Functions](https://aws.amazon.com/lambda/lambda-web-functions/)
 - [Lambda quotas - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html)
 - [Amazon CloudFront now supports AWS Lambda Web Functions as an origin - AWS（What's New）](https://aws.amazon.com/about-aws/whats-new/2026/10/cloudfront-lambda-web-functions-origin/)
-- [Run isolated sandboxes with full lifecycle control: AWS Lambda introduces MicroVMs - AWS News Blog](https://aws.amazon.com/blogs/aws/run-isolated-sandboxes-with-full-lifecycle-control-aws-lambda-introduces-microvms/)
 
 #aws #serverless #lambda

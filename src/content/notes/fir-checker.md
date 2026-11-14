@@ -3,7 +3,7 @@ created: "2026-11-14T10:00:00+09:00"
 ---
 # FIR Checker
 
-K2コンパイラのフロントエンド（FIR: Frontend Intermediate Representation）で、型チェックや宣言の妥当性検査を行い、エラー・警告（diagnostic）を報告する仕組み。名前解決・型推論が全部終わって `BODY_RESOLVE` フェーズまで到達したFIRツリーに対して後から走る。プラグインから独自のCheckerを足す方法は [[fir-additional-checkers-extension]] に分けた。
+K2コンパイラのフロントエンド（[[fir]]）で、型チェックや宣言の妥当性検査を行い、エラー・警告（diagnostic）を報告する仕組み。名前解決・型推論が全部終わって `BODY_RESOLVE` フェーズまで到達したFIRツリーに対して後から走る。プラグインから独自のCheckerを足す方法は [[fir-additional-checkers-extension]] に分けた。
 
 ## 解決（resolve）とチェックの分離
 
@@ -92,13 +92,13 @@ abstract class FirDeclarationChecker<D : FirDeclaration>(
 ## チェック段階でのFIRの前提（IDEとの関係）
 
 - CLIではプロジェクト全体を `BODY_RESOLVE` まで解決してからCheckerを走らせる
-- IDE（Analysis API）は遅延解決なので、他ファイルの宣言がどのフェーズまで解決済みかは分からない
+- IDE（Analysis API）は遅延解決なので（[[fir]] の「CLIモードとAnalysis APIモード」参照）、他ファイルの宣言がどのフェーズまで解決済みかは分からない
 - 保証されるのは **「Checkerに直接渡された要素は `BODY_RESOLVE` 済み」** ということだけ
 - そのため `FirBasedSymbol<*>.fir` でシンボルからFIR要素を取り出すのは禁止。シンボルのメンバのアクセサ（必要最小限のフェーズまで遅延解決してから値を返す）を使う
 
 ## MppCheckerKind（Common / Platform）
 
-KMPでは、`expect` を含む型が、どのセッションから見るかで別のクラスに解決されうる。
+KMPでは、`expect` を含む型が、どのセッションから見るかで別のクラスに解決されうる（[[kotlin-expect-actual]] の「型の精製」）。
 
 ```kotlin
 // MODULE: common

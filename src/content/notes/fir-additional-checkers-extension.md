@@ -3,7 +3,7 @@ created: "2026-11-14T10:10:00+09:00"
 ---
 # FirAdditionalCheckersExtension
 
-K2コンパイラプラグインから独自の [[fir-checker]] を追加するためのFIR拡張ポイント。ここに登録したCheckerは、組み込みのCheckerと同じタイミング（`BODY_RESOLVE` 後のdiagnostic収集）で走る。FIRで報告したdiagnosticは、コンパイル時だけでなくIDEのハイライトにも出る。
+K2コンパイラプラグインから独自の [[fir-checker]] を追加するための [[fir]] の拡張ポイント。ここに登録したCheckerは、組み込みのCheckerと同じタイミング（`BODY_RESOLVE` 後のdiagnostic収集）で走る。FIRで報告したdiagnosticは、コンパイル時だけでなくIDEのハイライトにも出る。
 
 ```kotlin
 abstract class FirAdditionalCheckersExtension(session: FirSession) : FirExtension(session) {

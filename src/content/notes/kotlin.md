@@ -1,5 +1,6 @@
 ---
 created: "2026-10-12T10:10:00+09:00"
+updated: "2026-11-14"
 ---
 # Kotlin
 
@@ -14,5 +15,10 @@ Kotlinまわりのノートを束ねるハブノート。JVM・ビルドツー�
 ## ビルド・コード生成
 
 - [[kotlin-annotation-processing]] — コンパイル時コード生成のハブ。Javaのannotation processorを土台に、Javaスタブ経由のkaptとKotlinネイティブな後継のKSPがある。
+
+## コンパイラ（K2 / FIR）
+
+- [[fir-checker]] — K2フロントエンドで`BODY_RESOLVE`済みのFIRツリーに対して走り、diagnosticを報告するCheckerの仕組み。宣言・式・型ごとの型付きCheckerと、その契約（ステートレス・独立・具体的・構文非依存）。
+- [[fir-additional-checkers-extension]] — コンパイラプラグインから独自のFIR Checkerを足す拡張ポイント。diagnostic定義→Checker→拡張→`FirExtensionRegistrar`→`CompilerPluginRegistrar`の順に配線する。
 
 #kotlin #moc

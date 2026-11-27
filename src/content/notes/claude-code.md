@@ -1,5 +1,6 @@
 ---
 created: "2026-10-12T10:50:00+09:00"
+updated: "2026-11-27"
 ---
 # Claude Code
 
@@ -14,5 +15,6 @@ Claude Codeの機能まわりのノートを束ねるハブノート。
 ## 考え方
 
 - [[loop-engineering]] — 人間が毎回プロンプトを打つ代わりに、エージェントにプロンプトを打ち続けるループを設計するという考え方。Claude Codeでの最も手軽な実践が[[claude-code-loop]]。
+- [[loop-engineering-practice]] — 機能改修にループを当てはめるときの観点・進め方・プロンプト例。
 
 #claude-code #ai #agent #moc
